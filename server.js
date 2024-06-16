@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 // Test route
 app.post('/test', async (req, res) => {
     
-    let query = "INSERT INTO Pokemon (pokemon_id, pokemon_name) VALUES (2, 'Ivysaur');";
+    let query = "INSERT INTO Pokemon (pokemon_id, pokemon_name) VALUES (4, 'Frederick');";
     try {
         await db.pool.query(query);
     }
