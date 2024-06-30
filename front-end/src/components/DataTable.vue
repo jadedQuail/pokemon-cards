@@ -25,7 +25,7 @@ export default {
 
         const fetchData = async () => {
             console.log("Called!");
-            const response = await axios.post('http://localhost:11112/test');
+            const response = await axios.post(process.env.VUE_APP_API_URL);
             console.log(response.data);
         }
 
