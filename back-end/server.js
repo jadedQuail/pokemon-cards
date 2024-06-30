@@ -1,15 +1,18 @@
+// Environment variables
+require('dotenv').config();
+
 // Initialize
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 11112;
+const PORT = process.env.PORT || 3000;
 
 // Database connection
 const db = require('./database/db-connector')
 
 // Only allow certain origins to make requests
 // 8080 is my front-end Vue app.
-const allowlist = ['http://localhost:8080']
+const allowlist = [process.env.FRONTEND]
 const corsOptions = {
     origin: function (origin, callback) {
         if (allowlist.includes(origin)) {
