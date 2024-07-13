@@ -1,19 +1,18 @@
 <template>
-    <div>
-
-        <!-- Get the header of the table going -->
-        <table>
-            <TableHeader :columns="columns"/>
-            <tbody>
-                <TableRow
-                    v-for="(row, index) in data"
-                    :key="index"
-                    :row="row"
-                    :columns="columns"
-                />
-            </tbody>
-        </table>
-
+    <div class="flex justify-center">
+        <div class="w-full lg:w-3/4">
+            <table class="min-w-full">
+                <TableHeader :columns="columns"/>
+                <tbody>
+                    <TableRow
+                        v-for="(row, index) in data"
+                        :key="index"
+                        :row="row"
+                        :columns="columns"
+                    />
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -31,7 +30,7 @@ export default defineComponent({
         TableRow,
     },
     setup() {
-        const columns = ref(['pokemon_id', 'pokemon_name']);
+        const columns = ref([]);
         const data = ref([]);
 
         const fetchData = async() => {
@@ -39,19 +38,34 @@ export default defineComponent({
                 const response = await axios.get(process.env.VUE_APP_API_URL);
                 data.value = response.data;
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching data: ', error);
             }
         };
 
+        const fetchColumnHeaders = async() => {
+            try {
+                const response = await axios.get(process.env.VUE_APP_API_URL + '/column-headers');
+                columns.value = response.data;
+            } catch (error) {
+                console.error('Error fetching column headers for data: ', error);
+            }
+        }
+
         onMounted(() => {
             fetchData();
+            fetchColumnHeaders();
         })
 
         return {
             columns,
             data,
+            fetchColumnHeaders,
             fetchData,
         }
     }
 })
 </script>
+
+<style scoped>
+
+</style>

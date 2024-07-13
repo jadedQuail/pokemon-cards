@@ -1,7 +1,9 @@
 <template>
     <div>
-        <img alt="Pokeball logo" src="./assets/pokemon-svgrepo-com.png">
-        <h1>Pokemon Cards</h1>
+        <img class="logo-img" alt="Pokeball logo" src="./assets/pokemon-svgrepo-com.png">
+        <h1 class="font-sans text-4xl text-indigo-400 mb-4">
+            Pokemon Cards
+        </h1>
         <DataTable />
     </div>
 </template>
@@ -27,8 +29,9 @@ export default {
         margin-top: 60px;
     }
 
-    img {
+    .logo-img {
         width: 200px;
-        height: auto;  
+        display: block;
+        margin: 0 auto;
     }
 </style>
