@@ -1,38 +1,43 @@
 <template>
     <div>
-        <p>Count: {{ count }}</p>
-        <button @click="increment">Increment</button>
-        <button @click="fetchData">Fetch Data</button>
+
+        <!-- Get the header of the table going -->
+        <table>
+            <TableHeader :columns="columns"/>
+            <tbody>
+                <TableRow
+                    v-for="(row, index) in data"
+                    :key="index"
+                    :row="row"
+                    :columns="columns"
+                />
+            </tbody>
+        </table>
+
     </div>
 </template>
 
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import TableHeader from './TableHeader.vue';
+import TableRow from './TableRow.vue';
+
 export default {
-    props: {
-        initialCount: {
-            type: Number,
-            default: 0,
-        }
+    components: {
+        TableHeader,
+        TableRow,
     },
-    setup(props) {
-        const count = ref(props.initialCount);
-
-        function increment() {
-            count.value++;
-        }
-
-        const fetchData = async () => {
-            console.log("Called!");
-            const response = await axios.post(process.env.VUE_APP_API_URL);
-            console.log(response.data);
-        }
-
+    setup() {
+        const columns = ref(['PokemonID', 'PokemonName'])
+        const data = ref([
+            { PokemonId: '1', PokemonName: 'Bulbasaur'},
+            { PokemonId: '2', PokemonName: 'Ivysaur'},
+            { PokemonId: '3', PokemonName: 'Garfielf'},
+        ])
         return {
-            count,
-            increment,
-            fetchData,
+            columns,
+            data,
         }
     }
 }
