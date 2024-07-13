@@ -21,13 +21,27 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS')); // Block the request
         }
     }
+
+    // // Testing purposes only - allow any origin
+    // origin: function (origin, callback) {
+    //     callback(null, true);
+    // }
 };
 
 app.use(cors(corsOptions));
 
-app.get('/', (req, res) => {
-    // res.send('Successful response.');
-    res.sendFile(__dirname + '/views/index.html');
+// Main get route, for grabbing all data
+app.get('/', async (req, res) => {
+    let query = "SELECT * FROM Pokemon";
+    try {
+        let results = await db.pool.query(query);
+        console.log(results);
+        res.status(200).json(results[0]);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(400);
+    }
 });
 
 // Test route
