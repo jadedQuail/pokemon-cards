@@ -30,11 +30,25 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Queries
+
+const mainGetQuery = `
+    SELECT 
+        Pokemon.pokemon_id AS 'ID', 
+        Pokemon.pokemon_name AS 'Name',
+        Pokemon.pokemon_hp AS 'HP',
+        Types.type_name AS 'Type',
+        Sets.set_name AS 'Set',
+        Pokemon.pokemon_flavor_text AS 'Flavor Text'
+    FROM Pokemon
+    LEFT JOIN Types ON Pokemon.type_id = Types.type_id
+    LEFT JOIN Sets ON Pokemon.set_id = Sets.set_id;
+`;
+
 // Main get route, for grabbing all data
 app.get('/', async (req, res) => {
-    let query = "SELECT * FROM Pokemon;";
     try {
-        let results = await db.pool.query(query);
+        let results = await db.pool.query(mainGetQuery);
         res.status(200).json(results[0]);
     }
     catch (err) {
@@ -45,37 +59,16 @@ app.get('/', async (req, res) => {
 
 // Get route for getting column headers
 app.get('/column-headers', async (req, res) => {
-    let query = "SELECT COLUMN_NAME \
-                FROM INFORMATION_SCHEMA.COLUMNS \
-                WHERE TABLE_NAME = N'Pokemon' \
-                ORDER BY ORDINAL_POSITION;";
     try {
-        let results = await db.pool.query(query);
-        results = results[0].map((object) => object.COLUMN_NAME);
-        res.status(200).json(results);
+        let [, fields] = await db.pool.query(mainGetQuery);
+        const headers = fields.map(field => field.name);
+        res.status(200).json(headers);
     }
     catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
 });
-
-// // Test route
-// app.post('/test', async (req, res) => {
-    
-//     let query = "INSERT INTO Pokemon (pokemon_id, pokemon_name) VALUES (6, 'Garfielf');";
-//     try {
-//         await db.pool.query(query);
-//     }
-//     catch (err) {
-//         console.error(err);
-//         res.sendStatus(400);
-//     }
-
-//     // Success
-//     res.redirect('/');
-
-// });
 
 app.listen(PORT, () => {
     console.log(`Example app is listening on port ${PORT}.`);
