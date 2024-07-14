@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <div class="w-full lg:w-3/4">
-            <table class="min-w-full">
+            <table class="min-w-full border border-black">
                 <TableHeader :columns="columns"/>
                 <tbody>
                     <TableRow

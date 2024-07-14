@@ -1,5 +1,5 @@
 <template>
-    <td>{{ value }}</td>
+    <td class="border border-black px-4 py-3">{{ value }}</td>
 </template>
 
 <script>

@@ -45,7 +45,10 @@ app.get('/', async (req, res) => {
 
 // Get route for getting column headers
 app.get('/column-headers', async (req, res) => {
-    let query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Pokemon';";
+    let query = "SELECT COLUMN_NAME \
+                FROM INFORMATION_SCHEMA.COLUMNS \
+                WHERE TABLE_NAME = N'Pokemon' \
+                ORDER BY ORDINAL_POSITION;";
     try {
         let results = await db.pool.query(query);
         results = results[0].map((object) => object.COLUMN_NAME);
