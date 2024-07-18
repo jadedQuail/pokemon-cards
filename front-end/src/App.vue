@@ -4,17 +4,20 @@
         <h1 class="font-sans text-4xl text-indigo-400 mb-4">
             Pokemon Cards
         </h1>
+        <Button text="Hello" color="blue" />
         <DataTable />
     </div>
 </template>
 
 <script>
 import DataTable from './components/DataTable.vue'
+import Button from './components/Button.vue'
 
 export default {
     name: 'App',
     components: {
         DataTable,
+        Button,
     }
 }
 </script>
