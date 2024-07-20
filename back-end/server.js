@@ -28,10 +28,11 @@ const corsOptions = {
     // }
 };
 
+// Middelware
 app.use(cors(corsOptions));
+app.use(express.json());
 
 // Queries
-
 const mainGetQuery = `
     SELECT 
         Pokemon.pokemon_id AS 'ID', 
@@ -44,6 +45,8 @@ const mainGetQuery = `
     LEFT JOIN Types ON Pokemon.type_id = Types.type_id
     LEFT JOIN Sets ON Pokemon.set_id = Sets.set_id;
 `;
+
+const getTypesQuery = `SELECT type_name FROM Types`;
 
 // Main get route, for grabbing all data
 app.get('/', async (req, res) => {
@@ -69,6 +72,31 @@ app.get('/column-headers', async (req, res) => {
         res.sendStatus(400);
     }
 });
+
+// Get route for getting types options for forms
+app.get('/get-type-options', async (req, res) => {
+    try {
+        const results = await db.pool.query(getTypesQuery);
+        const types = results[0].map(typeObject => typeObject.type_name);
+        res.status(200).json(types);
+    } 
+    catch (err) {
+        console.error(err);
+        res.sendStatus(400);
+    }
+});
+
+// Post route for submitting a new pokemon
+app.post('/add-pokemon', async (req, res) => {
+    let data = req.body;
+    try {
+        console.log(data);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(400);
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Example app is listening on port ${PORT}.`);
