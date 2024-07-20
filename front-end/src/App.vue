@@ -1,24 +1,30 @@
 <template>
     <div>
         <img class="logo-img" alt="Pokeball logo" src="./assets/pokemon-svgrepo-com.png">
-        <h1 class="font-sans text-4xl text-indigo-400 mb-4">
-            Pokemon Cards
+        <h1 class="font-sans text-4xl text-indigo-400 mb-10">
+            Pok&eacute;mon Cards
         </h1>
-        <Button text="Hello" color="blue" />
-        <DataTable />
+        <div class="mb-10">
+            <Button text="Add Pok&eacute;mon" color="blue" @click="toggleForm" v-if="!showForm" />
+            <Button text="Go Back" color="red" @click="toggleForm" v-if="showForm" />
+        </div>
+        <div class="mb-40">
+            <DataTable v-if="!showForm" />
+            <AddPokemon v-if="showForm" />
+        </div>
     </div>
 </template>
 
-<script>
-import DataTable from './components/DataTable.vue'
-import Button from './components/Button.vue'
+<script setup>
+import { ref } from 'vue';
+import Button from './components/Button.vue';
+import DataTable from './components/DataTable.vue';
+import AddPokemon from './components/AddPokemon.vue';
 
-export default {
-    name: 'App',
-    components: {
-        DataTable,
-        Button,
-    }
+const showForm = ref(false);
+
+const toggleForm = () => {
+    showForm.value = !showForm.value;
 }
 </script>
 
