@@ -32,14 +32,15 @@
     <!-- Set -->
     <label for="set">Set:</label><br />
     <select v-model="formData.pokemonSet" class="add-pokemon-input" name="set" id="set">
-      <option value="temporal-forces">Temporal Forces</option>
-      <option value="paldea-evolved">Paldea Evolved</option></select
-    ><br />
+        <option v-for="set in sets" :key="set" :value="set">
+            {{ set }}
+        </option>
+    </select><br />
 
     <!-- Flavor Text -->
     <p><label for="flavor-text">Flavor Text:</label><br /></p>
     <textarea
-      v-model="formData.flavorText"
+      v-model="formData.pokemonFlavorText"
       class="add-pokemon-input"
       id="flavor-text"
       name="flavor-text"
@@ -59,20 +60,16 @@ import { ref, onMounted } from 'vue';
 import Button from "./Button.vue";
 import axios from 'axios';
 
-const formData = ref({
-  pokemonName: "",
-  pokemonHP: "",
-  pokemonType: "",
-  pokemonSet: "",
-  pokemonFlavorText: "",
-});
+const formData = ref({});
 
 const types = ref([]);
+const sets = ref([]);
+
+const emit = defineEmits(['pokemon-added']);
 
 const submitPokemon = async() => {
     try {
         const dataToSend = { ...formData.value };
-        console.log(dataToSend);
         const response = await axios.post(
             `${process.env.VUE_APP_API_URL}/add-pokemon`, 
             dataToSend,
@@ -82,14 +79,14 @@ const submitPokemon = async() => {
                 }
             }
         );
-        console.log('Response:', response.data);
+        // Emit event after successful POST request to add a new pokemon
+        emit('pokemon-added');
     } catch (error) {
         console.error('Error posting data:', error);
     }
 };
 
 const getTypeOptions = async() => {
-    console.log("In here!");
     try {
         const response = await axios.get(process.env.VUE_APP_API_URL + '/get-type-options');
         types.value = Object.values(response.data);
@@ -98,9 +95,19 @@ const getTypeOptions = async() => {
     }
 }
 
+const getSetOptions = async() => {
+    try {
+        const response = await axios.get(process.env.VUE_APP_API_URL + '/get-set-options');
+        sets.value = Object.values(response.data);
+    } catch (error) {
+        console.error('Error fetching set options for "Add Pokemon" form:', error)
+    }
+}
+
 // Lifecycle Hooks
 onMounted(() => {
     getTypeOptions();
+    getSetOptions();
 })
 
 </script>

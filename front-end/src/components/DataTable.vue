@@ -16,54 +16,38 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 import TableHeader from './TableHeader.vue';
 import TableRow from './TableRow.vue';
 
-export default defineComponent({
-    components: {
-        TableHeader,
-        TableRow,
-    },
-    setup() {
-        const columns = ref([]);
-        const data = ref([]);
+const columns = ref([]);
+const data = ref([]);
 
-        const fetchData = async() => {
-            try {
-                const response = await axios.get(process.env.VUE_APP_API_URL);
-                data.value = response.data;
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-            }
-        };
-
-        const fetchColumnHeaders = async() => {
-            try {
-                const response = await axios.get(process.env.VUE_APP_API_URL + '/column-headers');
-                columns.value = response.data;
-            } catch (error) {
-                console.error('Error fetching column headers for data: ', error);
-            }
-        }
-
-        onMounted(() => {
-            fetchData();
-            fetchColumnHeaders();
-        })
-
-        return {
-            columns,
-            data,
-            fetchColumnHeaders,
-            fetchData,
-        }
+const fetchData = async() => {
+    try {
+        const response = await axios.get(process.env.VUE_APP_API_URL);
+        data.value = response.data;
+    } catch (error) {
+        console.error('Error fetching data: ', error);
     }
-})
+};
+
+const fetchColumnHeaders = async() => {
+    try {
+        const response = await axios.get(process.env.VUE_APP_API_URL + '/column-headers');
+        columns.value = response.data;
+    } catch (error) {
+        console.error('Error fetching column headers for data: ', error);
+    }
+};
+
+onMounted(() => {
+    fetchData();
+    fetchColumnHeaders();
+});
 </script>
 
 <style scoped>

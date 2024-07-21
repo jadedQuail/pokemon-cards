@@ -2,12 +2,12 @@
     <td class="border border-black px-4 py-3">{{ value }}</td>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
 
-export default defineComponent({
-  props: {
-    value: [String, Number, Boolean]
-  }
+const props = defineProps({
+    value: {
+        type: [String, Number, Boolean],
+        required: true
+    }
 });
 </script>

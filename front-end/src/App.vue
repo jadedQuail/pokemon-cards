@@ -10,7 +10,7 @@
         </div>
         <div class="mb-40">
             <DataTable v-if="!showForm" />
-            <AddPokemon v-if="showForm" />
+            <AddPokemon v-if="showForm" @pokemon-added="toggleForm" />
         </div>
     </div>
 </template>
@@ -24,6 +24,7 @@ import AddPokemon from './components/AddPokemon.vue';
 const showForm = ref(false);
 
 const toggleForm = () => {
+    console.log("Called!");
     showForm.value = !showForm.value;
 }
 </script>

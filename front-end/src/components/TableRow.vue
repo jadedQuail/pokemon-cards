@@ -8,18 +8,11 @@
     </tr>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-
+<script setup>
 import TableCell from './TableCell.vue';
 
-export default defineComponent({
-    components: {
-        TableCell,
-    },
-    props: {
-        row: Object,       //{ PokemonId: '1', PokemonName: 'Bulbasaur'}
-        columns: Array,    //['PokemonID', 'PokemonName']
-    }
-})
+const props = defineProps({
+    row: Object,
+    columns: Array, 
+});
 </script>
