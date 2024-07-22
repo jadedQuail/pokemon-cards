@@ -1,57 +1,59 @@
 <template>
-  <form>
-    <!-- Pokemon Name -->
-    <label for="name">Name:</label><br />
-    <input
-      v-model="formData.pokemonName"
-      class="add-pokemon-input"
-      type="text"
-      id="name"
-      name="name"
-    /><br />
+    <div class="flex items-center justify-center">
+    <form class="border border-black rounded shadow-lg p-10">
+        <!-- Pokemon Name -->
+        <label class="add-pokemon-label" for="name">Name:</label><br />
+        <input
+        v-model="formData.pokemonName"
+        class="add-pokemon-input"
+        type="text"
+        id="name"
+        name="name"
+        /><br />
 
-    <!-- HP -->
-    <label for="hp">HP:</label><br />
-    <input
-      v-model="formData.pokemonHP"
-      class="add-pokemon-input"
-      type="number"
-      id="hp"
-      name="hp"
-      value="0"
-    /><br />
+        <!-- HP -->
+        <label class="add-pokemon-label" for="hp">HP:</label><br />
+        <input
+        v-model="formData.pokemonHP"
+        class="add-pokemon-input"
+        type="number"
+        id="hp"
+        name="hp"
+        value="0"
+        /><br />
 
-    <!-- Type -->
-    <label for="type">Type:</label><br />
-    <select v-model="formData.pokemonType" class="add-pokemon-input" name="type" id="type">
-        <option v-for="type in types" :key="type" :value="type">
-            {{ type }}
-        </option>
-    </select><br />
+        <!-- Type -->
+        <label class="add-pokemon-label" for="type">Type:</label><br />
+        <select v-model="formData.pokemonType" class="add-pokemon-input" name="type" id="type">
+            <option v-for="type in types" :key="type" :value="type">
+                {{ type }}
+            </option>
+        </select><br />
 
-    <!-- Set -->
-    <label for="set">Set:</label><br />
-    <select v-model="formData.pokemonSet" class="add-pokemon-input" name="set" id="set">
-        <option v-for="set in sets" :key="set" :value="set">
-            {{ set }}
-        </option>
-    </select><br />
+        <!-- Set -->
+        <label class="add-pokemon-label" for="set">Set:</label><br />
+        <select v-model="formData.pokemonSet" class="add-pokemon-input" name="set" id="set">
+            <option v-for="set in sets" :key="set" :value="set">
+                {{ set }}
+            </option>
+        </select><br />
 
-    <!-- Flavor Text -->
-    <p><label for="flavor-text">Flavor Text:</label><br /></p>
-    <textarea
-      v-model="formData.pokemonFlavorText"
-      class="add-pokemon-input"
-      id="flavor-text"
-      name="flavor-text"
-      rows="3"
-      cols="50"
-    ></textarea
-    ><br />
+        <!-- Flavor Text -->
+        <p><label class="add-pokemon-label" for="flavor-text">Flavor Text:</label><br /></p>
+        <textarea
+        v-model="formData.pokemonFlavorText"
+        class="add-pokemon-input"
+        id="flavor-text"
+        name="flavor-text"
+        rows="4"
+        cols="50"
+        ></textarea
+        ><br />
 
-    <!-- Submit Button -->
-    <Button text="Submit" @click="submitPokemon" color="green" />
-  </form>
+        <!-- Submit Button -->
+        <Button text="Submit" @click="submitPokemon" color="green" />
+    </form>
+    </div>
 </template>
 
 <script setup>
@@ -114,6 +116,11 @@ onMounted(() => {
 
 <style scoped>
 .add-pokemon-input {
-  @apply border border-black rounded-sm px-2 py-1;
+    @apply border border-black 
+    rounded-sm px-2 py-1 mb-3 w-full text-2xl;
+}
+
+.add-pokemon-label {
+    @apply text-2xl;
 }
 </style>
