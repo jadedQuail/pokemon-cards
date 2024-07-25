@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+let axios;
 
 import TableHeader from './TableHeader.vue';
 import TableRow from './TableRow.vue';
@@ -28,7 +28,8 @@ const data = ref([]);
 
 const fetchData = async() => {
     try {
-        const response = await axios.get(process.env.VUE_APP_API_URL);
+        axios = (await import('axios')).default;
+        const response = await axios.get(process.env.API_URL);
         data.value = response.data;
     } catch (error) {
         console.error('Error fetching data: ', error);
@@ -37,14 +38,15 @@ const fetchData = async() => {
 
 const fetchColumnHeaders = async() => {
     try {
-        const response = await axios.get(process.env.VUE_APP_API_URL + '/column-headers');
+        axios = (await import('axios')).default;
+        const response = await axios.get(process.env.API_URL + '/column-headers');
         columns.value = response.data;
     } catch (error) {
         console.error('Error fetching column headers for data: ', error);
     }
 };
 
-onMounted(() => {
+onMounted(async () => {
     fetchData();
     fetchColumnHeaders();
 });

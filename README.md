@@ -1,6 +1,6 @@
 # Pokemon Cards Web App
 
-This is a simple project that I created with the intention of learning more about Vue as a front-end framework, and for practicing full-stack development in general. In addition to using [Vue.js](https://vuejs.org/) as the front-end,
+This is a simple project that I created with the intention of learning more about Vue as a front-end framework, and for practicing full-stack development in general. In addition to using [Vue.js](https://vuejs.org/) as the front-end (with [Nuxt.js](https://nuxt.com/)),
 I am using [Express](https://expressjs.com/) as the backend. I am currently using [MySQL](https://www.mysql.com/) as my database management system (running a server locally on my machine), but I plan to host a database somewhere, eventually.
 
 ## Set Up
@@ -23,6 +23,8 @@ To run the back-end:
 To run the front-end:
 
 1. Navigate to the `front-end` folder in a terminal.
-2. Run the following command: `npm run serve`
+2. Run the following command: `npm run dev`
 
-From there, you should be able to access the front-end page - the default URL will be `https:\\localhost:8080`
+From there, you should be able to access the front-end page - the default URL will be `https:\\localhost:3000`
+
+You will need to have a MySQL database to connect to in order for this web application to work. You can create a fresh database in MySQL somewhere (whether that be your local machine or in some cloud space), and then you can use the table definitions and test values in the file `DDL.sql` to get your database up and running such that it is compatible with this application.
