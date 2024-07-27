@@ -2,6 +2,7 @@
     <div class="flex justify-center">
         <div class="w-full lg:w-3/4">
             <table class="min-w-full border border-black">
+                
                 <TableHeader :columns="columns"/>
                 <tbody>
                     <TableRow
@@ -19,6 +20,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 let axios;
+const config = useRuntimeConfig();
 
 import TableHeader from './TableHeader.vue';
 import TableRow from './TableRow.vue';
@@ -29,7 +31,7 @@ const data = ref([]);
 const fetchData = async() => {
     try {
         axios = (await import('axios')).default;
-        const response = await axios.get(process.env.API_URL);
+        const response = await axios.get(config.public.API_URL);
         data.value = response.data;
     } catch (error) {
         console.error('Error fetching data: ', error);
@@ -39,7 +41,7 @@ const fetchData = async() => {
 const fetchColumnHeaders = async() => {
     try {
         axios = (await import('axios')).default;
-        const response = await axios.get(process.env.API_URL + '/column-headers');
+        const response = await axios.get(config.public.API_URL + '/column-headers');
         columns.value = response.data;
     } catch (error) {
         console.error('Error fetching column headers for data: ', error);
@@ -51,7 +53,3 @@ onMounted(async () => {
     fetchColumnHeaders();
 });
 </script>
-
-<style scoped>
-
-</style>

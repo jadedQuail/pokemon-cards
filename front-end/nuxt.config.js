@@ -1,44 +1,65 @@
-export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'pokemon-cards',
-    htmlAttrs: {
-      lang: 'en'
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+import { defineNuxtConfig } from 'nuxt/config'
+import dotenv from 'dotenv'
+
+dotenv.config();
+
+export default defineNuxtConfig({
+  // Global page headers
+  app: {
+    head: {
+      title: 'pokemon-cards',
+      htmlAttrs: {
+        lang: 'en'
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+        { name: 'format-detection', content: 'telephone=no' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  devtools: { enabled: true },
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  runtimeConfig: {
+    public: {
+      API_URL: process.env.API_URL
+    }
+  },
+
+  // Plugins
   plugins: [
+    // Add plugins here
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
+  // Auto import components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  // Modules for dev and build (recommended)
   buildModules: [
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
+  // Modules
   modules: [
-    '@nuxtjs/dotenv',
+
   ],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  // Build Configuration
   build: {
-  }
-}
+    // Add build configuration here
+  },
+
+  compatibilityDate: '2024-07-27'
+})

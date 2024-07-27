@@ -19,7 +19,6 @@
         type="number"
         id="hp"
         name="hp"
-        value="0"
         /><br />
 
         <!-- Type -->
@@ -58,9 +57,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+let axios;
+const config = useRuntimeConfig();
 
 import Button from "./Button.vue";
-let axios;
 
 const formData = ref({});
 
@@ -73,7 +73,7 @@ const submitPokemon = async() => {
     try {
         const dataToSend = { ...formData.value };
         const response = await axios.post(
-            `${process.env.API_URL}/add-pokemon`, 
+            `${config.public.API_URL}/add-pokemon`, 
             dataToSend,
             {
                 headers: {
@@ -91,7 +91,7 @@ const submitPokemon = async() => {
 const getTypeOptions = async() => {
     try {
         axios = (await import('axios')).default;
-        const response = await axios.get(process.env.API_URL + '/get-type-options');
+        const response = await axios.get(config.public.API_URL + '/get-type-options');
         types.value = Object.values(response.data);
     } catch (error) {
         console.error('Error fetching type options for "Add Pokemon" form:', error)
@@ -101,7 +101,7 @@ const getTypeOptions = async() => {
 const getSetOptions = async() => {
     try {
         axios = (await import('axios')).default;
-        const response = await axios.get(process.env.API_URL + '/get-set-options');
+        const response = await axios.get(config.public.API_URL + '/get-set-options');
         sets.value = Object.values(response.data);
     } catch (error) {
         console.error('Error fetching set options for "Add Pokemon" form:', error)
