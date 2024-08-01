@@ -1,5 +1,6 @@
-import { defineNuxtConfig } from 'nuxt/config'
-import dotenv from 'dotenv'
+import { defineNuxtConfig } from 'nuxt/config';
+import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/global.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -53,8 +54,15 @@ export default defineNuxtConfig({
 
   // Modules
   modules: [
-
+    '@primevue/nuxt-module'
   ],
+  
+  primevue: {
+    options: {
+     unstyled: true
+    },
+    importPT: { from: path.resolve(__dirname, './presets/aura/') }
+  },
 
   // Build Configuration
   build: {
