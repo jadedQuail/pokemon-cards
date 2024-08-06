@@ -61,7 +61,7 @@ export default defineNuxtConfig({
     options: {
      unstyled: true
     },
-    importPT: { from: path.resolve(__dirname, './presets/aura/') }
+    importPT: { as: 'Aura', from: '~/presets/aura' }     //import and apply preset
   },
 
   // Build Configuration
