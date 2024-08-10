@@ -9,13 +9,33 @@
                 <h1 class="pl-3 pb-1 text-white text-3xl font-sans">Pokemon Card Database</h1>
             </div>
             <!-- Right Content -->
-            <div>
-                <Button class="mr-2 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100" size="small" label="Add Pokemon" />
+            <div class="flex items-center">
+                <Button class="mr-2 py-[9.5px] !text-custom-blue-800 bg-white hover:!bg-custom-blue-100" size="small" label="Add Pokemon" />
+                <IconField class="mr-2">
+                    <InputIcon class="pi pi-search" />
+                    <InputText 
+                        v-model="filters['global'].value" 
+                        placeholder="Search"
+                        @update:modelValue='emitSearch(filters)'
+                    />
+                </IconField>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { defineEmits } from 'vue';
 import PokeballIcon from '@/components/PokeballIcon.vue';
+import { FilterMatchMode } from '@primevue/core/api';
+
+const emit = defineEmits(['search-change'])
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const emitSearch = () => {
+    emit('search-change', filters.value);
+};
 </script>

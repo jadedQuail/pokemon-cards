@@ -1,6 +1,8 @@
 <template>
-    <AppTopBar />
-    <AppDataTable />
+    <AppTopBar
+        @search-change="grabFilters"
+    />
+    <AppDataTable :filters="filters" />
 </template>
 
 <script setup>
@@ -13,5 +15,11 @@ const showForm = ref(false);
 
 const toggleForm = () => {
     showForm.value = !showForm.value;
+}
+
+const filters = ref({});
+
+const grabFilters = (inputFilters) => {
+    filters.value = inputFilters;
 }
 </script>
