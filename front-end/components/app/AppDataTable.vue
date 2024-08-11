@@ -1,14 +1,18 @@
 <template>
-    <div class="w-11/12 mx-auto">
+    <div class="px-[2%] mx-auto">
         <DataTable
-            v-model:filters="filters" 
-            :value="pokemonData" 
+            :filters="filters"
+            @update:filters="updateFilters"
+            :value="pokemonData"
+            scrollable
+            :scrollHeight="scrollHeight" 
             stripedRows
             paginator
-            paginatorPosition="both"
+            paginatorPosition="top"
             :rows="20"
             :rowsPerPageOptions="[20, 50, 100]" 
             tableStyle="min-width: 50rem"
+            class="fixed-header"
         >
             <Column field="ID" header="ID" sortable></Column>
             <Column field="Name" header="Name" sortable></Column>
@@ -21,16 +25,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue';
+import { ref, onMounted, defineProps, defineEmits } from 'vue';
 import 'primeicons/primeicons.css';
 
 let axios;
 
 const config = useRuntimeConfig();
 
-const props = defineProps(['filters']);
-const filters = ref({});
-filters.value = props.filters;
+const props = defineProps({
+    filters: {
+        type: Object,
+        default: () => ({})
+    }
+});
 
 const pokemonData = ref([]);
 
@@ -44,7 +51,33 @@ const fetchData = async() => {
     }
 };
 
+const calculateScrollHeight = () => {
+    if (typeof window !== 'undefined') {
+        return `${(window.innerHeight - 50) * 0.83}px`;
+    }
+    return '600px';
+}
+
+const scrollHeight = ref('600px');
+
+const updateScrollHeight = () => {
+    scrollHeight.value = calculateScrollHeight();
+}
+
 onMounted(async () => {
     fetchData();
+    updateScrollHeight();
+    window.addEventListener('resize', updateScrollHeight);
 });
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateScrollHeight);
+})
+
+const emit = defineEmits(['update:filters']);
+
+const updateFilters = (newFilters) => {
+    console.log("Hello!");
+    emit('update:filters', newFilters);
+}
 </script>
