@@ -1,7 +1,12 @@
 <template>
     <div>
+        <AppAddPokemonDialog
+            :visible="showAddPokemonDialog"
+            @closing-dialog="closeAddPokemonForm"
+        />
         <AppTopBar
             @search-change="updateFilters"
+            @add-pokemon="openAddPokemonForm"
             class="fixed top-0 left-0 w-full z-[9999]"
         />
         <AppDataTable
@@ -17,10 +22,21 @@ import { ref } from 'vue';
 
 import AppDataTableVue from '../components/app/AppDataTable.vue';
 import AppTopBar from '../components/app/AppTopBar.vue';
+import AppAddPokemonDialog from '../components/app/AppAddPokemonDialog.vue';
 
 const filters = ref({});
 
+const showAddPokemonDialog = ref(false);
+
 const updateFilters = (inputFilters) => {
     filters.value = inputFilters;
+}
+
+const openAddPokemonForm = () => {
+    showAddPokemonDialog.value = true;
+}
+
+const closeAddPokemonForm = () => {
+    showAddPokemonDialog.value = false;
 }
 </script>

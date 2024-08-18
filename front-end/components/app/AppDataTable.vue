@@ -3,8 +3,10 @@
         <DataTable
             :filters="filters"
             @update:filters="updateFilters"
+            @sort="viewSortOrder"
             :value="pokemonData"
             scrollable
+            removableSort
             :scrollHeight="scrollHeight" 
             stripedRows
             paginator
@@ -20,6 +22,14 @@
             <Column field="Type" header="Type" sortable></Column>
             <Column field="Set" header="Set" sortable></Column>
             <Column field="Flavor Text" header="Flavor Text" sortable></Column>
+            <Column header="Options" bodyClass="!pl-3">
+                <template #body>
+                    <div class="flex justify-center space-x-5">
+                        <InputIcon class="pi pi-pencil" />
+                        <InputIcon class="pi pi-trash" />
+                    </div>
+                </template>
+            </Column>
         </DataTable>
     </div>
 </template>
@@ -29,6 +39,9 @@ import { ref, onMounted, defineProps, defineEmits } from 'vue';
 import 'primeicons/primeicons.css';
 
 let axios;
+
+// Cannot believe I have to do this because PrimeVue can't get its presets right
+const idSortOrder = ref(0);
 
 const config = useRuntimeConfig();
 
@@ -79,5 +92,9 @@ const emit = defineEmits(['update:filters']);
 const updateFilters = (newFilters) => {
     console.log("Hello!");
     emit('update:filters', newFilters);
+}
+
+const viewSortOrder = (event) => {
+    console.log(event);
 }
 </script>
