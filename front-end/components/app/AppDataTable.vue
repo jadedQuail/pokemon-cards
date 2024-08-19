@@ -25,8 +25,8 @@
             <Column header="Options" bodyClass="!pl-3">
                 <template #body>
                     <div class="flex justify-center space-x-5">
-                        <InputIcon class="pi pi-pencil" />
-                        <InputIcon class="pi pi-trash" />
+                        <InputIcon class="pi pi-pencil text-green-600 cursor-pointer" />
+                        <InputIcon class="pi pi-trash text-red-600 cursor-pointer" />
                     </div>
                 </template>
             </Column>
