@@ -11,29 +11,79 @@
             class="min-w-[500px] !w-[30vw]"
         >
             <!-- Name -->
-            <div class="flex items-center gap-4 mb-4 mt-1">
+            <div class="flex items-start gap-4 mb-4 mt-1">
                 <label for="name" class="font-semibold w-24">Name</label>
-                <InputText v-model="formData.pokemonName" id="name" class="flex-auto" autocomplete="off" />
+                <div class="flex flex-col flex-auto">
+                    <InputText
+                        v-model="formData.pokemonName"
+                        id="name"
+                        class="w-full"
+                        autocomplete="off" 
+                        aria-describedby="name-error"
+                        :invalid="!nameValid"
+                    />
+                    <small v-if="!nameValid" id="name-error" class="text-red-500">You must provide a name for this Pokemon card.</small>
+                </div>
             </div>
             <!-- HP -->
-            <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-start gap-4 mb-4 mt-1">
                 <label for="hp" class="font-semibold w-24">HP</label>
-                <InputNumber v-model="formData.pokemonHP" inputId="integeronly" class="flex-auto" autocomplete="off" />
+                <div class="flex flex-col flex-auto">
+                    <InputNumber
+                        v-model="formData.pokemonHP"
+                        inputId="integeronly"
+                        class="flex-auto"
+                        autocomplete="off"
+                        aria-describedby="hp-error"
+                        invalid
+                    />
+                    <small id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
+                </div>
             </div>
             <!-- Type -->
-            <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-start gap-4 mb-4 mt-1">
                 <label for="type" class="font-semibold w-24">Type</label>
-                <Select v-model="formData.pokemonType" :options="types" placeholder="" class="flex-auto" />
+                <div class="flex flex-col flex-auto">
+                    <Select
+                        v-model="formData.pokemonType"
+                        :options="types"
+                        placeholder=""
+                        class="flex-auto"
+                        aria-describedby="type-error"
+                        invalid
+                    />
+                    <small id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
+                </div>
             </div>
             <!-- Set -->
-            <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-start gap-4 mb-4 mt-1">
                 <label for="set" class="font-semibold w-24">Set</label>
-                <Select v-model="formData.pokemonSet" :options="sets" placeholder="" class="flex-auto" />
+                <div class="flex flex-col flex-auto">
+                    <Select
+                        v-model="formData.pokemonSet"
+                        :options="sets"
+                        placeholder=""
+                        class="flex-auto"
+                        aria-describedby="set-error"
+                        invalid
+                    />
+                    <small id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
+                </div>
             </div>
             <!-- Flavor Text -->
-            <div class="flex gap-4 mb-4">
-                <label for="flavortext" class="font-semibold w-24 mt-1">Flavor Text</label>
-                <Textarea v-model="formData.pokemonFlavorText" rows="5" cols="5" class="flex-auto resize-none leading-snug" />
+            <div class="flex items-start gap-4 mb-4 mt-1">
+                <label for="flavortext" class="font-semibold w-24">Flavor Text</label>
+                <div class="flex flex-col flex-auto">
+                    <Textarea
+                        v-model="formData.pokemonFlavorText"
+                        rows="5"
+                        cols="5"
+                        class="flex-auto resize-none leading-snug"
+                        aria-describedby="flavortext-error"
+                        invalid
+                    />
+                    <small id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
+                </div>
             </div>
             <!-- Buttons -->
             <div class="flex justify-end gap-2">
@@ -63,6 +113,9 @@ const formData = ref({});
 const types = ref([]);
 const sets = ref([]);
 
+// Form validation flags
+const nameValid = ref(true);
+
 // The visibility prop determines whether the dialog is active or not, visibilityController puts it in effect
 const visibilityController = computed({
     get() {
@@ -74,8 +127,26 @@ const visibilityController = computed({
 });
 
 const handleSubmit = async () => {
-    await submitPokemon();
-    closeDialog();
+    const formReady = validateForm();
+
+    if (formReady) {
+        await submitPokemon();
+        closeDialog();
+    }
+}
+
+const validateForm = () => {
+
+    if (!('pokemonName' in formData.value)) {
+        console.log(formData.value);
+        nameValid.value = false;
+    }
+
+    if (!nameValid.value) {
+        return false;
+    }
+
+    return true;
 }
 
 // API Calls
