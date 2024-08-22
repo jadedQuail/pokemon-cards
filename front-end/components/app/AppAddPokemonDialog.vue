@@ -6,7 +6,6 @@
         <Dialog
             v-model:visible="visibilityController"
             :draggable="false"
-            :dismissableMask="true"
             modal header="Add New Pokemon Card"
             class="min-w-[500px] !w-[30vw]"
         >
@@ -21,6 +20,7 @@
                         autocomplete="off" 
                         aria-describedby="name-error"
                         :invalid="!nameValid"
+                        @update:modelValue="resetValidityFlag(ValidityFlag.Name)"
                     />
                     <small v-if="!nameValid" id="name-error" class="text-red-500">You must provide a name for this Pokemon card.</small>
                 </div>
@@ -35,9 +35,9 @@
                         class="flex-auto"
                         autocomplete="off"
                         aria-describedby="hp-error"
-                        invalid
+                        :invalid="!hpValid"
                     />
-                    <small id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
+                    <small v-if="!hpValid" id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Type -->
@@ -50,9 +50,9 @@
                         placeholder=""
                         class="flex-auto"
                         aria-describedby="type-error"
-                        invalid
+                        :invalid="!typeValid"
                     />
-                    <small id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
+                    <small v-if="!typeValid" id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Set -->
@@ -65,9 +65,9 @@
                         placeholder=""
                         class="flex-auto"
                         aria-describedby="set-error"
-                        invalid
+                        :invalid="!setValid"
                     />
-                    <small id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
+                    <small v-if="!setValid" id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Flavor Text -->
@@ -80,9 +80,9 @@
                         cols="5"
                         class="flex-auto resize-none leading-snug"
                         aria-describedby="flavortext-error"
-                        invalid
+                        :invalid="!flavorTextValid"
                     />
-                    <small id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
+                    <small v-if="!flavorTextValid" id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Buttons -->
@@ -113,15 +113,13 @@ const formData = ref({});
 const types = ref([]);
 const sets = ref([]);
 
-// Form validation flags
-const nameValid = ref(true);
-
 // The visibility prop determines whether the dialog is active or not, visibilityController puts it in effect
 const visibilityController = computed({
     get() {
         return props.visible;
     },
     set(value) {
+        resetValidityFlags();
         emit('closing-dialog', value);
     }
 });
@@ -135,14 +133,38 @@ const handleSubmit = async () => {
     }
 }
 
+// Form validation flags
+const nameValid = ref(true);
+const hpValid = ref(true);
+const typeValid = ref(true);
+const setValid = ref(true);
+const flavorTextValid = ref(true);
+
 const validateForm = () => {
 
-    if (!('pokemonName' in formData.value)) {
-        console.log(formData.value);
+    if (!('pokemonName' in formData.value) || !formData.value.pokemonName) {
         nameValid.value = false;
+    } 
+    if (!('pokemonHP' in formData.value) || !formData.value.pokemonHP) {
+        hpValid.value = false;
+    }
+    if (!('pokemonType' in formData.value) || formData.value.pokemonType === '') {
+        typeValid.value = false;
+    }
+    if (!('pokemonSet' in formData.value) || formData.value.pokemonSet === '') {
+        setValid.value = false;
+    }
+    if (!('pokemonFlavorText' in formData.value) || formData.value.pokemonFlavorText === '') {
+        flavorTextValid.value = false;
     }
 
-    if (!nameValid.value) {
+    if (
+        !nameValid.value || 
+        !hpValid.value ||
+        !typeValid.value ||
+        !setValid.value ||
+        !flavorTextValid.value
+    ) {
         return false;
     }
 
@@ -189,6 +211,28 @@ const submitPokemon = async() => {
 
 const closeDialog = () => {
     visibilityController.value = false;
+}
+
+const ValidityFlag = {
+    Name: 'name',
+    HP: 'hp',
+    Type: 'type',
+    Set: 'set',
+    FlavorText: 'flavorText',
+}
+
+const resetValidityFlags = () => {
+    nameValid.value = hpValid.value = typeValid.value = setValid.value = flavorTextValid.value = true;
+}
+
+const resetValidityFlag = (flag) => {
+    if (flag === ValidityFlag.Name) {
+        if (formData.value.pokemonName) {
+            nameValid.value = true;
+        } else {
+            nameValid.value = false;
+        }
+    }
 }
 
 onMounted(async () => {
