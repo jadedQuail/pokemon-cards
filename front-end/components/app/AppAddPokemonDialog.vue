@@ -14,30 +14,31 @@
                 <label for="name" class="font-semibold w-24">Name</label>
                 <div class="flex flex-col flex-auto">
                     <InputText
-                        v-model="formData.pokemonName"
+                        v-model="fields.name.content"
                         id="name"
                         class="w-full"
                         autocomplete="off" 
                         aria-describedby="name-error"
-                        :invalid="!nameValid"
-                        @update:modelValue="resetValidityFlag(ValidityFlag.Name)"
+                        :invalid="!fields.name.valid"
+                        @update:model-value="(value) => revalidate(value, fields.name)"
                     />
-                    <small v-if="!nameValid" id="name-error" class="text-red-500">You must provide a name for this Pokemon card.</small>
+                    <small v-if="!fields.name.valid" id="name-error" class="text-red-500">You must provide a name for this Pokemon card.</small>
                 </div>
             </div>
             <!-- HP -->
             <div class="flex items-start gap-4 mb-4 mt-1">
                 <label for="hp" class="font-semibold w-24">HP</label>
                 <div class="flex flex-col flex-auto">
-                    <InputNumber
-                        v-model="formData.pokemonHP"
-                        inputId="integeronly"
-                        class="flex-auto"
+                    <InputText
+                        v-model="fields.hp.content"
+                        id="hp"
+                        class="w-full"
                         autocomplete="off"
                         aria-describedby="hp-error"
-                        :invalid="!hpValid"
+                        :invalid="!fields.hp.valid"
+                        @update:model-value="(value) => revalidate(value, fields.hp)"
                     />
-                    <small v-if="!hpValid" id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
+                    <small v-if="!fields.hp.valid" id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Type -->
@@ -45,14 +46,15 @@
                 <label for="type" class="font-semibold w-24">Type</label>
                 <div class="flex flex-col flex-auto">
                     <Select
-                        v-model="formData.pokemonType"
+                        v-model="fields.type.content"
                         :options="types"
                         placeholder=""
                         class="flex-auto"
                         aria-describedby="type-error"
-                        :invalid="!typeValid"
+                        :invalid="!fields.type.valid"
+                        @update:model-value="(value) => revalidate(value, fields.type)"
                     />
-                    <small v-if="!typeValid" id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
+                    <small v-if="!fields.type.valid" id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Set -->
@@ -60,14 +62,14 @@
                 <label for="set" class="font-semibold w-24">Set</label>
                 <div class="flex flex-col flex-auto">
                     <Select
-                        v-model="formData.pokemonSet"
+                        v-model="fields.set.content"
                         :options="sets"
                         placeholder=""
                         class="flex-auto"
                         aria-describedby="set-error"
-                        :invalid="!setValid"
+                        :invalid="!fields.set.valid"
                     />
-                    <small v-if="!setValid" id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
+                    <small v-if="!fields.set.valid" id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Flavor Text -->
@@ -75,14 +77,14 @@
                 <label for="flavortext" class="font-semibold w-24">Flavor Text</label>
                 <div class="flex flex-col flex-auto">
                     <Textarea
-                        v-model="formData.pokemonFlavorText"
+                        v-model="fields.flavorText.content"
                         rows="5"
                         cols="5"
                         class="flex-auto resize-none leading-snug"
                         aria-describedby="flavortext-error"
-                        :invalid="!flavorTextValid"
+                        :invalid="!fields.flavorText.valid"
                     />
-                    <small v-if="!flavorTextValid" id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
+                    <small v-if="!fields.flavorText.valid" id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
                 </div>
             </div>
             <!-- Buttons -->
@@ -119,7 +121,6 @@ const visibilityController = computed({
         return props.visible;
     },
     set(value) {
-        resetValidityFlags();
         emit('closing-dialog', value);
     }
 });
@@ -133,42 +134,64 @@ const handleSubmit = async () => {
     }
 }
 
-// Form validation flags
-const nameValid = ref(true);
-const hpValid = ref(true);
-const typeValid = ref(true);
-const setValid = ref(true);
-const flavorTextValid = ref(true);
+const fields = ref({
+    name: {
+        id: "name",
+        content: "",
+        valid: true,
+    },
+    hp: {
+        id: "hp",
+        content: "",
+        valid: true,
+    },
+    type: {
+        id: "type",
+        content: "",
+        valid: true,
+    },
+    set: {
+        id: "set",
+        content: "",
+        valid: true,
+    },
+    flavorText: {
+        id: "flavorText",
+        content: "",
+        valid: true,
+    }
+});
+
+const revalidate = (value, field) => {
+
+    console.log(value);
+
+    if (field.id === "hp") {
+        if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
+            field.valid = false;
+        } else {
+            field.valid = true;
+        }
+    } else {
+        if (value.length < 1) {
+            field.valid = false;
+        } else {
+            field.valid = true;
+        }
+    }
+}
 
 const validateForm = () => {
+    let allValid = true;
 
-    if (!('pokemonName' in formData.value) || !formData.value.pokemonName) {
-        nameValid.value = false;
-    } 
-    if (!('pokemonHP' in formData.value) || !formData.value.pokemonHP) {
-        hpValid.value = false;
-    }
-    if (!('pokemonType' in formData.value) || formData.value.pokemonType === '') {
-        typeValid.value = false;
-    }
-    if (!('pokemonSet' in formData.value) || formData.value.pokemonSet === '') {
-        setValid.value = false;
-    }
-    if (!('pokemonFlavorText' in formData.value) || formData.value.pokemonFlavorText === '') {
-        flavorTextValid.value = false;
+    for (const key in fields.value) {
+        if (fields.value[key].content === "") {
+            fields.value[key].valid = false;
+            allValid = false;
+        }
     }
 
-    if (
-        !nameValid.value || 
-        !hpValid.value ||
-        !typeValid.value ||
-        !setValid.value ||
-        !flavorTextValid.value
-    ) {
-        return false;
-    }
-
-    return true;
+    return allValid;
 }
 
 // API Calls
@@ -213,26 +236,21 @@ const closeDialog = () => {
     visibilityController.value = false;
 }
 
-const ValidityFlag = {
-    Name: 'name',
-    HP: 'hp',
-    Type: 'type',
-    Set: 'set',
-    FlavorText: 'flavorText',
-}
+function canBeConvertedToPositiveInt(str) {
+    // Trim any leading or trailing whitespace
+    const trimmedStr = str.trim();
+    
+    // Use a regular expression to check if the string is a valid integer
+    const isInteger = /^-?\d+$/.test(trimmedStr);
 
-const resetValidityFlags = () => {
-    nameValid.value = hpValid.value = typeValid.value = setValid.value = flavorTextValid.value = true;
-}
+    // Check if the string has leading zeros
+    const hasLeadingZeros = /^0+/.test(trimmedStr) && trimmedStr !== '0';
 
-const resetValidityFlag = (flag) => {
-    if (flag === ValidityFlag.Name) {
-        if (formData.value.pokemonName) {
-            nameValid.value = true;
-        } else {
-            nameValid.value = false;
-        }
-    }
+    // Parse the integer and check if it is greater than 0
+    const parsedInt = parseInt(trimmedStr, 10);
+
+    // Return true if the string is a valid integer, does not have leading zeros, and the parsed value is greater than 0
+    return isInteger && !isNaN(parsedInt) && parsedInt > 0 && !hasLeadingZeros;
 }
 
 onMounted(async () => {
