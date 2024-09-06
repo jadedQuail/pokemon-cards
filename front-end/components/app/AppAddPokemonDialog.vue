@@ -163,9 +163,6 @@ const fields = ref({
 });
 
 const revalidate = (value, field) => {
-
-    console.log(value);
-
     if (field.id === "hp") {
         if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
             field.valid = false;
@@ -217,7 +214,13 @@ const getSetOptions = async() => {
 
 const submitPokemon = async() => {
     try {
-        const dataToSend = { ...formData.value };
+        const dataToSend = {
+            pokemonName: fields.value.name.content,
+            pokemonHP: fields.value.hp.content,
+            pokemonFlavorText: fields.value.flavorText.content,
+            pokemonType: fields.value.type.content,
+            pokemonSet: fields.value.set.content,
+        };
         const response = await axios.post(
             `${config.public.API_URL}/add-pokemon`, 
             dataToSend,
