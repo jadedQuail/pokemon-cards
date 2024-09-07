@@ -11,21 +11,20 @@ const PORT = process.env.PORT || 3000;
 const db = require('./database/db-connector')
 
 // Only allow certain origins to make requests
-// 8080 is my front-end Vue app.
 const allowlist = [process.env.FRONTEND]
 const corsOptions = {
-    // origin: function (origin, callback) {
-    //     if (allowlist.includes(origin)) {
-    //         callback(null, true); // Allow the request
-    //     } else {
-    //         callback(new Error('Not allowed by CORS')); // Block the request
-    //     }
-    // }
-
-    // Testing purposes only - allow any origin
     origin: function (origin, callback) {
-        callback(null, true);
+        if (allowlist.includes(origin)) {
+            callback(null, true); // Allow the request
+        } else {
+            callback(new Error('Not allowed by CORS')); // Block the request
+        }
     }
+
+    // // Testing purposes only - allow any origin
+    // origin: function (origin, callback) {
+    //     callback(null, true);
+    // }
 };
 
 // Middelware

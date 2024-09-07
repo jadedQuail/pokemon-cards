@@ -18,7 +18,7 @@ I am using [Express](https://expressjs.com/) as the backend. I am currently usin
 To run the back-end:
 
 1. Navigate to the `back-end` folder in a terminal.
-2. Run the following command: `node server.js`
+2. Run the following command: `npm run dev`
 
 To run the front-end:
 
