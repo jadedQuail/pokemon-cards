@@ -3,6 +3,7 @@
         <Button label="Test" />
     </div>
     <div class="flex justify-center">
+        <!-- TODO: Figure out why this pcCloseButton pass through doesn't work (I think PrimeVue v4 is broken) -->
         <Dialog
             v-model:visible="visibilityController"
             :draggable="false"
@@ -10,6 +11,11 @@
             header="Add New Pokemon Card"
             class="min-w-[500px] !w-[30vw]"
             @hide="resetValidationFlags"
+            :pt="{
+                pcCloseButton: {
+                    style: 'box-shadow: none;'
+                }
+            }"
         >
             <!-- Name -->
             <div class="flex items-start gap-4 mb-4 mt-1">
