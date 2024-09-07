@@ -6,8 +6,10 @@
         <Dialog
             v-model:visible="visibilityController"
             :draggable="false"
-            modal header="Add New Pokemon Card"
+            modal
+            header="Add New Pokemon Card"
             class="min-w-[500px] !w-[30vw]"
+            @hide="resetValidationFlags"
         >
             <!-- Name -->
             <div class="flex items-start gap-4 mb-4 mt-1">
@@ -68,6 +70,7 @@
                         class="flex-auto"
                         aria-describedby="set-error"
                         :invalid="!fields.set.valid"
+                        @update:model-value="(value) => revalidate(value, fields.set)"
                     />
                     <small v-if="!fields.set.valid" id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
                 </div>
@@ -83,6 +86,7 @@
                         class="flex-auto resize-none leading-snug"
                         aria-describedby="flavortext-error"
                         :invalid="!fields.flavorText.valid"
+                        @update:model-value="(value) => revalidate(value, fields.flavorText)"
                     />
                     <small v-if="!fields.flavorText.valid" id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
                 </div>
@@ -162,7 +166,16 @@ const fields = ref({
     }
 });
 
+const resetValidationFlags = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].valid = true;
+        }
+    }
+}
+
 const revalidate = (value, field) => {
+    // TODO: Get rid of this magic string
     if (field.id === "hp") {
         if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
             field.valid = false;
@@ -191,7 +204,6 @@ const validateForm = () => {
     return allValid;
 }
 
-// API Calls
 const getTypeOptions = async() => {
     try {
         axios = (await import('axios')).default;
@@ -240,19 +252,11 @@ const closeDialog = () => {
 }
 
 function canBeConvertedToPositiveInt(str) {
-    // Trim any leading or trailing whitespace
     const trimmedStr = str.trim();
-    
-    // Use a regular expression to check if the string is a valid integer
     const isInteger = /^-?\d+$/.test(trimmedStr);
-
-    // Check if the string has leading zeros
     const hasLeadingZeros = /^0+/.test(trimmedStr) && trimmedStr !== '0';
-
-    // Parse the integer and check if it is greater than 0
     const parsedInt = parseInt(trimmedStr, 10);
-
-    // Return true if the string is a valid integer, does not have leading zeros, and the parsed value is greater than 0
+    
     return isInteger && !isNaN(parsedInt) && parsedInt > 0 && !hasLeadingZeros;
 }
 
@@ -260,4 +264,6 @@ onMounted(async () => {
     getTypeOptions();
     getSetOptions();
 });
+
+// TODO: Best way to register a new set or type?
 </script>
