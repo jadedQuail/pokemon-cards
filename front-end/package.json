@@ -9,11 +9,13 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.4",
     "@primevue/themes": "^4.0.3",
     "axios": "^1.7.2",
     "core-js": "^3.25.3",
     "dotenv": "^16.4.5",
     "nuxt": "^3.12.4",
+    "pinia": "^2.2.2",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.3",
     "tailwindcss-primeui": "^0.3.4",

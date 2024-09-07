@@ -4,7 +4,7 @@
             :filters="filters"
             @update:filters="updateFilters"
             @sort="viewSortOrder"
-            :value="pokemonData"
+            :value="store.pokemonData"
             scrollable
             removableSort
             :scrollHeight="scrollHeight" 
@@ -36,12 +36,13 @@
 
 <script setup>
 import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import { useStore } from '~/store/store'
 import 'primeicons/primeicons.css';
 
-let axios;
+const store = useStore();
 
 // Cannot believe I have to do this because PrimeVue can't get its presets right
-const idSortOrder = ref(0);
+// const idSortOrder = ref(0);
 
 const config = useRuntimeConfig();
 
@@ -52,17 +53,7 @@ const props = defineProps({
     }
 });
 
-const pokemonData = ref([]);
-
-const fetchData = async() => {
-    try {
-        axios = (await import('axios')).default;
-        const response = await axios.get(config.public.API_URL);
-        pokemonData.value = response.data;
-    } catch (error) {
-        console.error('Error fetching data: ', error);
-    }
-};
+const scrollHeight = ref('600px');
 
 const calculateScrollHeight = () => {
     if (typeof window !== 'undefined') {
@@ -71,14 +62,12 @@ const calculateScrollHeight = () => {
     return '600px';
 }
 
-const scrollHeight = ref('600px');
-
 const updateScrollHeight = () => {
     scrollHeight.value = calculateScrollHeight();
 }
 
 onMounted(async () => {
-    fetchData();
+    store.fetchPokemonData(config.public.API_URL);
     updateScrollHeight();
     window.addEventListener('resize', updateScrollHeight);
 });
@@ -90,7 +79,6 @@ onBeforeUnmount(() => {
 const emit = defineEmits(['update:filters']);
 
 const updateFilters = (newFilters) => {
-    console.log("Hello!");
     emit('update:filters', newFilters);
 }
 
