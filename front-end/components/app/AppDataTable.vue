@@ -36,13 +36,10 @@
 
 <script setup>
 import { ref, onMounted, defineProps, defineEmits } from 'vue';
-import { useStore } from '~/store/store'
+import { useStore } from '~/store/store.js'
 import 'primeicons/primeicons.css';
 
 const store = useStore();
-
-// Cannot believe I have to do this because PrimeVue can't get its presets right
-// const idSortOrder = ref(0);
 
 const config = useRuntimeConfig();
 

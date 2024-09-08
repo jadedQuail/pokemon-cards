@@ -19,82 +19,87 @@
         >
             <!-- Name -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label for="name" class="font-semibold w-24">Name</label>
+                <label :for="FieldIds.Name" class="font-semibold w-24">Name</label>
                 <div class="flex flex-col flex-auto">
                     <InputText
-                        v-model="fields.name.content"
-                        id="name"
+                        v-model="fields[FieldIds.Name].content"
+                        :id="FieldIds.Name"
                         class="w-full"
                         autocomplete="off" 
-                        aria-describedby="name-error"
-                        :invalid="!fields.name.valid"
-                        @update:model-value="(value) => revalidate(value, fields.name)"
+                        :invalid="!fields[FieldIds.Name].valid"
+                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Name])"
                     />
-                    <small v-if="!fields.name.valid" id="name-error" class="text-red-500">You must provide a name for this Pokemon card.</small>
+                    <small v-if="!fields[FieldIds.Name].valid" class="text-red-500">
+                        You must provide a name for this Pokemon card.
+                    </small>
                 </div>
             </div>
             <!-- HP -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label for="hp" class="font-semibold w-24">HP</label>
+                <label :for="FieldIds.HP" class="font-semibold w-24">HP</label>
                 <div class="flex flex-col flex-auto">
                     <InputText
-                        v-model="fields.hp.content"
-                        id="hp"
+                        v-model="fields[FieldIds.HP].content"
+                        :id="FieldIds.HP"
                         class="w-full"
                         autocomplete="off"
-                        aria-describedby="hp-error"
-                        :invalid="!fields.hp.valid"
-                        @update:model-value="(value) => revalidate(value, fields.hp)"
+                        :invalid="!fields[FieldIds.HP].valid"
+                        @update:model-value="(value) => revalidate(value, fields[FieldIds.HP])"
                     />
-                    <small v-if="!fields.hp.valid" id="hp-error" class="text-red-500">You must provide an HP value for this Pokemon card.</small>
+                    <small v-if="!fields[FieldIds.HP].valid" class="text-red-500">
+                        You must provide a <em>valid</em> HP value for this Pokemon card.
+                    </small>
                 </div>
             </div>
             <!-- Type -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label for="type" class="font-semibold w-24">Type</label>
+                <label :for="FieldIds.Type" class="font-semibold w-24">Type</label>
                 <div class="flex flex-col flex-auto">
                     <Select
-                        v-model="fields.type.content"
+                        v-model="fields[FieldIds.Type].content"
                         :options="types"
                         placeholder=""
                         class="flex-auto"
-                        aria-describedby="type-error"
-                        :invalid="!fields.type.valid"
-                        @update:model-value="(value) => revalidate(value, fields.type)"
+                        :invalid="!fields[FieldIds.Type].valid"
+                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Type])"
                     />
-                    <small v-if="!fields.type.valid" id="type-error" class="text-red-500">You must select a type for this Pokemon card.</small>
+                    <small v-if="!fields[FieldIds.Type].valid" id="type-error" class="text-red-500">
+                        You must select a type for this Pokemon card.
+                    </small>
                 </div>
             </div>
             <!-- Set -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label for="set" class="font-semibold w-24">Set</label>
+                <label :for="FieldIds.Set" class="font-semibold w-24">Set</label>
                 <div class="flex flex-col flex-auto">
                     <Select
-                        v-model="fields.set.content"
+                        v-model="fields[FieldIds.Set].content"
                         :options="sets"
                         placeholder=""
                         class="flex-auto"
-                        aria-describedby="set-error"
-                        :invalid="!fields.set.valid"
-                        @update:model-value="(value) => revalidate(value, fields.set)"
+                        :invalid="!fields[FieldIds.Set].valid"
+                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Set])"
                     />
-                    <small v-if="!fields.set.valid" id="set-error" class="text-red-500">You must select a valid set for this Pokemon card.</small>
+                    <small v-if="!fields[FieldIds.Set].valid" class="text-red-500">
+                        You must select a valid set for this Pokemon card.
+                    </small>
                 </div>
             </div>
             <!-- Flavor Text -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label for="flavortext" class="font-semibold w-24">Flavor Text</label>
+                <label :for="FieldIds.FlavorText" class="font-semibold w-24">Flavor Text</label>
                 <div class="flex flex-col flex-auto">
                     <Textarea
-                        v-model="fields.flavorText.content"
+                        v-model="fields[FieldIds.FlavorText].content"
                         rows="5"
                         cols="5"
                         class="flex-auto resize-none leading-snug"
-                        aria-describedby="flavortext-error"
-                        :invalid="!fields.flavorText.valid"
-                        @update:model-value="(value) => revalidate(value, fields.flavorText)"
+                        :invalid="!fields[FieldIds.FlavorText].valid"
+                        @update:model-value="(value) => revalidate(value, fields[FieldIds.FlavorText])"
                     />
-                    <small v-if="!fields.flavorText.valid" id="flavortext-error" class="text-red-500">You must enter valid flavor text for this Pokemon card.</small>
+                    <small v-if="!fields[FieldIds.FlavorText].valid" class="text-red-500">
+                        You must enter valid flavor text for this Pokemon card.
+                    </small>
                 </div>
             </div>
             <!-- Buttons -->
@@ -108,6 +113,7 @@
 
 <script setup>
 import { defineProps, defineEmits, onMounted } from 'vue';
+import { FieldIds } from '~/static/constants.js'
 let axios;
 const config = useRuntimeConfig();
 
@@ -145,28 +151,28 @@ const handleSubmit = async () => {
 }
 
 const fields = ref({
-    name: {
-        id: "name",
+    [FieldIds.Name]: {
+        name: FieldIds.Name,
         content: "",
         valid: true,
     },
-    hp: {
-        id: "hp",
+    [FieldIds.HP]: {
+        name: FieldIds.HP,
         content: "",
         valid: true,
     },
-    type: {
-        id: "type",
+    [FieldIds.Type]: {
+        name: FieldIds.Type,
         content: "",
         valid: true,
     },
-    set: {
-        id: "set",
+    [FieldIds.Set]: {
+        name: FieldIds.Set,
         content: "",
         valid: true,
     },
-    flavorText: {
-        id: "flavorText",
+    [FieldIds.FlavorText]: {
+        name: FieldIds.FlavorText,
         content: "",
         valid: true,
     }
@@ -181,8 +187,7 @@ const resetValidationFlags = () => {
 }
 
 const revalidate = (value, field) => {
-    // TODO: Get rid of this magic string
-    if (field.id === "hp") {
+    if (field.name === FieldIds.HP) {
         if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
             field.valid = false;
         } else {
