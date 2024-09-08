@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppSiteTour />
         <AppAddPokemonDialog
             :visible="showAddPokemonDialog"
             @closing-dialog="closeAddPokemonForm"
@@ -7,7 +8,7 @@
         <AppTopBar
             @search-change="updateFilters"
             @add-pokemon="openAddPokemonForm"
-            class="fixed top-0 left-0 w-full z-[100]"
+            class="top-0 left-0 w-full"
         />
         <AppDataTable
             class="pt-16" 
@@ -23,6 +24,7 @@ import { ref } from 'vue';
 import AppDataTableVue from '../components/app/AppDataTable.vue';
 import AppTopBar from '../components/app/AppTopBar.vue';
 import AppAddPokemonDialog from '../components/app/AppAddPokemonDialog.vue';
+import AppSiteTour from '../components/app/AppSiteTour.vue';
 
 const filters = ref({});
 
