@@ -8,7 +8,7 @@
         <AppTopBar
             @search-change="updateFilters"
             @add-pokemon="openAddPokemonForm"
-            class="top-0 left-0 w-full"
+            class="fixed top-0 left-0 w-full"
         />
         <AppDataTable
             class="pt-16" 

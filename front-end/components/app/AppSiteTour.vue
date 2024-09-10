@@ -1,6 +1,4 @@
 <template>
-    <div v-if="maskActive" class="custom-mask"></div>
-
     <Dialog
         v-model:visible="visible"
         :modal="false"
@@ -68,14 +66,58 @@ const nextStep = async () => {
 
 const applyHighlight = () => {
     const element = document.getElementById(currentStep.value.highlightElementId);
-
     if (element) {
-        element.classList.add("highlight-target");
+        const rect = element.getBoundingClientRect();
+
+        const overlayDiv = document.createElement("div");
+        overlayDiv.classList.add("overlay-box");
+
+        overlayDiv.style.position = "fixed";
+        overlayDiv.style.top = "0";
+        overlayDiv.style.left = "0";
+        overlayDiv.style.width = "100vw";
+        overlayDiv.style.height = "100vh";
+        overlayDiv.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        overlayDiv.style.zIndex = "1100";
+        overlayDiv.style.pointerEvents = "auto";
+        overlayDiv.style.clipPath = `polygon(
+            0 0,
+            0 100%,
+            ${rect.left}px 100%,
+            ${rect.left}px ${rect.top}px,
+            ${rect.right}px ${rect.top}px,
+            ${rect.right}px ${rect.bottom}px,
+            ${rect.left}px ${rect.bottom}px,
+            ${rect.left}px 100%,
+            100% 100%,
+            100% 0
+        )`;
+
+        document.body.appendChild(overlayDiv);
+
+        const highlightDiv = document.createElement("div");
+        highlightDiv.classList.add("highlight-box");
+
+        highlightDiv.style.position = "absolute";
+        highlightDiv.style.top = `${rect.top + window.scrollY}px`;
+        highlightDiv.style.left = `${rect.left + window.scrollX}px`;
+        highlightDiv.style.width = `${rect.width}px`;
+        highlightDiv.style.height = `${rect.height}px`;
+        highlightDiv.style.border = "3px solid yellow";
+        highlightDiv.style.zIndex = "1101";
+        highlightDiv.style.pointerEvents = "none";
+
+        element.style.pointerEvents = "none";
+
+        document.body.appendChild(highlightDiv);
+
+        element.highlightOverlay = overlayDiv;
+        element.highlightDiv = highlightDiv;
     } else {
         setTimeout(() => {
             const retryElement = document.getElementById(currentStep.value.highlightElementId);
             if (retryElement) {
-                retryElement.classList.add("highlight-target");
+                applyHighlight();
             }
         }, 100);
     }
@@ -83,33 +125,18 @@ const applyHighlight = () => {
 
 const removeHighlight = () => {
     const element = document.getElementById(currentStep.value.highlightElementId);
-    if (element) {
-        element.classList.remove("highlight-target");
+    if (element && element.highlightDiv && element.highlightOverlay) {
+        element.highlightDiv.remove();
+        element.highlightOverlay.remove();
+        element.style.pointerEvents = "";
+        delete element.highlightDiv;
+        delete element.highlightOverlay;
     }
 };
 </script>
 
 <style>
-.custom-mask {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1100; /* Lower than the highlighted element */
-}
-
-/* Element to be highlighted */
-.highlight-target {
-    position: relative !important; /* Ensure proper positioning for z-index to take effect */
-    z-index: 1101 !important; /* Ensure it appears above the mask */
-    border: 3px solid yellow; /* Optional: Highlight border */
-    box-shadow: 0 0 10px rgba(255, 255, 0, 0.7); /* Optional: Add a glowing effect */
-    pointer-events: none;
-}
-
-.absolute-dialog {
-    position: absolute;
+.highlight-box {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.7);
 }
 </style>
