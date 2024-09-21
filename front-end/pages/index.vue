@@ -10,19 +10,19 @@
             class="fixed top-0 left-0 w-full z-[100]"
         />
         <AppDataTable
-            class="pt-16" 
+            class="pt-16"
             :filters="filters"
-            @update:filters="updateFilters" 
+            @update:filters="updateFilters"
         />
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-import AppDataTableVue from '../components/app/AppDataTable.vue';
-import AppTopBar from '../components/app/AppTopBar.vue';
-import AppAddPokemonDialog from '../components/app/AppAddPokemonDialog.vue';
+import AppDataTableVue from "../components/app/AppDataTable.vue";
+import AppTopBar from "../components/app/AppTopBar.vue";
+import AppAddPokemonDialog from "../components/app/AppAddPokemonDialog.vue";
 
 const filters = ref({});
 
@@ -30,13 +30,13 @@ const showAddPokemonDialog = ref(false);
 
 const updateFilters = (inputFilters) => {
     filters.value = inputFilters;
-}
+};
 
 const openAddPokemonForm = () => {
     showAddPokemonDialog.value = true;
-}
+};
 
 const closeAddPokemonForm = () => {
     showAddPokemonDialog.value = false;
-}
+};
 </script>

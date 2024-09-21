@@ -13,23 +13,30 @@
             @hide="resetValidationFlags"
             :pt="{
                 pcCloseButton: {
-                    style: 'box-shadow: none;'
-                }
+                    style: 'box-shadow: none;',
+                },
             }"
         >
             <!-- Name -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Name" class="font-semibold w-24">Name</label>
+                <label :for="FieldIds.Name" class="font-semibold w-24"
+                    >Name</label
+                >
                 <div class="flex flex-col flex-auto">
                     <InputText
                         v-model="fields[FieldIds.Name].content"
                         :id="FieldIds.Name"
                         class="w-full"
-                        autocomplete="off" 
+                        autocomplete="off"
                         :invalid="!fields[FieldIds.Name].valid"
-                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Name])"
+                        @update:model-value="
+                            (value) => revalidate(value, fields[FieldIds.Name])
+                        "
                     />
-                    <small v-if="!fields[FieldIds.Name].valid" class="text-red-500">
+                    <small
+                        v-if="!fields[FieldIds.Name].valid"
+                        class="text-red-500"
+                    >
                         You must provide a name for this Pokemon card.
                     </small>
                 </div>
@@ -44,16 +51,24 @@
                         class="w-full"
                         autocomplete="off"
                         :invalid="!fields[FieldIds.HP].valid"
-                        @update:model-value="(value) => revalidate(value, fields[FieldIds.HP])"
+                        @update:model-value="
+                            (value) => revalidate(value, fields[FieldIds.HP])
+                        "
                     />
-                    <small v-if="!fields[FieldIds.HP].valid" class="text-red-500">
-                        You must provide a <em>valid</em> HP value for this Pokemon card.
+                    <small
+                        v-if="!fields[FieldIds.HP].valid"
+                        class="text-red-500"
+                    >
+                        You must provide a <em>valid</em> HP value for this
+                        Pokemon card.
                     </small>
                 </div>
             </div>
             <!-- Type -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Type" class="font-semibold w-24">Type</label>
+                <label :for="FieldIds.Type" class="font-semibold w-24"
+                    >Type</label
+                >
                 <div class="flex flex-col flex-auto">
                     <Select
                         v-model="fields[FieldIds.Type].content"
@@ -61,16 +76,24 @@
                         placeholder=""
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Type].valid"
-                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Type])"
+                        @update:model-value="
+                            (value) => revalidate(value, fields[FieldIds.Type])
+                        "
                     />
-                    <small v-if="!fields[FieldIds.Type].valid" id="type-error" class="text-red-500">
+                    <small
+                        v-if="!fields[FieldIds.Type].valid"
+                        id="type-error"
+                        class="text-red-500"
+                    >
                         You must select a type for this Pokemon card.
                     </small>
                 </div>
             </div>
             <!-- Set -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Set" class="font-semibold w-24">Set</label>
+                <label :for="FieldIds.Set" class="font-semibold w-24"
+                    >Set</label
+                >
                 <div class="flex flex-col flex-auto">
                     <Select
                         v-model="fields[FieldIds.Set].content"
@@ -78,16 +101,23 @@
                         placeholder=""
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Set].valid"
-                        @update:model-value="(value) => revalidate(value, fields[FieldIds.Set])"
+                        @update:model-value="
+                            (value) => revalidate(value, fields[FieldIds.Set])
+                        "
                     />
-                    <small v-if="!fields[FieldIds.Set].valid" class="text-red-500">
+                    <small
+                        v-if="!fields[FieldIds.Set].valid"
+                        class="text-red-500"
+                    >
                         You must select a valid set for this Pokemon card.
                     </small>
                 </div>
             </div>
             <!-- Flavor Text -->
             <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.FlavorText" class="font-semibold w-24">Flavor Text</label>
+                <label :for="FieldIds.FlavorText" class="font-semibold w-24"
+                    >Flavor Text</label
+                >
                 <div class="flex flex-col flex-auto">
                     <Textarea
                         v-model="fields[FieldIds.FlavorText].content"
@@ -95,25 +125,40 @@
                         cols="5"
                         class="flex-auto resize-none leading-snug"
                         :invalid="!fields[FieldIds.FlavorText].valid"
-                        @update:model-value="(value) => revalidate(value, fields[FieldIds.FlavorText])"
+                        @update:model-value="
+                            (value) =>
+                                revalidate(value, fields[FieldIds.FlavorText])
+                        "
                     />
-                    <small v-if="!fields[FieldIds.FlavorText].valid" class="text-red-500">
+                    <small
+                        v-if="!fields[FieldIds.FlavorText].valid"
+                        class="text-red-500"
+                    >
                         You must enter valid flavor text for this Pokemon card.
                     </small>
                 </div>
             </div>
             <!-- Buttons -->
             <div class="flex justify-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="closeDialog"></Button>
-                <Button type="button" label="Save" @click="handleSubmit"></Button>
+                <Button
+                    type="button"
+                    label="Cancel"
+                    severity="secondary"
+                    @click="closeDialog"
+                ></Button>
+                <Button
+                    type="button"
+                    label="Save"
+                    @click="handleSubmit"
+                ></Button>
             </div>
         </Dialog>
     </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, onMounted } from 'vue';
-import { FieldIds } from '~/static/constants.js'
+import { defineProps, defineEmits, onMounted } from "vue";
+import { FieldIds } from "~/static/constants.js";
 let axios;
 const config = useRuntimeConfig();
 
@@ -121,10 +166,10 @@ const props = defineProps({
     visible: {
         type: Boolean,
         required: true,
-    }
+    },
 });
 
-const emit = defineEmits(['closing-dialog']);
+const emit = defineEmits(["closing-dialog"]);
 
 const formData = ref({});
 
@@ -137,8 +182,8 @@ const visibilityController = computed({
         return props.visible;
     },
     set(value) {
-        emit('closing-dialog', value);
-    }
+        emit("closing-dialog", value);
+    },
 });
 
 const handleSubmit = async () => {
@@ -148,7 +193,7 @@ const handleSubmit = async () => {
         await submitPokemon();
         closeDialog();
     }
-}
+};
 
 const fields = ref({
     [FieldIds.Name]: {
@@ -175,7 +220,7 @@ const fields = ref({
         name: FieldIds.FlavorText,
         content: "",
         valid: true,
-    }
+    },
 });
 
 const resetValidationFlags = () => {
@@ -184,7 +229,7 @@ const resetValidationFlags = () => {
             fields.value[key].valid = true;
         }
     }
-}
+};
 
 const revalidate = (value, field) => {
     if (field.name === FieldIds.HP) {
@@ -200,7 +245,7 @@ const revalidate = (value, field) => {
             field.valid = true;
         }
     }
-}
+};
 
 const validateForm = () => {
     let allValid = true;
@@ -213,29 +258,39 @@ const validateForm = () => {
     }
 
     return allValid;
-}
+};
 
-const getTypeOptions = async() => {
+const getTypeOptions = async () => {
     try {
-        axios = (await import('axios')).default;
-        const response = await axios.get(config.public.API_URL + '/get-type-options');
+        axios = (await import("axios")).default;
+        const response = await axios.get(
+            config.public.API_URL + "/get-type-options"
+        );
         types.value = response.data;
     } catch (error) {
-        console.error('Error fetching type options for "Add Pokemon" form:', error)
+        console.error(
+            'Error fetching type options for "Add Pokemon" form:',
+            error
+        );
     }
-}
+};
 
-const getSetOptions = async() => {
+const getSetOptions = async () => {
     try {
-        axios = (await import('axios')).default;
-        const response = await axios.get(config.public.API_URL + '/get-set-options');
+        axios = (await import("axios")).default;
+        const response = await axios.get(
+            config.public.API_URL + "/get-set-options"
+        );
         sets.value = response.data;
     } catch (error) {
-        console.error('Error fetching set options for "Add Pokemon" form:', error)
+        console.error(
+            'Error fetching set options for "Add Pokemon" form:',
+            error
+        );
     }
-}
+};
 
-const submitPokemon = async() => {
+const submitPokemon = async () => {
     try {
         const dataToSend = {
             pokemonName: fields.value.name.content,
@@ -245,29 +300,29 @@ const submitPokemon = async() => {
             pokemonSet: fields.value.set.content,
         };
         const response = await axios.post(
-            `${config.public.API_URL}/add-pokemon`, 
+            `${config.public.API_URL}/add-pokemon`,
             dataToSend,
             {
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    "Content-Type": "application/json",
+                },
             }
         );
     } catch (error) {
-        console.error('Error posting data:', error);
+        console.error("Error posting data:", error);
     }
 };
 
 const closeDialog = () => {
     visibilityController.value = false;
-}
+};
 
 function canBeConvertedToPositiveInt(str) {
     const trimmedStr = str.trim();
     const isInteger = /^-?\d+$/.test(trimmedStr);
-    const hasLeadingZeros = /^0+/.test(trimmedStr) && trimmedStr !== '0';
+    const hasLeadingZeros = /^0+/.test(trimmedStr) && trimmedStr !== "0";
     const parsedInt = parseInt(trimmedStr, 10);
-    
+
     return isInteger && !isNaN(parsedInt) && parsedInt > 0 && !hasLeadingZeros;
 }
 

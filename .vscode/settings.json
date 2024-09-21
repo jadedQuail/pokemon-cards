@@ -2,4 +2,27 @@
     "vetur.validation.template": false,
     "vetur.validation.script": false,
     "vetur.validation.style": false,
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#43697a",
+        "activityBar.background": "#43697a",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#3e2235",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#43697a",
+        "statusBar.background": "#314d59",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#43697a",
+        "statusBarItem.remoteBackground": "#314d59",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#314d59",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#314d5999",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#314d59",
+    "prettier.tabWidth": 4,
+    "editor.formatOnSave": true,
+    "vetur.format.options.tabSize": 4
 }

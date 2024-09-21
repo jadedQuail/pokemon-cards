@@ -15,6 +15,7 @@
             :rowsPerPageOptions="[20, 50, 100]" 
             tableStyle="min-width: 50rem"
             class="fixed-header"
+            :loading="!store.dataLoaded"
         >
             <Column field="ID" header="ID" sortable></Column>
             <Column field="Name" header="Name" sortable></Column>
@@ -64,7 +65,7 @@ const updateScrollHeight = () => {
 }
 
 onMounted(async () => {
-    store.fetchPokemonData(config.public.API_URL);
+    await store.fetchPokemonData(config.public.API_URL);
     updateScrollHeight();
     window.addEventListener('resize', updateScrollHeight);
 });
