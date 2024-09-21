@@ -176,6 +176,10 @@ const formData = ref({});
 const types = ref([]);
 const sets = ref([]);
 
+import { useStore } from "~/store/store.js";
+
+const store = useStore();
+
 // The visibility prop determines whether the dialog is active or not, visibilityController puts it in effect
 const visibilityController = computed({
     get() {
@@ -308,6 +312,7 @@ const submitPokemon = async () => {
                 },
             }
         );
+        await store.fetchPokemonData(config.public.API_URL);
     } catch (error) {
         console.error("Error posting data:", error);
     }

@@ -10,6 +10,7 @@ export const useStore = defineStore("store", {
     actions: {
         async fetchPokemonData(apiUrl) {
             try {
+                this.dataLoaded = false;
                 const response = await axios.get(apiUrl);
                 this.pokemonData = response.data;
             } catch (error) {
