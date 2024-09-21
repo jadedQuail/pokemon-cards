@@ -32,6 +32,7 @@
                         />
                         <InputIcon
                             class="pi pi-trash text-red-600 cursor-pointer"
+                            @click="deleteRow"
                         />
                     </div>
                 </template>
@@ -93,5 +94,9 @@ const updateFilters = (newFilters) => {
 
 const viewSortOrder = (event) => {
     console.log(event);
+};
+
+const deleteRow = () => {
+    console.log("Deleting!");
 };
 </script>

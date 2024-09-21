@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppConfirmDeletion />
         <AppAddPokemonDialog
             :visible="showAddPokemonDialog"
             @closing-dialog="closeAddPokemonForm"
@@ -23,6 +24,7 @@ import { ref } from "vue";
 import AppDataTableVue from "../components/app/AppDataTable.vue";
 import AppTopBar from "../components/app/AppTopBar.vue";
 import AppAddPokemonDialog from "../components/app/AppAddPokemonDialog.vue";
+import AppConfirmDeletionVue from "../components/app/AppConfirmDeletion.vue";
 
 const filters = ref({});
 

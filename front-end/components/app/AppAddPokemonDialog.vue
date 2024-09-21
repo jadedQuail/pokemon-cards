@@ -1,7 +1,4 @@
 <template>
-    <div>
-        <Button label="Test" />
-    </div>
     <div class="flex justify-center">
         <!-- TODO: Figure out why this pcCloseButton pass through doesn't work (I think PrimeVue v4 is broken) -->
         <Dialog
