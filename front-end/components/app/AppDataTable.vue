@@ -52,6 +52,9 @@ import { ref, onMounted, defineProps, defineEmits } from "vue";
 import { useStore } from "~/store/store.js";
 import "primeicons/primeicons.css";
 
+import { useConfirmDialog } from "@/composables/useConfirmDialog";
+const { openConfirmDialog } = useConfirmDialog();
+
 const store = useStore();
 
 const config = useRuntimeConfig();
@@ -97,6 +100,7 @@ const viewSortOrder = (event) => {
 };
 
 const deleteRow = () => {
-    console.log("Deleting!");
+    console.log("Testing.");
+    openConfirmDialog("Testing", "Can you see this???");
 };
 </script>
