@@ -86,21 +86,28 @@ app.get("/get-set-options", async (req, res) => {
     }
 });
 
-// TODO: Need to do parameterized queries, this is not protected against SQL injection
 app.post("/add-pokemon", async (req, res) => {
     let data = req.body;
 
-    let query = `INSERT INTO Pokemon (pokemon_name, pokemon_hp, pokemon_flavor_text, type_id, set_id)
-    VALUES (
-        '${data.pokemonName}',
-        ${data.pokemonHP},
-        '${data.pokemonFlavorText}',
-        (SELECT type_id FROM Types WHERE type_name = '${data.pokemonType}'),
-        (SELECT set_id FROM Sets WHERE set_name = '${data.pokemonSet}')
-    );`;
+    let query = `
+        INSERT INTO Pokemon (pokemon_name, pokemon_hp, pokemon_flavor_text, type_id, set_id)
+        VALUES (
+            ?, ?, ?, 
+            (SELECT type_id FROM Types WHERE type_name = ?),
+            (SELECT set_id FROM Sets WHERE set_name = ?)
+        );
+    `;
+
+    let values = [
+        data.pokemonName,
+        data.pokemonHP,
+        data.pokemonFlavorText,
+        data.pokemonType,
+        data.pokemonSet,
+    ];
 
     try {
-        await db.pool.query(query);
+        await db.pool.query(query, values);
         res.sendStatus(200);
     } catch (err) {
         console.error(err);

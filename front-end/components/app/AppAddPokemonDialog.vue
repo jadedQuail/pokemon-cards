@@ -1,6 +1,5 @@
 <template>
     <div class="flex justify-center">
-        <!-- TODO: Figure out why this pcCloseButton pass through doesn't work (I think PrimeVue v4 is broken) -->
         <Dialog
             v-model:visible="visibilityController"
             :draggable="false"
@@ -279,7 +278,6 @@ const loadTypeOptions = async () => {
     }
 };
 
-// TODO: config.public.API_URL can just be set as the "baseUrl" directly in the apiCalls service
 const loadSetOptions = async () => {
     try {
         const apiUrl = config.public.API_URL;
@@ -319,6 +317,4 @@ onMounted(async () => {
     await loadTypeOptions();
     await loadSetOptions();
 });
-
-// TODO: Best way to register a new set or type?
 </script>
