@@ -1,4 +1,5 @@
 <template>
+    <Toast position="top-left" />
     <Dialog
         v-model:visible="isVisible"
         modal
@@ -54,9 +55,21 @@ import { useConfirmDialog } from "@/composables/useConfirmDialog";
 import { deletePokemon } from "@/services/apiCalls";
 import { useStore } from "~/store/store.js";
 
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
 const { isVisible, message, currentPokemonData } = useConfirmDialog();
 const store = useStore();
 const config = useRuntimeConfig();
+
+const showSuccess = () => {
+    toast.add({
+        severity: "info",
+        summary: "Success Message",
+        detail: "Message Content",
+        life: 3000,
+    });
+};
 
 // TODO: Add a toast that tells the user when a delete/added pokemon has occurred successfully.
 const deletePokemonHandler = async () => {
@@ -67,6 +80,8 @@ const deletePokemonHandler = async () => {
         await deletePokemon(apiUrl, deleteId);
         await store.fetchPokemonData(apiUrl);
         isVisible.value = false;
+
+        showSuccess();
     } catch (error) {
         console.error("Error deleting Pokémon:", error);
     }

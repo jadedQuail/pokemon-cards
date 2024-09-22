@@ -6,7 +6,7 @@
             modal
             header="Add New Pokemon Card"
             class="min-w-[500px] !w-[30vw]"
-            @hide="resetValidationFlags"
+            @hide="resetForm"
             :pt="{
                 pcCloseButton: {
                     style: 'box-shadow: none;',
@@ -229,10 +229,24 @@ const fields = ref({
     },
 });
 
+const resetForm = () => {
+    console.log("Yeah baby");
+    resetValidationFlags();
+    resetFieldContent();
+};
+
 const resetValidationFlags = () => {
     for (const key in fields.value) {
         if (fields.value.hasOwnProperty(key)) {
             fields.value[key].valid = true;
+        }
+    }
+};
+
+const resetFieldContent = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].content = "";
         }
     }
 };
