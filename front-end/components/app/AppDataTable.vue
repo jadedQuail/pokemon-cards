@@ -101,6 +101,10 @@ const viewSortOrder = (event) => {
 
 const deleteRow = (rowData) => {
     const plainRowData = { ...rowData };
-    openConfirmDialog("Testing", "Can you see this???", plainRowData);
+    openConfirmDialog(
+        "Confirmation",
+        "Please confirm you wish to delete the following item:",
+        plainRowData
+    );
 };
 </script>

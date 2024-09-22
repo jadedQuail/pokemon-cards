@@ -4,25 +4,35 @@
         modal
         :closable="false"
         :draggable="false"
+        class="min-w-[400px]"
     >
         <template #header>
             <div class="w-full flex justify-center">
-                <span class="font-semibold text-2xl flex items-center"
-                    >Confirmation</span
-                >
+                <span class="font-semibold text-2xl flex items-center">{{
+                    message.header
+                }}</span>
             </div>
         </template>
-        <span class="text-surface-500 dark:text-surface-400 block mb-8"
-            >Please confirm you wish to delete the following item:</span
-        >
-        <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24">Username</label>
-            <InputText id="username" class="flex-auto" autocomplete="off" />
+
+        <span class="text-surface-500 block mb-5">{{ message.message }}</span>
+
+        <div class="grid grid-cols-[1fr,3fr] gap-y-1 items-center mb-5">
+            <span class="font-bold">ID</span>
+            <span>{{ currentPokemonData.ID }}</span>
+
+            <span class="font-bold">Name</span>
+            <span>{{ currentPokemonData.Name }}</span>
+
+            <span class="font-bold">HP</span>
+            <span>{{ currentPokemonData.HP }}</span>
+
+            <span class="font-bold">Type</span>
+            <span>{{ currentPokemonData.Type }}</span>
+
+            <span class="font-bold">Set</span>
+            <span>{{ currentPokemonData.Set }}</span>
         </div>
-        <div class="flex items-center gap-4 mb-8">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <InputText id="email" class="flex-auto" autocomplete="off" />
-        </div>
+
         <div class="flex justify-end gap-2">
             <Button
                 type="button"

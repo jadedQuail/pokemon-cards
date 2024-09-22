@@ -8,7 +8,6 @@ export function useConfirmDialog() {
     const openConfirmDialog = (header, messageText, data) => {
         message.value = { header, message: messageText };
         isVisible.value = true;
-        console.log(isVisible.value);
         currentPokemonData.value = data;
     };
 
