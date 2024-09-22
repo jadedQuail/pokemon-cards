@@ -41,5 +41,5 @@
 
 <script setup>
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
-const { isVisible, message } = useConfirmDialog();
+const { isVisible, message, currentPokemonData } = useConfirmDialog();
 </script>

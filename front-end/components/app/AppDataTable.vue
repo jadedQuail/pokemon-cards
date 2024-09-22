@@ -25,14 +25,14 @@
             <Column field="Set" header="Set" sortable></Column>
             <Column field="Flavor Text" header="Flavor Text" sortable></Column>
             <Column header="Options" bodyClass="!pl-3">
-                <template #body>
+                <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
                         <InputIcon
                             class="pi pi-pencil text-green-600 cursor-pointer"
                         />
                         <InputIcon
                             class="pi pi-trash text-red-600 cursor-pointer"
-                            @click="deleteRow"
+                            @click="deleteRow(slotProps.data)"
                         />
                     </div>
                 </template>
@@ -53,7 +53,7 @@ import { useStore } from "~/store/store.js";
 import "primeicons/primeicons.css";
 
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
-const { openConfirmDialog } = useConfirmDialog();
+const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
 
 const store = useStore();
 
@@ -99,8 +99,8 @@ const viewSortOrder = (event) => {
     console.log(event);
 };
 
-const deleteRow = () => {
-    console.log("Testing.");
-    openConfirmDialog("Testing", "Can you see this???");
+const deleteRow = (rowData) => {
+    const plainRowData = { ...rowData };
+    openConfirmDialog("Testing", "Can you see this???", plainRowData);
 };
 </script>
