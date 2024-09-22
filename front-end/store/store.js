@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import { fetchPokemonData } from "@/services/apiCalls";
 
 export const useStore = defineStore("store", {
     state: () => ({
@@ -11,8 +11,7 @@ export const useStore = defineStore("store", {
         async fetchPokemonData(apiUrl) {
             try {
                 this.dataLoaded = false;
-                const response = await axios.get(apiUrl);
-                this.pokemonData = response.data;
+                this.pokemonData = await fetchPokemonData(apiUrl);
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {

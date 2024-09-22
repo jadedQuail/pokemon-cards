@@ -156,7 +156,13 @@
 <script setup>
 import { defineProps, defineEmits, onMounted } from "vue";
 import { FieldIds } from "~/static/constants.js";
-let axios;
+
+import {
+    submitPokemon,
+    getTypeOptions,
+    getSetOptions,
+} from "@/services/apiCalls";
+
 const config = useRuntimeConfig();
 
 const props = defineProps({
@@ -191,7 +197,7 @@ const handleSubmit = async () => {
     const formReady = validateForm();
 
     if (formReady) {
-        await submitPokemon();
+        await submitPokemonHandler();
         closeDialog();
     }
 };
@@ -261,13 +267,10 @@ const validateForm = () => {
     return allValid;
 };
 
-const getTypeOptions = async () => {
+const loadTypeOptions = async () => {
     try {
-        axios = (await import("axios")).default;
-        const response = await axios.get(
-            config.public.API_URL + "/get-type-options"
-        );
-        types.value = response.data;
+        const apiUrl = config.public.API_URL;
+        types.value = await getTypeOptions(apiUrl);
     } catch (error) {
         console.error(
             'Error fetching type options for "Add Pokemon" form:',
@@ -276,13 +279,11 @@ const getTypeOptions = async () => {
     }
 };
 
-const getSetOptions = async () => {
+// TODO: config.public.API_URL can just be set as the "baseUrl" directly in the apiCalls service
+const loadSetOptions = async () => {
     try {
-        axios = (await import("axios")).default;
-        const response = await axios.get(
-            config.public.API_URL + "/get-set-options"
-        );
-        sets.value = response.data;
+        const apiUrl = config.public.API_URL;
+        sets.value = await getSetOptions(apiUrl);
     } catch (error) {
         console.error(
             'Error fetching set options for "Add Pokemon" form:',
@@ -291,25 +292,11 @@ const getSetOptions = async () => {
     }
 };
 
-const submitPokemon = async () => {
+const submitPokemonHandler = async () => {
     try {
-        const dataToSend = {
-            pokemonName: fields.value.name.content,
-            pokemonHP: fields.value.hp.content,
-            pokemonFlavorText: fields.value.flavorText.content,
-            pokemonType: fields.value.type.content,
-            pokemonSet: fields.value.set.content,
-        };
-        const response = await axios.post(
-            `${config.public.API_URL}/add-pokemon`,
-            dataToSend,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        await store.fetchPokemonData(config.public.API_URL);
+        const apiUrl = config.public.API_URL;
+        await submitPokemon(apiUrl, fields.value);
+        await store.fetchPokemonData(apiUrl); // Fetch data after submitting
     } catch (error) {
         console.error("Error posting data:", error);
     }
@@ -329,8 +316,8 @@ function canBeConvertedToPositiveInt(str) {
 }
 
 onMounted(async () => {
-    getTypeOptions();
-    getSetOptions();
+    await loadTypeOptions();
+    await loadSetOptions();
 });
 
 // TODO: Best way to register a new set or type?
