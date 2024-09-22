@@ -1,25 +1,21 @@
-// Environment variables
-require('dotenv').config();
+require("dotenv").config();
 
-// Initialize
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Database connection
-const db = require('./database/db-connector')
+const db = require("./database/db-connector");
 
-// Only allow certain origins to make requests
-const allowlist = [process.env.FRONTEND]
+const allowlist = [process.env.FRONTEND];
 const corsOptions = {
     origin: function (origin, callback) {
         if (allowlist.includes(origin)) {
-            callback(null, true); // Allow the request
+            callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS')); // Block the request
+            callback(new Error("Not allowed by CORS"));
         }
-    }
+    },
 
     // // Testing purposes only - allow any origin
     // origin: function (origin, callback) {
@@ -27,11 +23,9 @@ const corsOptions = {
     // }
 };
 
-// Middelware
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Queries
 const mainGetQuery = `
     SELECT 
         Pokemon.pokemon_id AS 'ID', 
@@ -49,59 +43,51 @@ const getTypesQuery = `SELECT type_name FROM Types;`;
 
 const getSetsQuery = `SELECT set_name FROM Sets;`;
 
-// Main get route, for grabbing all data
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
     try {
         let results = await db.pool.query(mainGetQuery);
         res.status(200).json(results[0]);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
 });
 
-// Get route for getting column headers
-app.get('/column-headers', async (req, res) => {
+app.get("/column-headers", async (req, res) => {
     try {
         let [, fields] = await db.pool.query(mainGetQuery);
-        const headers = fields.map(field => field.name);
+        const headers = fields.map((field) => field.name);
         res.status(200).json(headers);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
 });
 
-// Get route for getting types options for forms
-app.get('/get-type-options', async (req, res) => {
+app.get("/get-type-options", async (req, res) => {
     try {
         const results = await db.pool.query(getTypesQuery);
-        const types = results[0].map(typeObject => typeObject.type_name);
+        const types = results[0].map((typeObject) => typeObject.type_name);
         res.status(200).json(types);
-    } 
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
 });
 
-// Get route for getting set options for forms
-app.get('/get-set-options', async (req, res) => {
-    try{
+app.get("/get-set-options", async (req, res) => {
+    try {
         const results = await db.pool.query(getSetsQuery);
-        const sets = results[0].map(setObject => setObject.set_name);
+        const sets = results[0].map((setObject) => setObject.set_name);
         res.status(200).json(sets);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
 });
 
-// Post route for submitting a new pokemon
-app.post('/add-pokemon', async (req, res) => {
+// TODO: Need to do parameterized queries, this is not protected against SQL injection
+app.post("/add-pokemon", async (req, res) => {
     let data = req.body;
 
     let query = `INSERT INTO Pokemon (pokemon_name, pokemon_hp, pokemon_flavor_text, type_id, set_id)
@@ -116,12 +102,25 @@ app.post('/add-pokemon', async (req, res) => {
     try {
         await db.pool.query(query);
         res.sendStatus(200);
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.sendStatus(400);
     }
-})
+});
+
+app.delete("/delete-pokemon/:id", async (req, res) => {
+    const pokemonId = req.params.id;
+
+    const deleteQuery = `DELETE FROM Pokemon WHERE pokemon_id = ?`;
+
+    try {
+        await db.pool.query(deleteQuery, [pokemonId]);
+        res.sendStatus(200);
+    } catch (err) {
+        console.error("Error deleting Pokemon:", err);
+        res.sendStatus(400);
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Example app is listening on port ${PORT}.`);

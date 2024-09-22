@@ -43,7 +43,7 @@
             <Button
                 type="button"
                 label="Delete"
-                @click="isVisible = false"
+                @click="deletePokemonHandler"
             ></Button>
         </div>
     </Dialog>
@@ -51,5 +51,24 @@
 
 <script setup>
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
+import { deletePokemon } from "@/services/apiCalls";
+import { useStore } from "~/store/store.js";
+
 const { isVisible, message, currentPokemonData } = useConfirmDialog();
+const store = useStore();
+const config = useRuntimeConfig();
+
+// TODO: Add a toast that tells the user when a delete/added pokemon has occurred successfully.
+const deletePokemonHandler = async () => {
+    try {
+        const apiUrl = config.public.API_URL;
+        const deleteId = currentPokemonData.value.ID;
+
+        await deletePokemon(apiUrl, deleteId);
+        await store.fetchPokemonData(apiUrl);
+        isVisible.value = false;
+    } catch (error) {
+        console.error("Error deleting Pokémon:", error);
+    }
+};
 </script>

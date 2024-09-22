@@ -49,3 +49,12 @@ export async function getSetOptions(apiUrl) {
         throw error;
     }
 }
+
+export async function deletePokemon(apiUrl, pokemonId) {
+    try {
+        await axios.delete(`${apiUrl}/delete-pokemon/${pokemonId}`);
+    } catch (error) {
+        console.error("Error deleting Pokemon:", error);
+        throw error;
+    }
+}
