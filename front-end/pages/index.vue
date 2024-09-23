@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Toast position="top-left" />
         <AppConfirmDeletion />
         <AppAddPokemonDialog
             :visible="showAddPokemonDialog"

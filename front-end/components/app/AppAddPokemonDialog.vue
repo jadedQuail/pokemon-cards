@@ -230,7 +230,6 @@ const fields = ref({
 });
 
 const resetForm = () => {
-    console.log("Yeah baby");
     resetValidationFlags();
     resetFieldContent();
 };

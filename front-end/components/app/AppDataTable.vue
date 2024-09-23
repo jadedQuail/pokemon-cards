@@ -3,7 +3,6 @@
         <DataTable
             :filters="filters"
             @update:filters="updateFilters"
-            @sort="viewSortOrder"
             :value="store.pokemonData"
             scrollable
             removableSort
@@ -93,10 +92,6 @@ const emit = defineEmits(["update:filters"]);
 
 const updateFilters = (newFilters) => {
     emit("update:filters", newFilters);
-};
-
-const viewSortOrder = (event) => {
-    console.log(event);
 };
 
 const deleteRow = (rowData) => {
