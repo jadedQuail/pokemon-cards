@@ -162,6 +162,13 @@ import {
     getSetOptions,
 } from "@/services/apiCalls";
 
+import { useStore } from "~/store/store.js";
+
+import { useToastNotifications } from "@/composables/useToastNotification";
+import { SeverityLevels } from "~/static/constants.js";
+
+const { showToast } = useToastNotifications();
+
 const config = useRuntimeConfig();
 
 const props = defineProps({
@@ -177,8 +184,6 @@ const formData = ref({});
 
 const types = ref([]);
 const sets = ref([]);
-
-import { useStore } from "~/store/store.js";
 
 const store = useStore();
 
@@ -306,7 +311,19 @@ const loadSetOptions = async () => {
 const submitPokemonHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
+
+        const cardNameForToast = fields.value.name.content;
+        const cardHpForToast = fields.value.hp.content;
+        const cardTypeForToast = fields.value.type.content;
+
         await submitPokemon(apiUrl, fields.value);
+
+        showToast(
+            SeverityLevels.Info,
+            "Card Created",
+            `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
+        );
+
         await store.fetchPokemonData(apiUrl); // Fetch data after submitting
     } catch (error) {
         console.error("Error posting data:", error);
