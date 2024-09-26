@@ -28,6 +28,7 @@
                     <div class="flex justify-center space-x-5">
                         <InputIcon
                             class="pi pi-pencil text-green-600 cursor-pointer"
+                            @click="editRow(slotProps.data)"
                         />
                         <InputIcon
                             class="pi pi-trash text-red-600 cursor-pointer"
@@ -47,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from "vue";
+import { ref, onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import "primeicons/primeicons.css";
 
@@ -101,5 +102,9 @@ const deleteRow = (rowData) => {
         "Please confirm you wish to delete the following item:",
         plainRowData
     );
+};
+
+const editRow = (rowData) => {
+    const plainRowData = { ...rowData };
 };
 </script>

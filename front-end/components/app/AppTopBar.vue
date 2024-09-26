@@ -15,7 +15,7 @@
                     class="mr-2 py-[9.5px] !text-custom-blue-800 bg-white hover:!bg-custom-blue-100"
                     size="small"
                     label="Add Pokemon"
-                    @click="emitAddPokemon"
+                    @click="store.showAddPokemonDialog()"
                 />
                 <IconField class="mr-2">
                     <InputIcon class="pi pi-search" />
@@ -31,10 +31,11 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
 import { FilterMatchMode } from "@primevue/core/api";
+import { useStore } from "~/store/store.js";
 
-const emit = defineEmits(["search-change", "add-pokemon"]);
+const emit = defineEmits(["search-change"]);
+const store = useStore();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -42,9 +43,5 @@ const filters = ref({
 
 const emitSearch = () => {
     emit("search-change", filters.value);
-};
-
-const emitAddPokemon = () => {
-    emit("add-pokemon");
 };
 </script>

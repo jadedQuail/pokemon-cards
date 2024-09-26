@@ -5,6 +5,7 @@ export const useStore = defineStore("store", {
     state: () => ({
         pokemonData: [],
         dataLoaded: false,
+        addPokemonDialogVisible: false,
     }),
 
     actions: {
@@ -17,6 +18,12 @@ export const useStore = defineStore("store", {
             } finally {
                 this.dataLoaded = true;
             }
+        },
+        showAddPokemonDialog() {
+            this.addPokemonDialogVisible = true;
+        },
+        hideAddPokemonDialog() {
+            this.addPokemonDialogVisible = false;
         },
     },
 });

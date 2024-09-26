@@ -2,13 +2,9 @@
     <div>
         <Toast position="top-left" />
         <AppConfirmDeletion />
-        <AppAddPokemonDialog
-            :visible="showAddPokemonDialog"
-            @closing-dialog="closeAddPokemonForm"
-        />
+        <AppAddPokemonDialog />
         <AppTopBar
             @search-change="updateFilters"
-            @add-pokemon="openAddPokemonForm"
             class="fixed top-0 left-0 w-full z-[100]"
         />
         <AppDataTable
@@ -29,17 +25,7 @@ import AppConfirmDeletionVue from "../components/app/AppConfirmDeletion.vue";
 
 const filters = ref({});
 
-const showAddPokemonDialog = ref(false);
-
 const updateFilters = (inputFilters) => {
     filters.value = inputFilters;
-};
-
-const openAddPokemonForm = () => {
-    showAddPokemonDialog.value = true;
-};
-
-const closeAddPokemonForm = () => {
-    showAddPokemonDialog.value = false;
 };
 </script>

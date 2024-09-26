@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="visibilityController"
+            v-model:visible="store.addPokemonDialogVisible"
             :draggable="false"
             modal
             header="Add New Pokemon Card"
@@ -153,7 +153,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, onMounted } from "vue";
+import { onMounted } from "vue";
 import { FieldIds } from "~/static/constants.js";
 
 import {
@@ -167,35 +167,16 @@ import { useStore } from "~/store/store.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { SeverityLevels } from "~/static/constants.js";
 
+const store = useStore();
+
 const { showToast } = useToastNotifications();
 
 const config = useRuntimeConfig();
-
-const props = defineProps({
-    visible: {
-        type: Boolean,
-        required: true,
-    },
-});
-
-const emit = defineEmits(["closing-dialog"]);
 
 const formData = ref({});
 
 const types = ref([]);
 const sets = ref([]);
-
-const store = useStore();
-
-// The visibility prop determines whether the dialog is active or not, visibilityController puts it in effect
-const visibilityController = computed({
-    get() {
-        return props.visible;
-    },
-    set(value) {
-        emit("closing-dialog", value);
-    },
-});
 
 const handleSubmit = async () => {
     const formReady = validateForm();
@@ -237,6 +218,7 @@ const fields = ref({
 const resetForm = () => {
     resetValidationFlags();
     resetFieldContent();
+    console.log(store.addPokemonDialogVisible);
 };
 
 const resetValidationFlags = () => {
@@ -331,7 +313,7 @@ const submitPokemonHandler = async () => {
 };
 
 const closeDialog = () => {
-    visibilityController.value = false;
+    store.hideAddPokemonDialog();
 };
 
 function canBeConvertedToPositiveInt(str) {
