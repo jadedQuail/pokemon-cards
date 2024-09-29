@@ -1,4 +1,5 @@
 export const FieldIds = Object.freeze({
+    ID: "id",
     Name: "name",
     HP: "hp",
     Type: "type",

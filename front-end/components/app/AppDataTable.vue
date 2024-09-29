@@ -109,6 +109,7 @@ const editRow = (rowData) => {
     store.editingPokemonId = rowData.id;
 
     store.setFieldContentForEditDialog({
+        id: rowData.id,
         name: rowData.name,
         hp: rowData.hp,
         type: rowData.type,

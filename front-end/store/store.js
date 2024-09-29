@@ -10,6 +10,11 @@ export const useStore = defineStore("store", {
         addPokemonDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         rawFields: {
+            [FieldIds.ID]: {
+                name: FieldIds.ID,
+                content: "",
+                valid: true,
+            },
             [FieldIds.Name]: {
                 name: FieldIds.Name,
                 content: "",
@@ -59,6 +64,7 @@ export const useStore = defineStore("store", {
             this.addPokemonDialogVisible = false;
         },
         setFieldContentForEditDialog(pokemon) {
+            this.rawFields[FieldIds.ID].content = pokemon.id || "";
             this.rawFields[FieldIds.Name].content = pokemon.name || "";
             this.rawFields[FieldIds.HP].content = pokemon.hp || "";
             this.rawFields[FieldIds.Type].content = pokemon.type || "";

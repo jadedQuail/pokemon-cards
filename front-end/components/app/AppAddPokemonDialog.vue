@@ -4,7 +4,7 @@
             v-model:visible="store.addPokemonDialogVisible"
             :draggable="false"
             modal
-            header="Add New Pokemon Card"
+            :header="dialogHeader"
             class="min-w-[500px] !w-[30vw]"
             @hide="resetForm"
             :pt="{
@@ -281,7 +281,7 @@ const submitPokemonHandler = async () => {
                 `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
             );
         } else if (store.pokemonFormMode === PokemonFormMode.Edit) {
-            await editPokemon(apiUrl, fields.value, store.editingPokemonId);
+            await editPokemon(apiUrl, fields.value, fields.value.id.content);
 
             showToast(
                 SeverityLevels.Info,
@@ -299,6 +299,13 @@ const submitPokemonHandler = async () => {
 const closeDialog = () => {
     store.hideAddPokemonDialog();
 };
+
+const dialogHeader = computed(() => {
+    if (store.pokemonFormMode === PokemonFormMode.Edit) {
+        return "Edit Pokemon Card";
+    }
+    return "Add Pokemon Card";
+});
 
 function canBeConvertedToPositiveInt(str) {
     const trimmedStr = str.trim();
