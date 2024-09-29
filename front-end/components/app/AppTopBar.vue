@@ -15,7 +15,7 @@
                     class="mr-2 py-[9.5px] !text-custom-blue-800 bg-white hover:!bg-custom-blue-100"
                     size="small"
                     label="Add Pokemon"
-                    @click="store.showAddPokemonDialog()"
+                    @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
                 />
                 <IconField class="mr-2">
                     <InputIcon class="pi pi-search" />
@@ -33,6 +33,7 @@
 <script setup>
 import { FilterMatchMode } from "@primevue/core/api";
 import { useStore } from "~/store/store.js";
+import { PokemonFormMode } from "~/static/constants.js";
 
 const emit = defineEmits(["search-change"]);
 const store = useStore();

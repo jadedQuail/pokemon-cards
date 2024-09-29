@@ -18,19 +18,19 @@
 
         <div class="grid grid-cols-[1fr,3fr] gap-y-1 items-center mb-5">
             <span class="font-bold">ID</span>
-            <span>{{ currentPokemonData.ID }}</span>
+            <span>{{ currentPokemonData.id }}</span>
 
             <span class="font-bold">Name</span>
-            <span>{{ currentPokemonData.Name }}</span>
+            <span>{{ currentPokemonData.name }}</span>
 
             <span class="font-bold">HP</span>
-            <span>{{ currentPokemonData.HP }}</span>
+            <span>{{ currentPokemonData.hp }}</span>
 
             <span class="font-bold">Type</span>
-            <span>{{ currentPokemonData.Type }}</span>
+            <span>{{ currentPokemonData.type }}</span>
 
             <span class="font-bold">Set</span>
-            <span>{{ currentPokemonData.Set }}</span>
+            <span>{{ currentPokemonData.set }}</span>
         </div>
 
         <div class="flex justify-end gap-2">
@@ -66,7 +66,7 @@ const config = useRuntimeConfig();
 const deletePokemonHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
-        const deleteId = currentPokemonData.value.ID;
+        const deleteId = currentPokemonData.value.id;
 
         await deletePokemon(apiUrl, deleteId);
         await store.fetchPokemonData(apiUrl);

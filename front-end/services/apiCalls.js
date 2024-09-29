@@ -10,7 +10,27 @@ export async function fetchPokemonData(apiUrl) {
     }
 }
 
-export async function submitPokemon(apiUrl, fields) {
+export async function editPokemon(apiUrl, fields, id) {
+    try {
+        const dataToSend = {
+            pokemonName: fields.name.content,
+            pokemonHP: fields.hp.content,
+            pokemonFlavorText: fields.flavorText.content,
+            pokemonType: fields.type.content,
+            pokemonSet: fields.set.content,
+        };
+        await axios.post(`${apiUrl}/edit-pokemon/${id}`, dataToSend, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        console.error("Error posting data:", error);
+        throw error;
+    }
+}
+
+export async function addPokemon(apiUrl, fields) {
     try {
         const dataToSend = {
             pokemonName: fields.name.content,

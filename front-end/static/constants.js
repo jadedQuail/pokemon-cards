@@ -14,3 +14,9 @@ export const SeverityLevels = Object.freeze({
     Secondary: "secondary",
     Contrast: "contrast",
 });
+
+export const PokemonFormMode = Object.freeze({
+    Add: "add",
+    Edit: "edit",
+    None: "none",
+});

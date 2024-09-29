@@ -17,12 +17,12 @@
             :loading="!store.dataLoaded"
             loadingIcon="null"
         >
-            <Column field="ID" header="ID" sortable></Column>
-            <Column field="Name" header="Name" sortable></Column>
-            <Column field="HP" header="HP" sortable></Column>
-            <Column field="Type" header="Type" sortable></Column>
-            <Column field="Set" header="Set" sortable></Column>
-            <Column field="Flavor Text" header="Flavor Text" sortable></Column>
+            <Column field="id" header="ID" sortable></Column>
+            <Column field="name" header="Name" sortable></Column>
+            <Column field="hp" header="HP" sortable></Column>
+            <Column field="type" header="Type" sortable></Column>
+            <Column field="set" header="Set" sortable></Column>
+            <Column field="flavorText" header="Flavor Text" sortable></Column>
             <Column header="Options" bodyClass="!pl-3">
                 <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
@@ -51,6 +51,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import "primeicons/primeicons.css";
+import { PokemonFormMode } from "~/static/constants.js";
 
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
 const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
@@ -105,6 +106,15 @@ const deleteRow = (rowData) => {
 };
 
 const editRow = (rowData) => {
-    const plainRowData = { ...rowData };
+    store.editingPokemonId = rowData.id;
+
+    store.setFieldContentForEditDialog({
+        name: rowData.name,
+        hp: rowData.hp,
+        type: rowData.type,
+        set: rowData.set,
+        flavorText: rowData.flavorText,
+    });
+    store.showAddPokemonDialog(PokemonFormMode.Edit);
 };
 </script>

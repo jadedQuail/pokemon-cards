@@ -154,10 +154,11 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { FieldIds } from "~/static/constants.js";
+import { FieldIds, PokemonFormMode } from "~/static/constants.js";
 
 import {
-    submitPokemon,
+    addPokemon,
+    editPokemon,
     getTypeOptions,
     getSetOptions,
 } from "@/services/apiCalls";
@@ -187,38 +188,11 @@ const handleSubmit = async () => {
     }
 };
 
-const fields = ref({
-    [FieldIds.Name]: {
-        name: FieldIds.Name,
-        content: "",
-        valid: true,
-    },
-    [FieldIds.HP]: {
-        name: FieldIds.HP,
-        content: "",
-        valid: true,
-    },
-    [FieldIds.Type]: {
-        name: FieldIds.Type,
-        content: "",
-        valid: true,
-    },
-    [FieldIds.Set]: {
-        name: FieldIds.Set,
-        content: "",
-        valid: true,
-    },
-    [FieldIds.FlavorText]: {
-        name: FieldIds.FlavorText,
-        content: "",
-        valid: true,
-    },
-});
+const fields = ref(store.rawFields);
 
 const resetForm = () => {
     resetValidationFlags();
     resetFieldContent();
-    console.log(store.addPokemonDialogVisible);
 };
 
 const resetValidationFlags = () => {
@@ -298,13 +272,23 @@ const submitPokemonHandler = async () => {
         const cardHpForToast = fields.value.hp.content;
         const cardTypeForToast = fields.value.type.content;
 
-        await submitPokemon(apiUrl, fields.value);
+        if (store.pokemonFormMode === PokemonFormMode.Add) {
+            await addPokemon(apiUrl, fields.value);
 
-        showToast(
-            SeverityLevels.Info,
-            "Card Created",
-            `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
-        );
+            showToast(
+                SeverityLevels.Info,
+                "Card Created",
+                `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
+            );
+        } else if (store.pokemonFormMode === PokemonFormMode.Edit) {
+            await editPokemon(apiUrl, fields.value, store.editingPokemonId);
+
+            showToast(
+                SeverityLevels.Info,
+                "Card Edit",
+                `Edited card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
+            );
+        }
 
         await store.fetchPokemonData(apiUrl); // Fetch data after submitting
     } catch (error) {

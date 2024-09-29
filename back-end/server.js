@@ -28,12 +28,12 @@ app.use(express.json());
 
 const mainGetQuery = `
     SELECT 
-        Pokemon.pokemon_id AS 'ID', 
-        Pokemon.pokemon_name AS 'Name',
-        Pokemon.pokemon_hp AS 'HP',
-        Types.type_name AS 'Type',
-        Sets.set_name AS 'Set',
-        Pokemon.pokemon_flavor_text AS 'Flavor Text'
+        Pokemon.pokemon_id AS 'id', 
+        Pokemon.pokemon_name AS 'name',
+        Pokemon.pokemon_hp AS 'hp',
+        Types.type_name AS 'type',
+        Sets.set_name AS 'set',
+        Pokemon.pokemon_flavor_text AS 'flavorText'
     FROM Pokemon
     LEFT JOIN Types ON Pokemon.type_id = Types.type_id
     LEFT JOIN Sets ON Pokemon.set_id = Sets.set_id;
@@ -80,6 +80,40 @@ app.get("/get-set-options", async (req, res) => {
         const results = await db.pool.query(getSetsQuery);
         const sets = results[0].map((setObject) => setObject.set_name);
         res.status(200).json(sets);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(400);
+    }
+});
+
+app.post("/edit-pokemon/:id", async (req, res) => {
+    let data = req.body;
+    let pokemonId = req.params.id;
+
+    let query = `
+        UPDATE Pokemon 
+        SET 
+            pokemon_name = ?, 
+            pokemon_hp = ?, 
+            pokemon_flavor_text = ?, 
+            type_id = (SELECT type_id FROM Types WHERE type_name = ?), 
+            set_id = (SELECT set_id FROM Sets WHERE set_name = ?)
+        WHERE 
+            pokemon_id = ?;
+    `;
+
+    let values = [
+        data.pokemonName,
+        data.pokemonHP,
+        data.pokemonFlavorText,
+        data.pokemonType,
+        data.pokemonSet,
+        pokemonId,
+    ];
+
+    try {
+        await db.pool.query(query, values);
+        res.sendStatus(200);
     } catch (err) {
         console.error(err);
         res.sendStatus(400);
