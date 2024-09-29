@@ -17,6 +17,17 @@
                     label="Add Pokemon"
                     @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
                 />
+                <SplitButton
+                    :pt="{
+                        pcButton: { root: 'bg-white' },
+                        pcDropdown: { root: 'bg-white' },
+                    }"
+                    class="mr-2"
+                >
+                    <span class="flex items-center">
+                        <span class="!text-custom-blue-800">More</span>
+                    </span>
+                </SplitButton>
                 <IconField class="mr-2">
                     <InputIcon class="pi pi-search" />
                     <InputText
@@ -31,6 +42,8 @@
 </template>
 
 <script setup>
+import Button from "primevue/button";
+import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
 import { useStore } from "~/store/store.js";
 import { PokemonFormMode } from "~/static/constants.js";
