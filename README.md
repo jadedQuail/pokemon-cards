@@ -38,3 +38,17 @@ API_URL=http://localhost:3000
 # Front end port
 NITRO_PORT=1111
 ```
+
+## Back-End `.env` File Template
+
+```
+# Back-end
+PORT=3000
+FRONTEND=http://localhost:1111
+
+# Database
+DB_HOST=127.0.0.1
+DB_USER=username
+DB_PASSWORD=password
+DATABASE=database_name
+```
