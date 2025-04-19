@@ -28,3 +28,13 @@ To run the front-end:
 From there, you should be able to access the front-end page - the default URL will be `https:\\localhost:3000`
 
 You will need to have a MySQL database to connect to in order for this web application to work. You can create a fresh database in MySQL somewhere (whether that be your local machine or in some cloud space), and then you can use the table definitions and test values in the file `DDL.sql` to get your database up and running such that it is compatible with this application.
+
+## Front-End `.env` File Template
+
+```
+# API Link
+API_URL=http://localhost:3000
+
+# Front end port
+NITRO_PORT=1111
+```
