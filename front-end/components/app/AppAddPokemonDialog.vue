@@ -26,7 +26,7 @@
                         autocomplete="off"
                         :invalid="!fields[FieldIds.Name].valid"
                         @update:model-value="
-                            (value) => revalidate(value, fields[FieldIds.Name])
+                            (value) => setValidityFlagForField(value, fields[FieldIds.Name])
                         "
                     />
                     <small
@@ -48,7 +48,7 @@
                         autocomplete="off"
                         :invalid="!fields[FieldIds.HP].valid"
                         @update:model-value="
-                            (value) => revalidate(value, fields[FieldIds.HP])
+                            (value) => setValidityFlagForField(value, fields[FieldIds.HP])
                         "
                     />
                     <small
@@ -73,7 +73,7 @@
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Type].valid"
                         @update:model-value="
-                            (value) => revalidate(value, fields[FieldIds.Type])
+                            (value) => setValidityFlagForField(value, fields[FieldIds.Type])
                         "
                     />
                     <small
@@ -98,7 +98,7 @@
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Set].valid"
                         @update:model-value="
-                            (value) => revalidate(value, fields[FieldIds.Set])
+                            (value) => setValidityFlagForField(value, fields[FieldIds.Set])
                         "
                     />
                     <small
@@ -123,7 +123,7 @@
                         :invalid="!fields[FieldIds.FlavorText].valid"
                         @update:model-value="
                             (value) =>
-                                revalidate(value, fields[FieldIds.FlavorText])
+                                setValidityFlagForField(value, fields[FieldIds.FlavorText])
                         "
                     />
                     <small
@@ -180,7 +180,9 @@ const types = ref([]);
 const sets = ref([]);
 
 const handleSubmit = async () => {
-    const formReady = validateForm();
+    setValidityFlagsForAllFields();
+
+    const formReady = areAllFieldsValid();
 
     if (formReady) {
         await submitPokemonHandler();
@@ -211,13 +213,15 @@ const resetFieldContent = () => {
     }
 };
 
-const revalidate = (value, field) => {
+const setValidityFlagForField = (value, field) => {
     if (field.name === FieldIds.HP) {
         if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
             field.valid = false;
         } else {
             field.valid = true;
         }
+    } else if (field.name === FieldIds.ID) {
+        field.value = true;
     } else {
         if (value.length < 1) {
             field.valid = false;
@@ -227,17 +231,14 @@ const revalidate = (value, field) => {
     }
 };
 
-const validateForm = () => {
-    let allValid = true;
-
+const areAllFieldsValid = () => {
     for (const key in fields.value) {
-        if (fields.value[key].content === "") {
-            fields.value[key].valid = false;
-            allValid = false;
+        if (fields.value[key].valid === false) {
+            return false;
         }
     }
 
-    return allValid;
+    return true;
 };
 
 const loadTypeOptions = async () => {
@@ -315,6 +316,13 @@ function canBeConvertedToPositiveInt(str) {
 
     return isInteger && !isNaN(parsedInt) && parsedInt > 0 && !hasLeadingZeros;
 }
+
+const setValidityFlagsForAllFields = () => {
+    for (const key in fields.value) {
+        const field = fields.value[key];
+        setValidityFlagForField(field.content, field);
+    }
+};
 
 onMounted(async () => {
     await loadTypeOptions();

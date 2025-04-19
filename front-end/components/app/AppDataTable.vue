@@ -111,7 +111,7 @@ const editRow = (rowData) => {
     store.setFieldContentForEditDialog({
         id: rowData.id,
         name: rowData.name,
-        hp: rowData.hp,
+        hp: String(rowData.hp),
         type: rowData.type,
         set: rowData.set,
         flavorText: rowData.flavorText,
