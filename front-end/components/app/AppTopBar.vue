@@ -31,6 +31,7 @@
                         },
                     }"
                     class="mr-2"
+                    :model="splitButtonOptions"
                 >
                     <template #dropdownicon>
                         <i class="pi pi-angle-down text-custom-blue-800"></i>
@@ -72,4 +73,19 @@ const filters = ref({
 const emitSearch = () => {
     emit("search-change", filters.value);
 };
+
+const splitButtonOptions = [
+    {
+        label: "Edit Types",
+        command: () => {
+            console.log("Going to edit types...");
+        }
+    },
+    {
+        label: "Edit Sets",
+        command: () => {
+            console.log("Going to edit sets...");
+        }
+    }
+]
 </script>
