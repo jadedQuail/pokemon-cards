@@ -21,3 +21,9 @@ export const PokemonFormMode = Object.freeze({
     Edit: "edit",
     None: "none",
 });
+
+export const CategoriesFormMode = Object.freeze({
+    Types: "types",
+    Sets: "sets",
+    None: "none",
+});

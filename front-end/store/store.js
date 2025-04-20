@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { fetchPokemonData } from "@/services/apiCalls";
-import { FieldIds, PokemonFormMode } from "~/static/constants.js";
+import { FieldIds, PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
 export const useStore = defineStore("store", {
     state: () => ({
@@ -8,7 +8,9 @@ export const useStore = defineStore("store", {
         editingPokemonId: null,
         dataLoaded: false,
         addPokemonDialogVisible: false,
+        categoriesDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
+        categoriesFormMode: CategoriesFormMode.None,
         rawFields: {
             [FieldIds.ID]: {
                 name: FieldIds.ID,
@@ -62,6 +64,14 @@ export const useStore = defineStore("store", {
             this.editingPokemonId = null;
             this.pokemonFormMode = PokemonFormMode.None;
             this.addPokemonDialogVisible = false;
+        },
+        showCategoriesDialog(formMode) {
+            this.categoriesFormMode = formMode;
+            this.categoriesDialogVisible = true;
+        },
+        hideCategoriesDialog() {
+            this.categoriesDialogVisible = false;
+            this.categoriesFormMode = CategoriesFormMode.None;
         },
         setFieldContentForEditDialog(pokemon) {
             this.rawFields[FieldIds.ID].content = pokemon.id || "";

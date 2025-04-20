@@ -61,7 +61,7 @@ import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
 import { useStore } from "~/store/store.js";
-import { PokemonFormMode } from "~/static/constants.js";
+import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
 const emit = defineEmits(["search-change"]);
 const store = useStore();
@@ -78,13 +78,13 @@ const splitButtonOptions = [
     {
         label: "Edit Types",
         command: () => {
-            console.log("Going to edit types...");
+            store.showCategoriesDialog(CategoriesFormMode.Types);
         }
     },
     {
         label: "Edit Sets",
         command: () => {
-            console.log("Going to edit sets...");
+            store.showCategoriesDialog(CategoriesFormMode.Sets);
         }
     }
 ]
