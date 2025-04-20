@@ -6,26 +6,52 @@
             :header="dialogHeader"
             :draggable="false"
             @hide="closeDialog"
-            class="min-w-[400px] !max-h-[500px]"
+            class="min-w-[450px] !max-h-[500px]"
             :pt="{
+                header: {
+                    class: [
+                        'flex items-center justify-between shrink-0',
+                        'px-6 pt-6 pb-2',
+                        'rounded-tl-lg rounded-tr-lg',
+                        'text-surface-700 dark:text-surface-0/80',
+                        'border border-b-0 border-surface-200 dark:border-surface-700'
+                    ].join(' ')
+                },
                 pcCloseButton: {
                     style: 'box-shadow: none;',
                 },
             }"
         >
+            <template #header>
+                <div class="font-semibold text-xl leading-none">
+                    Types
+                </div>
+            </template>
+            <div class="mt-1 mb-5 space-x-2">
+                <InputText type="text" v-model="value" />
+                <Button
+                    type="button"
+                    label="Add Type"
+                ></Button>
+            </div>
             <!-- Types -->
             <div
                 v-if="store.categoriesFormMode === CategoriesFormMode.Types"
-                v-for="type in types"
-                :key="type"
+                class="space-y-1"
             >
-                <Checkbox
-                    v-model="selectedTypes"
-                    :inputId="type"
-                    name="type"
-                    :value="type"
-                />
-                <label :for="type">{{ type }}</label>
+                <div
+                    v-for="type in types"
+                    :key="type"
+                    class="flex items-center gap-2"
+                >
+                    <Checkbox
+                        v-model="selectedTypes"
+                        :inputId="type"
+                        name="type"
+                        :value="type"
+                    />
+                    <label :for="type">{{ type }}</label>
+                </div>
             </div>
             <!-- Sets -->
             <div 
