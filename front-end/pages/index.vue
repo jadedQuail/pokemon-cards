@@ -3,6 +3,7 @@
         <Toast position="top-left" />
         <ConfirmDeletionDialog />
         <AddPokemonDialog />
+        <CategoriesDialog />
         <TopBar
             @search-change="updateFilters"
             class="fixed top-0 left-0 w-full z-[100]"
@@ -22,6 +23,7 @@ import MainDataTable from "../components/MainDataTable.vue";
 import TopBar from "../components/TopBar.vue";
 import AddPokemonDialog from "../components/AddPokemonDialog.vue";
 import ConfirmDeletionDialog from "../components/ConfirmDeletionDialog.vue";
+import CategoriesDialog from "../components/CategoriesDialog.vue";
 
 const filters = ref({});
 
