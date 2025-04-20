@@ -18,10 +18,10 @@
 <script setup>
 import { ref } from "vue";
 
-import MainDataTable from "../components/app/MainDataTable.vue";
-import TopBar from "../components/app/TopBar.vue";
-import AddPokemonDialog from "../components/app/AddPokemonDialog.vue";
-import ConfirmDeletionDialog from "../components/app/ConfirmDeletionDialog.vue";
+import MainDataTable from "../components/MainDataTable.vue";
+import TopBar from "../components/TopBar.vue";
+import AddPokemonDialog from "../components/AddPokemonDialog.vue";
+import ConfirmDeletionDialog from "../components/ConfirmDeletionDialog.vue";
 
 const filters = ref({});
 
