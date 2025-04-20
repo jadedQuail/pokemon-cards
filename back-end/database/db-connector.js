@@ -1,7 +1,6 @@
 var mysql = require("mysql2");
 
 // Connection to a local database server
-// TODO: Make multipleStatements = false and make it work if anything breaks
 var pool = mysql
     .createPool({
         connectionLimit: 10,
