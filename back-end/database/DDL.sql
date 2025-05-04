@@ -30,15 +30,15 @@ CREATE TABLE Pokemon (
     pokemon_name VARCHAR(145) NOT NULL,
     pokemon_hp INT NOT NULL,
     pokemon_flavor_text VARCHAR(255),
-    type_id INT NOT NULL,
-    set_id INT NOT NULL,
+    type_id INT NULL,
+    set_id INT NULL,
     PRIMARY KEY (pokemon_id),
     FOREIGN KEY (type_id)
         REFERENCES Types (type_id)
-            ON DELETE CASCADE,
+            ON DELETE SET NULL,
     FOREIGN KEY (set_id)
         REFERENCES Sets (set_id)
-            ON DELETE CASCADE
+            ON DELETE SET NULL
 );
 
 ---------------------------------------------------------------------------------------------

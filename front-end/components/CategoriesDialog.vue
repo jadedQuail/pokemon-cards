@@ -37,6 +37,7 @@
                     label="Remove Selected"
                     :disabled="removeCategoriesDisabled"
                     :severity="removeCategoriesDisabled ? null : 'danger'"
+                    @click="removeCategoryConfirmatipon"
                 ></Button>
             </div>
             <div class="space-y-1">
@@ -87,7 +88,12 @@
 import { ref } from "vue";
 import { useStore } from "~/store/store.js";
 import { CategoriesFormMode } from "~/static/constants.js";
-import { getTypeOptions, getSetOptions } from "@/services/apiCalls";
+import {
+    getTypeOptions,
+    getSetOptions,
+    deleteType,
+    deleteSet,
+} from "@/services/apiCalls";
 
 const config = useRuntimeConfig();
 
@@ -123,7 +129,10 @@ const loadSetOptions = async () => {
     }
 };
 
-const closeDialog = () => {
+const closeDialog = async () => {
+    await loadTypeOptions();
+    await loadSetOptions();
+
     store.hideCategoriesDialog();
 };
 
@@ -140,6 +149,28 @@ const dialogHeaderPlural = computed(() => {
     }
     return "Sets";
 });
+
+const removeCategoryConfirmatipon = async () => {
+    const userConfirmed = confirm(
+        `Are you sure you want to remove the selected categories?\n\nThis value will be replaced with 'null' for all Pokémon it is applicable to.`
+    );
+    if (userConfirmed) {
+        const apiUrl = config.public.API_URL;
+
+        if (store.categoriesFormMode === CategoriesFormMode.Types) {
+            for (const category of selectedCategories.value) {
+                await deleteType(apiUrl, category);
+            }
+        } else {
+            for (const category of selectedCategories.value) {
+                await deleteSet(apiUrl, category);
+            }
+        }
+
+        await store.fetchPokemonData(apiUrl);
+        closeDialog();
+    }
+};
 
 const removeCategoriesDisabled = computed(() => {
     return selectedCategories.value.length === 0;

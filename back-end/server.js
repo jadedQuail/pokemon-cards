@@ -9,18 +9,18 @@ const db = require("./database/db-connector");
 
 const allowlist = [process.env.FRONTEND];
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowlist.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-
-    // // Testing purposes only - allow any origin
     // origin: function (origin, callback) {
-    //     callback(null, true);
-    // }
+    //     if (allowlist.includes(origin)) {
+    //         callback(null, true);
+    //     } else {
+    //         callback(new Error("Not allowed by CORS"));
+    //     }
+    // },
+
+    // Testing purposes only - allow any origin
+    origin: function (origin, callback) {
+        callback(null, true);
+    },
 };
 
 app.use(cors(corsOptions));
@@ -145,6 +145,34 @@ app.post("/add-pokemon", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error(err);
+        res.sendStatus(400);
+    }
+});
+
+app.delete("/delete-type/:type", async (req, res) => {
+    const typeName = req.params.type;
+
+    const deleteQuery = `DELETE FROM Types WHERE type_name = ?`;
+
+    try {
+        await db.pool.query(deleteQuery, [typeName]);
+        res.sendStatus(200);
+    } catch (err) {
+        console.error("Error deleting type:", err);
+        res.sendStatus(400);
+    }
+});
+
+app.delete("/delete-set/:set", async (req, res) => {
+    const setName = req.params.set;
+
+    const deleteQuery = `DELETE FROM Sets WHERE set_name = ?`;
+
+    try {
+        await db.pool.query(deleteQuery, [setName]);
+        res.sendStatus(200);
+    } catch (err) {
+        console.error("Error deleting set:", err);
         res.sendStatus(400);
     }
 });

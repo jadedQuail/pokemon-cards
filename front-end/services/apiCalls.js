@@ -78,3 +78,21 @@ export async function deletePokemon(apiUrl, pokemonId) {
         throw error;
     }
 }
+
+export async function deleteType(apiUrl, typeName) {
+    try {
+        await axios.delete(`${apiUrl}/delete-type/${typeName}`);
+    } catch (error) {
+        console.error("Error deleting type:", error);
+        throw error;
+    }
+}
+
+export async function deleteSet(apiUrl, setName) {
+    try {
+        await axios.delete(`${apiUrl}/delete-set/${setName}`);
+    } catch (error) {
+        console.error("Error deleting set:", error);
+        throw error;
+    }
+}
