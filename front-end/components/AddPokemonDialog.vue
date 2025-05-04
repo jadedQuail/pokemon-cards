@@ -7,6 +7,7 @@
             :header="dialogHeader"
             class="min-w-[500px] !w-[30vw]"
             @hide="resetForm"
+            @show="refreshCategories"
             :pt="{
                 pcCloseButton: {
                     style: 'box-shadow: none;',
@@ -26,7 +27,11 @@
                         autocomplete="off"
                         :invalid="!fields[FieldIds.Name].valid"
                         @update:model-value="
-                            (value) => setValidityFlagForField(value, fields[FieldIds.Name])
+                            (value) =>
+                                setValidityFlagForField(
+                                    value,
+                                    fields[FieldIds.Name]
+                                )
                         "
                     />
                     <small
@@ -48,7 +53,11 @@
                         autocomplete="off"
                         :invalid="!fields[FieldIds.HP].valid"
                         @update:model-value="
-                            (value) => setValidityFlagForField(value, fields[FieldIds.HP])
+                            (value) =>
+                                setValidityFlagForField(
+                                    value,
+                                    fields[FieldIds.HP]
+                                )
                         "
                     />
                     <small
@@ -73,7 +82,11 @@
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Type].valid"
                         @update:model-value="
-                            (value) => setValidityFlagForField(value, fields[FieldIds.Type])
+                            (value) =>
+                                setValidityFlagForField(
+                                    value,
+                                    fields[FieldIds.Type]
+                                )
                         "
                     />
                     <small
@@ -98,7 +111,11 @@
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Set].valid"
                         @update:model-value="
-                            (value) => setValidityFlagForField(value, fields[FieldIds.Set])
+                            (value) =>
+                                setValidityFlagForField(
+                                    value,
+                                    fields[FieldIds.Set]
+                                )
                         "
                     />
                     <small
@@ -123,7 +140,10 @@
                         :invalid="!fields[FieldIds.FlavorText].valid"
                         @update:model-value="
                             (value) =>
-                                setValidityFlagForField(value, fields[FieldIds.FlavorText])
+                                setValidityFlagForField(
+                                    value,
+                                    fields[FieldIds.FlavorText]
+                                )
                         "
                     />
                     <small
@@ -324,8 +344,12 @@ const setValidityFlagsForAllFields = () => {
     }
 };
 
-onMounted(async () => {
+const refreshCategories = async () => {
     await loadTypeOptions();
     await loadSetOptions();
+};
+
+onMounted(async () => {
+    refreshCategories();
 });
 </script>

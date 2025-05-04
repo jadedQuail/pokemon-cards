@@ -96,3 +96,37 @@ export async function deleteSet(apiUrl, setName) {
         throw error;
     }
 }
+
+export async function addSet(apiUrl, setName) {
+    try {
+        await axios.post(
+            `${apiUrl}/add-set`,
+            { setName },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    } catch (error) {
+        console.error("Error adding set:", error);
+        throw error;
+    }
+}
+
+export async function addType(apiUrl, typeName) {
+    try {
+        await axios.post(
+            `${apiUrl}/add-type`,
+            { typeName },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    } catch (error) {
+        console.error("Error adding type:", error);
+        throw error;
+    }
+}

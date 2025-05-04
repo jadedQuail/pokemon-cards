@@ -142,7 +142,7 @@ app.post("/add-pokemon", async (req, res) => {
 
     try {
         await db.pool.query(query, values);
-        res.sendStatus(200);
+        res.sendStatus(201);
     } catch (err) {
         console.error(err);
         res.sendStatus(400);
@@ -187,6 +187,34 @@ app.delete("/delete-pokemon/:id", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting Pokemon:", err);
+        res.sendStatus(400);
+    }
+});
+
+app.post("/add-set", async (req, res) => {
+    const { setName } = req.body;
+
+    const insertQuery = `INSERT INTO Sets (set_name) VALUES (?);`;
+
+    try {
+        await db.pool.query(insertQuery, [setName]);
+        res.sendStatus(201);
+    } catch (err) {
+        console.error("Error adding set:", err);
+        res.sendStatus(400);
+    }
+});
+
+app.post("/add-type", async (req, res) => {
+    const { typeName } = req.body;
+
+    const insertQuery = `INSERT INTO Types (type_name) VALUES (?);`;
+
+    try {
+        await db.pool.query(insertQuery, [typeName]);
+        res.sendStatus(201);
+    } catch (err) {
+        console.error("Error adding type:", err);
         res.sendStatus(400);
     }
 });

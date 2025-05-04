@@ -27,17 +27,18 @@
                 </div>
             </template>
             <div class="mt-1 mb-5 space-x-2">
-                <InputText type="text" v-model="value" />
+                <InputText type="text" v-model="newCategoryToAdd" />
                 <Button
                     type="button"
                     :label="'Add ' + dialogHeaderSingular"
+                    @click="addCategoryConfirmation(newCategoryToAdd)"
                 ></Button>
                 <Button
                     type="button"
                     label="Remove Selected"
                     :disabled="removeCategoriesDisabled"
                     :severity="removeCategoriesDisabled ? null : 'danger'"
-                    @click="removeCategoryConfirmatipon"
+                    @click="removeCategoryConfirmation"
                 ></Button>
             </div>
             <div class="space-y-1">
@@ -93,6 +94,8 @@ import {
     getSetOptions,
     deleteType,
     deleteSet,
+    addType,
+    addSet,
 } from "@/services/apiCalls";
 
 const config = useRuntimeConfig();
@@ -102,6 +105,8 @@ const store = useStore();
 // TODO: Make these types and sets store objects so they can be used both here and on AddPokemonDialog
 const types = ref([]);
 const sets = ref([]);
+
+const newCategoryToAdd = ref("");
 
 const selectedCategories = ref([]);
 
@@ -130,8 +135,7 @@ const loadSetOptions = async () => {
 };
 
 const closeDialog = async () => {
-    await loadTypeOptions();
-    await loadSetOptions();
+    newCategoryToAdd.value = "";
 
     store.hideCategoriesDialog();
 };
@@ -150,34 +154,64 @@ const dialogHeaderPlural = computed(() => {
     return "Sets";
 });
 
-const removeCategoryConfirmatipon = async () => {
+const addCategoryConfirmation = async (categoryName) => {
+    const userConfirmed = confirm(
+        `Are you sure you would like to add this category?`
+    );
+    if (userConfirmed) {
+        await addCategory(categoryName);
+    }
+};
+
+const addCategory = async (categoryName) => {
+    const apiUrl = config.public.API_URL;
+
+    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+        await addType(apiUrl, categoryName);
+    } else {
+        await addSet(apiUrl, categoryName);
+    }
+
+    await refreshCategories();
+    await store.fetchPokemonData(apiUrl);
+};
+
+const removeCategoryConfirmation = async () => {
     const userConfirmed = confirm(
         `Are you sure you want to remove the selected categories?\n\nThis value will be replaced with 'null' for all Pokémon it is applicable to.`
     );
     if (userConfirmed) {
-        const apiUrl = config.public.API_URL;
-
-        if (store.categoriesFormMode === CategoriesFormMode.Types) {
-            for (const category of selectedCategories.value) {
-                await deleteType(apiUrl, category);
-            }
-        } else {
-            for (const category of selectedCategories.value) {
-                await deleteSet(apiUrl, category);
-            }
-        }
-
-        await store.fetchPokemonData(apiUrl);
-        closeDialog();
+        await removeCategories();
     }
+};
+
+const removeCategories = async () => {
+    const apiUrl = config.public.API_URL;
+
+    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+        for (const category of selectedCategories.value) {
+            await deleteType(apiUrl, category);
+        }
+    } else {
+        for (const category of selectedCategories.value) {
+            await deleteSet(apiUrl, category);
+        }
+    }
+
+    await refreshCategories();
+    await store.fetchPokemonData(apiUrl);
 };
 
 const removeCategoriesDisabled = computed(() => {
     return selectedCategories.value.length === 0;
 });
 
-onMounted(async () => {
+const refreshCategories = async () => {
     await loadTypeOptions();
     await loadSetOptions();
+};
+
+onMounted(async () => {
+    refreshCategories();
 });
 </script>
