@@ -77,7 +77,7 @@
                 <div class="flex flex-col flex-auto">
                     <Select
                         v-model="fields[FieldIds.Type].content"
-                        :options="types"
+                        :options="store.types"
                         placeholder=""
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Type].valid"
@@ -106,7 +106,7 @@
                 <div class="flex flex-col flex-auto">
                     <Select
                         v-model="fields[FieldIds.Set].content"
-                        :options="sets"
+                        :options="store.sets"
                         placeholder=""
                         class="flex-auto"
                         :invalid="!fields[FieldIds.Set].valid"
@@ -194,11 +194,6 @@ const { showToast } = useToastNotifications();
 
 const config = useRuntimeConfig();
 
-const formData = ref({});
-
-const types = ref([]);
-const sets = ref([]);
-
 const handleSubmit = async () => {
     setValidityFlagsForAllFields();
 
@@ -261,30 +256,6 @@ const areAllFieldsValid = () => {
     return true;
 };
 
-const loadTypeOptions = async () => {
-    try {
-        const apiUrl = config.public.API_URL;
-        types.value = await getTypeOptions(apiUrl);
-    } catch (error) {
-        console.error(
-            'Error fetching type options for "Add Pokemon" form:',
-            error
-        );
-    }
-};
-
-const loadSetOptions = async () => {
-    try {
-        const apiUrl = config.public.API_URL;
-        sets.value = await getSetOptions(apiUrl);
-    } catch (error) {
-        console.error(
-            'Error fetching set options for "Add Pokemon" form:',
-            error
-        );
-    }
-};
-
 const submitPokemonHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
@@ -345,11 +316,12 @@ const setValidityFlagsForAllFields = () => {
 };
 
 const refreshCategories = async () => {
-    await loadTypeOptions();
-    await loadSetOptions();
+    const apiUrl = config.public.API_URL;
+
+    await store.refreshCategories(apiUrl);
 };
 
 onMounted(async () => {
-    refreshCategories();
+    await refreshCategories();
 });
 </script>

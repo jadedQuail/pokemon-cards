@@ -1,5 +1,13 @@
 import { defineStore } from "pinia";
-import { fetchPokemonData } from "@/services/apiCalls";
+import {
+    fetchPokemonData,
+    getTypeOptions,
+    getSetOptions,
+    addType,
+    addSet,
+    deleteType,
+    deleteSet,
+} from "@/services/apiCalls";
 import { FieldIds, PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
 export const useStore = defineStore("store", {
@@ -11,6 +19,8 @@ export const useStore = defineStore("store", {
         categoriesDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         categoriesFormMode: CategoriesFormMode.None,
+        types: [],
+        sets: [],
         rawFields: {
             [FieldIds.ID]: {
                 name: FieldIds.ID,
@@ -55,6 +65,47 @@ export const useStore = defineStore("store", {
             } finally {
                 this.dataLoaded = true;
             }
+        },
+        async loadTypeOptions(apiUrl) {
+            try {
+                this.types = await getTypeOptions(apiUrl);
+            } catch (error) {
+                console.error("Error fetching type options:", error);
+            }
+        },
+        async loadSetOptions(apiUrl) {
+            try {
+                this.sets = await getSetOptions(apiUrl);
+            } catch (error) {
+                console.error("Error fetching set options:", error);
+            }
+        },
+        async addCategory(apiUrl, categoryName) {
+            if (this.categoriesFormMode === CategoriesFormMode.Types) {
+                await addType(apiUrl, categoryName);
+            } else {
+                await addSet(apiUrl, categoryName);
+            }
+            await this.refreshCategories(apiUrl);
+            await this.fetchPokemonData(apiUrl);
+        },
+        async removeCategories(apiUrl, categoriesToRemove) {
+            const isType = this.categoriesFormMode === CategoriesFormMode.Types;
+
+            for (const category of categoriesToRemove) {
+                if (isType) {
+                    await deleteType(apiUrl, category);
+                } else {
+                    await deleteSet(apiUrl, category);
+                }
+            }
+
+            await this.refreshCategories(apiUrl);
+            await this.fetchPokemonData(apiUrl);
+        },
+        async refreshCategories(apiUrl) {
+            await this.loadTypeOptions(apiUrl);
+            await this.loadSetOptions(apiUrl);
         },
         showAddPokemonDialog(formMode) {
             this.pokemonFormMode = formMode;
