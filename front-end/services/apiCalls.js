@@ -108,9 +108,16 @@ export async function addSet(apiUrl, setName) {
                 },
             }
         );
+        return { success: true };
     } catch (error) {
-        console.error("Error adding set:", error);
-        throw error;
+        if (error.response?.status === 409) {
+            return {
+                success: false,
+                message: "You can't add a duplicate category!",
+            };
+        }
+
+        return { success: false, message: "An unexpected error occurred." };
     }
 }
 
@@ -125,8 +132,15 @@ export async function addType(apiUrl, typeName) {
                 },
             }
         );
+        return { success: true };
     } catch (error) {
-        console.error("Error adding type:", error);
-        throw error;
+        if (error.response?.status === 409) {
+            return {
+                success: false,
+                message: "You can't add a duplicate category!",
+            };
+        }
+
+        return { success: false, message: "An unexpected error occurred." };
     }
 }

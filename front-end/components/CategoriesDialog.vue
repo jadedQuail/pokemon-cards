@@ -170,11 +170,17 @@ const addCategoryConfirmation = async (categoryName) => {
 
 const addCategory = async (categoryName) => {
     const apiUrl = config.public.API_URL;
+    let result;
 
     if (store.categoriesFormMode === CategoriesFormMode.Types) {
-        await addType(apiUrl, categoryName);
+        result = await addType(apiUrl, categoryName);
     } else {
-        await addSet(apiUrl, categoryName);
+        result = await addSet(apiUrl, categoryName);
+    }
+
+    if (!result.success) {
+        alert(result.message);
+        return;
     }
 
     await resetDialogInput();

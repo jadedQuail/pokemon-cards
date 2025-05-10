@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
         res.status(200).json(results[0]);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -60,7 +60,7 @@ app.get("/column-headers", async (req, res) => {
         res.status(200).json(headers);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -71,7 +71,7 @@ app.get("/get-type-options", async (req, res) => {
         res.status(200).json(types);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -82,7 +82,7 @@ app.get("/get-set-options", async (req, res) => {
         res.status(200).json(sets);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -116,7 +116,7 @@ app.post("/edit-pokemon/:id", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -145,7 +145,7 @@ app.post("/add-pokemon", async (req, res) => {
         res.sendStatus(201);
     } catch (err) {
         console.error(err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -159,7 +159,7 @@ app.delete("/delete-type/:type", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting type:", err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -173,7 +173,7 @@ app.delete("/delete-set/:set", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting set:", err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -187,7 +187,7 @@ app.delete("/delete-pokemon/:id", async (req, res) => {
         res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting Pokemon:", err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -200,8 +200,11 @@ app.post("/add-set", async (req, res) => {
         await db.pool.query(insertQuery, [setName]);
         res.sendStatus(201);
     } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.sendStatus(409);
+        }
         console.error("Error adding set:", err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 
@@ -214,8 +217,11 @@ app.post("/add-type", async (req, res) => {
         await db.pool.query(insertQuery, [typeName]);
         res.sendStatus(201);
     } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.sendStatus(409);
+        }
         console.error("Error adding type:", err);
-        res.sendStatus(400);
+        res.sendStatus(500);
     }
 });
 

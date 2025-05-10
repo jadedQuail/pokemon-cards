@@ -13,14 +13,14 @@ DROP TABLE IF EXISTS Sets;
 -- Types Table
 CREATE TABLE Types (
     type_id INT NOT NULL AUTO_INCREMENT,
-    type_name VARCHAR(145) NOT NULL,
+    type_name VARCHAR(145) NOT NULL UNIQUE,
     PRIMARY KEY (type_id)
 );
 
 -- Set Table
 CREATE TABLE Sets (
     set_id INT NOT NULL AUTO_INCREMENT,
-    set_name VARCHAR(145) NOT NULL,
+    set_name VARCHAR(145) NOT NULL UNIQUE,
     PRIMARY KEY (set_id)
 );
 
