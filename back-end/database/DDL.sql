@@ -9,6 +9,7 @@ USE pokemoncards;
 DROP TABLE IF EXISTS Pokemon;
 DROP TABLE IF EXISTS Types;
 DROP TABLE IF EXISTS Sets;
+DROP TABLE IF EXISTS Users;
 
 -- Types Table
 CREATE TABLE Types (
@@ -39,6 +40,15 @@ CREATE TABLE Pokemon (
     FOREIGN KEY (set_id)
         REFERENCES Sets (set_id)
             ON DELETE SET NULL
+);
+
+-- Users Table
+CREATE TABLE Users (
+    user_id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (user_id)
 );
 
 ---------------------------------------------------------------------------------------------

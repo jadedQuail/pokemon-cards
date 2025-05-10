@@ -2,10 +2,14 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const db = require("./database/db-connector");
+
+// TODO: Split this server.js into different files, too many functions in one here
+// TODO: Clean up npm vulnerabilities
 
 const allowlist = [process.env.FRONTEND];
 const corsOptions = {
@@ -46,10 +50,10 @@ const getSetsQuery = `SELECT set_name FROM Sets;`;
 app.get("/", async (req, res) => {
     try {
         let results = await db.pool.query(mainGetQuery);
-        res.status(200).json(results[0]);
+        return res.status(200).json(results[0]);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -57,10 +61,10 @@ app.get("/column-headers", async (req, res) => {
     try {
         let [, fields] = await db.pool.query(mainGetQuery);
         const headers = fields.map((field) => field.name);
-        res.status(200).json(headers);
+        return res.status(200).json(headers);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -71,7 +75,7 @@ app.get("/get-type-options", async (req, res) => {
         res.status(200).json(types);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -82,7 +86,7 @@ app.get("/get-set-options", async (req, res) => {
         res.status(200).json(sets);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -113,10 +117,10 @@ app.post("/edit-pokemon/:id", async (req, res) => {
 
     try {
         await db.pool.query(query, values);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -142,10 +146,10 @@ app.post("/add-pokemon", async (req, res) => {
 
     try {
         await db.pool.query(query, values);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -156,10 +160,10 @@ app.delete("/delete-type/:type", async (req, res) => {
 
     try {
         await db.pool.query(deleteQuery, [typeName]);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting type:", err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -170,10 +174,10 @@ app.delete("/delete-set/:set", async (req, res) => {
 
     try {
         await db.pool.query(deleteQuery, [setName]);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting set:", err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -184,10 +188,10 @@ app.delete("/delete-pokemon/:id", async (req, res) => {
 
     try {
         await db.pool.query(deleteQuery, [pokemonId]);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting Pokemon:", err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -198,13 +202,13 @@ app.post("/add-set", async (req, res) => {
 
     try {
         await db.pool.query(insertQuery, [setName]);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
             return res.sendStatus(409);
         }
         console.error("Error adding set:", err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -215,13 +219,36 @@ app.post("/add-type", async (req, res) => {
 
     try {
         await db.pool.query(insertQuery, [typeName]);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
             return res.sendStatus(409);
         }
         console.error("Error adding type:", err);
-        res.sendStatus(500);
+        return res.sendStatus(500);
+    }
+});
+
+app.post("/create-user", async (req, res) => {
+    const { username, password, isAdmin = false } = req.body;
+
+    if (!username || !password) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const insertQuery = `INSERT INTO Users (username, password_hash, is_admin) VALUES (?, ?, ?)`;
+
+        await db.pool.query(insertQuery, [username, hashedPassword, isAdmin]);
+        return res.sendStatus(201);
+    } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            return res.sendStatus(409);
+        }
+
+        console.error("Error creating user:", err);
+        return res.sendStatus(500);
     }
 });
 
