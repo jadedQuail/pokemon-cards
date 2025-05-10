@@ -52,20 +52,16 @@
                         @update:modelValue="emitSearch(filters)"
                     />
                 </IconField>
-                <h1
-                    class="ml-10 pb-1 mr-4 text-white text-xl font-sans hidden sm:block"
-                >
-                    Welcome, Josh
-                </h1>
+                <div class="ml-10 pb-1 mr-4 hidden sm:block w-[200px]">
+                    <h1 class="text-white text-xl font-sans text-right">
+                        Login
+                    </h1>
+                </div>
                 <!-- TODO: Make this tooltip colored like the rest of your color scheme -->
                 <Button
                     size="small"
-                    icon="pi pi-sign-out"
-                    v-tooltip="{
-                        value: 'Logout',
-                        showDelay: 300,
-                        hideDelay: 300,
-                    }"
+                    icon="pi pi-sign-in"
+                    @click="store.showLoginDialog()"
                     :pt="{
                         root: {
                             class: 'whitespace-nowrap mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',

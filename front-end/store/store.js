@@ -8,7 +8,11 @@ import {
     deleteType,
     deleteSet,
 } from "@/services/apiCalls";
-import { FieldIds, PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
+import {
+    FieldIds,
+    PokemonFormMode,
+    CategoriesFormMode,
+} from "~/static/constants.js";
 
 export const useStore = defineStore("store", {
     state: () => ({
@@ -17,6 +21,7 @@ export const useStore = defineStore("store", {
         dataLoaded: false,
         addPokemonDialogVisible: false,
         categoriesDialogVisible: false,
+        loginDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
@@ -123,6 +128,12 @@ export const useStore = defineStore("store", {
         hideCategoriesDialog() {
             this.categoriesDialogVisible = false;
             this.categoriesFormMode = CategoriesFormMode.None;
+        },
+        showLoginDialog() {
+            this.loginDialogVisible = true;
+        },
+        hideLoginDialog() {
+            this.loginDialogVisible = false;
         },
         setFieldContentForEditDialog(pokemon) {
             this.rawFields[FieldIds.ID].content = pokemon.id || "";
