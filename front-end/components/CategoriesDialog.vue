@@ -134,8 +134,13 @@ const loadSetOptions = async () => {
     }
 };
 
-const closeDialog = async () => {
+const resetDialogInput = async () => {
     newCategoryToAdd.value = "";
+    selectedCategories.value = [];
+};
+
+const closeDialog = async () => {
+    await resetDialogInput();
 
     store.hideCategoriesDialog();
 };
@@ -172,6 +177,7 @@ const addCategory = async (categoryName) => {
         await addSet(apiUrl, categoryName);
     }
 
+    await resetDialogInput();
     await refreshCategories();
     await store.fetchPokemonData(apiUrl);
 };
@@ -198,6 +204,7 @@ const removeCategories = async () => {
         }
     }
 
+    await resetDialogInput();
     await refreshCategories();
     await store.fetchPokemonData(apiUrl);
 };
