@@ -71,18 +71,26 @@
                 </div>
             </div>
             <!-- Buttons -->
-            <div class="flex justify-end gap-2">
-                <Button
-                    type="button"
-                    label="Cancel"
-                    severity="secondary"
-                    @click="closeDialog"
-                ></Button>
-                <Button
-                    type="button"
-                    label="Login"
-                    @click="handleSubmit"
-                ></Button>
+            <div class="flex justify-between items-center mt-4">
+                <div>
+                    New user?
+                    <a href="#" class="text-blue-500">
+                        Click here to register</a
+                    >
+                </div>
+                <div class="flex justify-end gap-2">
+                    <Button
+                        type="button"
+                        label="Cancel"
+                        severity="secondary"
+                        @click="closeDialog"
+                    ></Button>
+                    <Button
+                        type="button"
+                        label="Login"
+                        @click="handleSubmit"
+                    ></Button>
+                </div>
             </div>
         </Dialog>
     </div>
