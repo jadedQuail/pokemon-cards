@@ -4,20 +4,17 @@
             <!-- Left Content -->
             <div class="flex items-center">
                 <h1
-                    class="pl-3 pb-1 text-white text-xl font-sans hidden sm:block"
+                    class="ml-4 pb-1 text-white text-xl font-sans hidden lg:block"
                 >
                     Pokemon Card Database
                 </h1>
-            </div>
-            <!-- Right Content -->
-            <div class="flex items-center">
                 <Button
                     size="small"
                     label="Add Pokemon"
                     @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
                     :pt="{
                         root: {
-                            class: 'whitespace-nowrap mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
+                            class: 'whitespace-nowrap ml-4 mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                     }"
                 />
@@ -52,7 +49,10 @@
                         @update:modelValue="emitSearch(filters)"
                     />
                 </IconField>
-                <div class="ml-10 pb-1 mr-4 hidden sm:block w-[200px]">
+            </div>
+            <!-- Right Content -->
+            <div class="flex items-center">
+                <div class="pb-1 hidden custom-800px:block">
                     <h1 class="text-white text-xl font-sans text-right">
                         Login
                     </h1>
@@ -64,7 +64,7 @@
                     @click="store.showLoginDialog()"
                     :pt="{
                         root: {
-                            class: 'whitespace-nowrap mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
+                            class: 'whitespace-nowrap ml-4 mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                     }"
                 />
