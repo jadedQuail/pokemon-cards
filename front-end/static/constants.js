@@ -7,6 +7,11 @@ export const FieldIds = Object.freeze({
     FlavorText: "flavorText",
 });
 
+export const LoginFieldIds = Object.freeze({
+    Username: "username",
+    Password: "password",
+});
+
 export const SeverityLevels = Object.freeze({
     Success: "success",
     Info: "info",

@@ -13,18 +13,18 @@ const db = require("./database/db-connector");
 
 const allowlist = [process.env.FRONTEND];
 const corsOptions = {
-    // origin: function (origin, callback) {
-    //     if (allowlist.includes(origin)) {
-    //         callback(null, true);
-    //     } else {
-    //         callback(new Error("Not allowed by CORS"));
-    //     }
-    // },
-
-    // Testing purposes only - allow any origin
     origin: function (origin, callback) {
-        callback(null, true);
+        if (allowlist.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
     },
+
+    // // Testing purposes only - allow any origin
+    // origin: function (origin, callback) {
+    //     callback(null, true);
+    // },
 };
 
 app.use(cors(corsOptions));

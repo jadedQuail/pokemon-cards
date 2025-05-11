@@ -10,6 +10,7 @@ import {
 } from "@/services/apiCalls";
 import {
     FieldIds,
+    LoginFieldIds,
     PokemonFormMode,
     CategoriesFormMode,
 } from "~/static/constants.js";
@@ -26,6 +27,19 @@ export const useStore = defineStore("store", {
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
         sets: [],
+        // TO-DO: Rename this to be more indicative of fields specifically for adding pokemon
+        loginFields: {
+            [LoginFieldIds.Username]: {
+                name: LoginFieldIds.Username,
+                content: "",
+                valid: true,
+            },
+            [LoginFieldIds.Password]: {
+                name: LoginFieldIds.Password,
+                content: "",
+                valid: true,
+            },
+        },
         rawFields: {
             [FieldIds.ID]: {
                 name: FieldIds.ID,
