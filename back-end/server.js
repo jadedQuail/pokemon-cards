@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,18 +14,18 @@ const db = require("./database/db-connector");
 
 const allowlist = [process.env.FRONTEND];
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowlist.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-
-    // // Testing purposes only - allow any origin
     // origin: function (origin, callback) {
-    //     callback(null, true);
+    //     if (allowlist.includes(origin)) {
+    //         callback(null, true);
+    //     } else {
+    //         callback(new Error("Not allowed by CORS"));
+    //     }
     // },
+
+    // Testing purposes only - allow any origin
+    origin: function (origin, callback) {
+        callback(null, true);
+    },
 };
 
 app.use(cors(corsOptions));
@@ -250,6 +251,45 @@ app.post("/create-user", async (req, res) => {
         console.error("Error creating user:", err);
         return res.sendStatus(500);
     }
+});
+
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `SELECT * FROM Users WHERE username = ? LIMIT 1`;
+        const [results] = await db.pool.query(query, [username]);
+
+        if (results.length === 0) {
+            return res.status(401);
+        }
+
+        const user = results[0];
+        const match = await bcrypt.compare(password, user.password_hash);
+
+        if (!match) {
+            return res.status(401);
+        }
+
+        const token = jwt.sign(
+            {
+                id: user.user_id,
+                username: user.username,
+                isAdmin: user.is_admin,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
+        );
+
+        return res.status(200).json({
+            message: "Login successful.",
+            token,
+        });
+    } catch (err) {}
 });
 
 app.listen(PORT, () => {
