@@ -11,6 +11,7 @@
             modal
             header="Login"
             class="min-w-[500px] !w-[30vw]"
+            @hide="resetForm"
             :pt="{
                 pcCloseButton: {
                     style: 'box-shadow: none;',
@@ -109,19 +110,25 @@ const store = useStore();
 
 const fields = ref(store.loginFields);
 
-const handleSubmit = async () => {
-    setValidityFlagForAllFields();
+const resetForm = () => {
+    resetValidationFlags();
+    resetFieldContent();
+};
 
-    const formReady = areAllFieldsValid();
-
-    if (formReady) {
-        await submitLoginHandler();
-        closeDialog();
+const resetValidationFlags = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].valid = true;
+        }
     }
 };
 
-const closeDialog = () => {
-    store.hideLoginDialog();
+const resetFieldContent = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].content = "";
+        }
+    }
 };
 
 const setValidityFlagForField = (value, field) => {
@@ -149,6 +156,17 @@ const areAllFieldsValid = () => {
     return true;
 };
 
+const handleSubmit = async () => {
+    setValidityFlagForAllFields();
+
+    const formReady = areAllFieldsValid();
+
+    if (formReady) {
+        await submitLoginHandler();
+        closeDialog();
+    }
+};
+
 const submitLoginHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
@@ -162,6 +180,10 @@ const submitLoginHandler = async () => {
     } catch (error) {
         console.error("Error logging in:", error);
     }
+};
+
+const closeDialog = () => {
+    store.hideLoginDialog();
 };
 
 onMounted(async () => {
