@@ -9,27 +9,35 @@ const PORT = process.env.PORT || 3000;
 
 const db = require("./database/db-connector");
 
-// TODO: Split this server.js into different files, too many functions in one here
+const categoryRoutes = require("./routes/categoryRoutes");
+
+// TODO: Rename categoryController and categoryRoutes to typeController and typeRoutes
+// TODO: Move set-related functions into own route/controller file
+// TODO: Move auth-related functions into own route/controller file
+// TODO: Move pokemon-related functions into own route/controller file
+
 // TODO: Clean up npm vulnerabilities
 
 const allowlist = [process.env.FRONTEND];
 const corsOptions = {
-    // origin: function (origin, callback) {
-    //     if (allowlist.includes(origin)) {
-    //         callback(null, true);
-    //     } else {
-    //         callback(new Error("Not allowed by CORS"));
-    //     }
-    // },
-
-    // Testing purposes only - allow any origin
     origin: function (origin, callback) {
-        callback(null, true);
+        if (allowlist.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
     },
+
+    // // Testing purposes only - allow any origin
+    // origin: function (origin, callback) {
+    //     callback(null, true);
+    // },
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use("/categories", categoryRoutes);
 
 const mainGetQuery = `
     SELECT 
@@ -63,17 +71,6 @@ app.get("/column-headers", async (req, res) => {
         let [, fields] = await db.pool.query(mainGetQuery);
         const headers = fields.map((field) => field.name);
         return res.status(200).json(headers);
-    } catch (err) {
-        console.error(err);
-        return res.sendStatus(500);
-    }
-});
-
-app.get("/get-type-options", async (req, res) => {
-    try {
-        const results = await db.pool.query(getTypesQuery);
-        const types = results[0].map((typeObject) => typeObject.type_name);
-        res.status(200).json(types);
     } catch (err) {
         console.error(err);
         return res.sendStatus(500);
@@ -154,20 +151,6 @@ app.post("/add-pokemon", async (req, res) => {
     }
 });
 
-app.delete("/delete-type/:type", async (req, res) => {
-    const typeName = req.params.type;
-
-    const deleteQuery = `DELETE FROM Types WHERE type_name = ?`;
-
-    try {
-        await db.pool.query(deleteQuery, [typeName]);
-        return res.sendStatus(200);
-    } catch (err) {
-        console.error("Error deleting type:", err);
-        return res.sendStatus(500);
-    }
-});
-
 app.delete("/delete-set/:set", async (req, res) => {
     const setName = req.params.set;
 
@@ -209,23 +192,6 @@ app.post("/add-set", async (req, res) => {
             return res.sendStatus(409);
         }
         console.error("Error adding set:", err);
-        return res.sendStatus(500);
-    }
-});
-
-app.post("/add-type", async (req, res) => {
-    const { typeName } = req.body;
-
-    const insertQuery = `INSERT INTO Types (type_name) VALUES (?);`;
-
-    try {
-        await db.pool.query(insertQuery, [typeName]);
-        return res.sendStatus(201);
-    } catch (err) {
-        if (err.code === "ER_DUP_ENTRY") {
-            return res.sendStatus(409);
-        }
-        console.error("Error adding type:", err);
         return res.sendStatus(500);
     }
 });
