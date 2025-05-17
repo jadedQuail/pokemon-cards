@@ -265,14 +265,14 @@ app.post("/login", async (req, res) => {
         const [results] = await db.pool.query(query, [username]);
 
         if (results.length === 0) {
-            return res.status(401);
+            return res.sendStatus(401);
         }
 
         const user = results[0];
         const match = await bcrypt.compare(password, user.password_hash);
 
         if (!match) {
-            return res.status(401);
+            return res.sendStatus(401);
         }
 
         const token = jwt.sign(
@@ -289,7 +289,10 @@ app.post("/login", async (req, res) => {
             message: "Login successful.",
             token,
         });
-    } catch (err) {}
+    } catch (err) {
+        console.error("Error logging in:", err);
+        return res.sendStatus(500);
+    }
 });
 
 app.listen(PORT, () => {

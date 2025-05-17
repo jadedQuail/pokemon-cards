@@ -101,6 +101,10 @@ import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import { LoginFieldIds } from "~/static/constants.js";
 
+import { logUserIn } from "@/services/apiCalls";
+
+const config = useRuntimeConfig();
+
 const store = useStore();
 
 const fields = ref(store.loginFields);
@@ -146,7 +150,18 @@ const areAllFieldsValid = () => {
 };
 
 const submitLoginHandler = async () => {
-    console.log("We made it, baby!");
+    try {
+        const apiUrl = config.public.API_URL;
+
+        const username = fields.value[LoginFieldIds.Username].content;
+        const password = fields.value[LoginFieldIds.Password].content;
+
+        const result = await logUserIn(apiUrl, username, password);
+
+        console.log(result);
+    } catch (error) {
+        console.error("Error logging in:", error);
+    }
 };
 
 onMounted(async () => {

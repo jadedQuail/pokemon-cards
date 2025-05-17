@@ -144,3 +144,33 @@ export async function addType(apiUrl, typeName) {
         return { success: false, message: "An unexpected error occurred." };
     }
 }
+
+export async function logUserIn(apiUrl, username, password) {
+    try {
+        const response = await axios.post(
+            `${apiUrl}/login`,
+            {
+                username,
+                password,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        const token = response.data.token;
+        localStorage.setItem("jwt_token", token);
+
+        return {
+            success: true,
+            user: JSON.parse(atob(token.split(".")[1])),
+        };
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || "Login failed.",
+        };
+    }
+}
