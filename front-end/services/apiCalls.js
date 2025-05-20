@@ -62,7 +62,7 @@ export async function getTypeOptions(apiUrl) {
 
 export async function getSetOptions(apiUrl) {
     try {
-        const response = await axios.get(`${apiUrl}/get-set-options`);
+        const response = await axios.get(`${apiUrl}/sets`);
         return response.data;
     } catch (error) {
         console.error("Error fetching set options:", error);
@@ -90,7 +90,7 @@ export async function deleteType(apiUrl, typeName) {
 
 export async function deleteSet(apiUrl, setName) {
     try {
-        await axios.delete(`${apiUrl}/delete-set/${setName}`);
+        await axios.delete(`${apiUrl}/sets/${setName}`);
     } catch (error) {
         console.error("Error deleting set:", error);
         throw error;
@@ -100,7 +100,7 @@ export async function deleteSet(apiUrl, setName) {
 export async function addSet(apiUrl, setName) {
     try {
         await axios.post(
-            `${apiUrl}/add-set`,
+            `${apiUrl}/sets`,
             { setName },
             {
                 headers: {

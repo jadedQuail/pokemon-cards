@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 const db = require("./database/db-connector");
 
 const typeRoutes = require("./routes/typeRoutes");
+const setRoutes = require("./routes/setRoutes");
 
 // TODO: Rename categoryController and categoryRoutes to typeController and typeRoutes
 // TODO: Move set-related functions into own route/controller file
@@ -38,6 +39,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/types", typeRoutes);
+app.use("/sets", setRoutes);
 
 const mainGetQuery = `
     SELECT 
@@ -51,10 +53,6 @@ const mainGetQuery = `
     LEFT JOIN Types ON Pokemon.type_id = Types.type_id
     LEFT JOIN Sets ON Pokemon.set_id = Sets.set_id;
 `;
-
-const getTypesQuery = `SELECT type_name FROM Types;`;
-
-const getSetsQuery = `SELECT set_name FROM Sets;`;
 
 app.get("/", async (req, res) => {
     try {
@@ -71,17 +69,6 @@ app.get("/column-headers", async (req, res) => {
         let [, fields] = await db.pool.query(mainGetQuery);
         const headers = fields.map((field) => field.name);
         return res.status(200).json(headers);
-    } catch (err) {
-        console.error(err);
-        return res.sendStatus(500);
-    }
-});
-
-app.get("/get-set-options", async (req, res) => {
-    try {
-        const results = await db.pool.query(getSetsQuery);
-        const sets = results[0].map((setObject) => setObject.set_name);
-        res.status(200).json(sets);
     } catch (err) {
         console.error(err);
         return res.sendStatus(500);
@@ -151,20 +138,6 @@ app.post("/add-pokemon", async (req, res) => {
     }
 });
 
-app.delete("/delete-set/:set", async (req, res) => {
-    const setName = req.params.set;
-
-    const deleteQuery = `DELETE FROM Sets WHERE set_name = ?`;
-
-    try {
-        await db.pool.query(deleteQuery, [setName]);
-        return res.sendStatus(200);
-    } catch (err) {
-        console.error("Error deleting set:", err);
-        return res.sendStatus(500);
-    }
-});
-
 app.delete("/delete-pokemon/:id", async (req, res) => {
     const pokemonId = req.params.id;
 
@@ -175,23 +148,6 @@ app.delete("/delete-pokemon/:id", async (req, res) => {
         return res.sendStatus(200);
     } catch (err) {
         console.error("Error deleting Pokemon:", err);
-        return res.sendStatus(500);
-    }
-});
-
-app.post("/add-set", async (req, res) => {
-    const { setName } = req.body;
-
-    const insertQuery = `INSERT INTO Sets (set_name) VALUES (?);`;
-
-    try {
-        await db.pool.query(insertQuery, [setName]);
-        return res.sendStatus(201);
-    } catch (err) {
-        if (err.code === "ER_DUP_ENTRY") {
-            return res.sendStatus(409);
-        }
-        console.error("Error adding set:", err);
         return res.sendStatus(500);
     }
 });
