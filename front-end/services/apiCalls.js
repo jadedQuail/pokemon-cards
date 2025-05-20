@@ -148,7 +148,7 @@ export async function addType(apiUrl, typeName) {
 export async function logUserIn(apiUrl, username, password) {
     try {
         const response = await axios.post(
-            `${apiUrl}/login`,
+            `${apiUrl}/auth/login`,
             {
                 username,
                 password,
