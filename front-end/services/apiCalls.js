@@ -52,7 +52,7 @@ export async function addPokemon(apiUrl, fields) {
 
 export async function getTypeOptions(apiUrl) {
     try {
-        const response = await axios.get(`${apiUrl}/categories/types`);
+        const response = await axios.get(`${apiUrl}/types`);
         return response.data;
     } catch (error) {
         console.error("Error fetching type options:", error);
@@ -81,7 +81,7 @@ export async function deletePokemon(apiUrl, pokemonId) {
 
 export async function deleteType(apiUrl, typeName) {
     try {
-        await axios.delete(`${apiUrl}/categories/types/${typeName}`);
+        await axios.delete(`${apiUrl}/types/${typeName}`);
     } catch (error) {
         console.error("Error deleting type:", error);
         throw error;
@@ -124,7 +124,7 @@ export async function addSet(apiUrl, setName) {
 export async function addType(apiUrl, typeName) {
     try {
         await axios.post(
-            `${apiUrl}/categories/types`,
+            `${apiUrl}/types`,
             { typeName },
             {
                 headers: {

@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 const db = require("./database/db-connector");
 
-const categoryRoutes = require("./routes/categoryRoutes");
+const typeRoutes = require("./routes/typeRoutes");
 
 // TODO: Rename categoryController and categoryRoutes to typeController and typeRoutes
 // TODO: Move set-related functions into own route/controller file
@@ -37,7 +37,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/categories", categoryRoutes);
+app.use("/types", typeRoutes);
 
 const mainGetQuery = `
     SELECT 
