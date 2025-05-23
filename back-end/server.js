@@ -3,31 +3,26 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+const ALLOW_ALL_ORIGINS = process.env.ALLOW_ALL_ORIGINS === "true";
+const ALLOW_LIST = [process.env.FRONTEND];
 
 const pokemonRoutes = require("./routes/pokemonRoutes");
 const typeRoutes = require("./routes/typeRoutes");
 const setRoutes = require("./routes/setRoutes");
 const authRoutes = require("./routes/authRoutes");
 
-// TODO: Move pokemon-related functions into own route/controller file
+// TODO: Clean up npm vulnerabilities on the back-end
 
-// TODO: Clean up npm vulnerabilities
-
-const allowlist = [process.env.FRONTEND];
 const corsOptions = {
     origin: function (origin, callback) {
-        if (allowlist.includes(origin)) {
+        if (ALLOW_ALL_ORIGINS || ALLOW_LIST.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
         }
     },
-
-    // // Testing purposes only - allow any origin
-    // origin: function (origin, callback) {
-    //     callback(null, true);
-    // },
 };
 
 app.use(cors(corsOptions));
