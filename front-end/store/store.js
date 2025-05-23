@@ -17,6 +17,7 @@ import {
 
 export const useStore = defineStore("store", {
     state: () => ({
+        user: null,
         pokemonData: [],
         editingPokemonId: null,
         dataLoaded: false,
@@ -157,6 +158,19 @@ export const useStore = defineStore("store", {
             this.rawFields[FieldIds.Set].content = pokemon.set || "";
             this.rawFields[FieldIds.FlavorText].content =
                 pokemon.flavorText || "";
+        },
+        setUserFromToken(token) {
+            try {
+                const decoded = JSON.parse(atob(token.split(".")[1]));
+                this.user = decoded;
+            } catch (err) {
+                console.error("Invalid JWT:", err);
+            }
+        },
+        // TODO: Shouldn't this be the responsibility of a "logout" function? I'm not sure
+        clearUser() {
+            this.user = null;
+            localStorage.removeItem("jwt_token");
         },
     },
 });

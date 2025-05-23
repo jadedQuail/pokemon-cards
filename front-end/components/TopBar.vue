@@ -54,7 +54,7 @@
             <div class="flex items-center">
                 <div class="pb-1 hidden custom-800px:block">
                     <h1 class="text-white text-xl font-sans text-right">
-                        Login
+                        {{ getGreetingText() }}
                     </h1>
                 </div>
                 <!-- TODO: Make this tooltip colored like the rest of your color scheme -->
@@ -89,6 +89,10 @@ const filters = ref({
 
 const emitSearch = () => {
     emit("search-change", filters.value);
+};
+
+const getGreetingText = () => {
+    return store.user ? `Hello, ${store.user.username}` : "Login";
 };
 
 const splitButtonOptions = [

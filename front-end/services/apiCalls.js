@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useStore } from "~/store/store.js";
+
+// TODO: Split up these API calls into separate files, same organization as routes on the back-end
 
 export async function fetchPokemonData(apiUrl) {
     try {
@@ -146,6 +149,8 @@ export async function addType(apiUrl, typeName) {
 }
 
 export async function logUserIn(apiUrl, username, password) {
+    const store = useStore();
+
     try {
         const response = await axios.post(
             `${apiUrl}/auth/login`,
@@ -162,6 +167,8 @@ export async function logUserIn(apiUrl, username, password) {
 
         const token = response.data.token;
         localStorage.setItem("jwt_token", token);
+
+        store.setUserFromToken(token);
 
         return {
             success: true,
