@@ -92,7 +92,8 @@ const emitSearch = () => {
 };
 
 const getGreetingText = () => {
-    return store.user ? `Hello, ${store.user.username}` : "Login";
+    const username = store.user?.username;
+    return username && username.trim() !== "" ? `Hello, ${username}` : "Login";
 };
 
 const splitButtonOptions = [
