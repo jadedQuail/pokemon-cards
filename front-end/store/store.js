@@ -15,9 +15,17 @@ import {
     CategoriesFormMode,
 } from "~/static/constants.js";
 
+function getDefaultUser() {
+    return {
+        id: null,
+        username: "",
+        isAdmin: false,
+    };
+}
+
 export const useStore = defineStore("store", {
     state: () => ({
-        user: null,
+        user: getDefaultUser(),
         pokemonData: [],
         editingPokemonId: null,
         dataLoaded: false,
