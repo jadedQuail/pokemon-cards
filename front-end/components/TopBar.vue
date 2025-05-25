@@ -58,10 +58,9 @@
                         {{ getGreetingText() }}
                     </h1>
                 </div>
-                <!-- TODO: Make this tooltip colored like the rest of your color scheme -->
                 <Button
                     size="small"
-                    icon="pi pi-sign-in"
+                    :icon="loginIcon"
                     @click="store.showLoginDialog()"
                     :pt="{
                         root: {
@@ -111,4 +110,8 @@ const splitButtonOptions = [
         },
     },
 ];
+
+const loginIcon = computed(() => {
+    return store.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
+});
 </script>

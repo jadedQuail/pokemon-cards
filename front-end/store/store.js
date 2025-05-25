@@ -83,6 +83,16 @@ export const useStore = defineStore("store", {
         },
     }),
 
+    getters: {
+        isLoggedIn: (state) => {
+            return (
+                state.user &&
+                typeof state.user.id === "number" &&
+                state.user.id !== null
+            );
+        },
+    },
+
     actions: {
         async fetchPokemonData(apiUrl) {
             try {
