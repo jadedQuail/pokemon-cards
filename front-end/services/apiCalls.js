@@ -106,7 +106,9 @@ export async function deleteType(apiUrl, typeName) {
 
 export async function deleteSet(apiUrl, setName) {
     try {
-        await axios.delete(`${apiUrl}/sets/${setName}`);
+        await axios.delete(`${apiUrl}/sets/${setName}`, {
+            headers: getAuthHeaders(),
+        });
     } catch (error) {
         console.error("Error deleting set:", error);
         throw error;
@@ -118,11 +120,7 @@ export async function addSet(apiUrl, setName) {
         await axios.post(
             `${apiUrl}/sets`,
             { setName },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+            { headers: getAuthHeaders() }
         );
         return { success: true };
     } catch (error) {
