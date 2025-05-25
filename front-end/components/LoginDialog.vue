@@ -73,6 +73,9 @@
                         </small>
                     </div>
                 </div>
+                <div v-if="loginError" class="text-red-500">
+                    Your username or password is incorrect. Please try again!
+                </div>
                 <!-- Buttons -->
                 <div class="flex justify-between items-center mt-4">
                     <div>
@@ -109,9 +112,12 @@ const store = useStore();
 
 const fields = ref(store.loginFields);
 
+const loginError = ref(false);
+
 const resetForm = () => {
     resetValidationFlags();
     resetFieldContent();
+    resetLoginErrorState();
 };
 
 const resetValidationFlags = () => {
@@ -128,6 +134,10 @@ const resetFieldContent = () => {
             fields.value[key].content = "";
         }
     }
+};
+
+const resetLoginErrorState = () => {
+    loginError.value = false;
 };
 
 const setValidityFlagForField = (value, field) => {
@@ -161,8 +171,10 @@ const handleSubmit = async () => {
     const formReady = areAllFieldsValid();
 
     if (formReady) {
-        await submitLoginHandler();
-        closeDialog();
+        const loginSucceeded = await submitLoginHandler();
+        if (loginSucceeded) {
+            closeDialog();
+        }
     }
 };
 
@@ -174,16 +186,22 @@ const submitLoginHandler = async () => {
         const password = fields.value[LoginFieldIds.Password].content;
 
         const result = await logUserIn(apiUrl, username, password);
+
+        setLoginErrorState(result);
+
+        return result && result.success;
     } catch (error) {
         console.error("Error logging in:", error);
+        loginError.value = true;
+        return false;
     }
+};
+
+const setLoginErrorState = (loginAttemptResult) => {
+    loginError.value = !(loginAttemptResult && loginAttemptResult.success);
 };
 
 const closeDialog = () => {
     store.hideLoginDialog();
 };
-
-onMounted(async () => {
-    console.log(fields.value);
-});
 </script>
