@@ -41,9 +41,7 @@ export default defineNuxtConfig({
     },
 
     // Plugins
-    plugins: [
-        // Add plugins here
-    ],
+    plugins: ["~/plugins/auth.client.js"],
 
     // Auto import components
     components: true,

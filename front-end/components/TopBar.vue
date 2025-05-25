@@ -111,6 +111,7 @@ const splitButtonOptions = [
     },
 ];
 
+// TODO: Get this icon to stop flickering on page reload
 const loginIcon = computed(() => {
     return store.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
 });

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="store.isAuthInitialized">
         <Toast position="top-left" />
         <ConfirmDeletionDialog />
         <AddPokemonDialog />
@@ -28,6 +28,10 @@ import ConfirmDeletionDialog from "../components/ConfirmDeletionDialog.vue";
 import CategoriesDialog from "../components/CategoriesDialog.vue";
 import LoginDialog from "../components/LoginDialog.vue";
 import LogoutDialog from "../components/LogoutDialog.vue";
+
+import { useStore } from "~/store/store.js";
+
+const store = useStore();
 
 const filters = ref({});
 

@@ -48,8 +48,9 @@ const handleConfirmClick = () => {
     closeDialog();
 };
 
-const logUserOut = () => {
+const logUserOut = async () => {
     store.clearUser();
+    await nextTick();
 };
 
 const closeDialog = () => {
