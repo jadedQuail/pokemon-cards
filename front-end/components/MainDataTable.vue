@@ -23,7 +23,11 @@
             <Column field="type" header="Type" sortable></Column>
             <Column field="set" header="Set" sortable></Column>
             <Column field="flavorText" header="Flavor Text" sortable></Column>
-            <Column header="Options" bodyClass="!pl-3">
+            <Column
+                header="Options"
+                bodyClass="!pl-3"
+                v-if="store.user.isAdmin"
+            >
                 <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
                         <InputIcon

@@ -4,21 +4,23 @@
             <!-- Left Content -->
             <div class="flex items-center">
                 <h1
-                    class="ml-4 pb-1 text-white text-xl font-sans hidden lg:block"
+                    class="m-4 pb-1 text-white text-xl font-sans hidden lg:block"
                 >
                     Pokemon Card Database
                 </h1>
                 <Button
+                    v-if="store.user.isAdmin"
                     size="small"
                     label="Add Pokemon"
                     @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
                     :pt="{
                         root: {
-                            class: 'whitespace-nowrap ml-4 mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
+                            class: 'whitespace-nowrap mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                     }"
                 />
                 <SplitButton
+                    v-if="store.user.isAdmin"
                     :pt="{
                         pcButton: {
                             root: 'bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
@@ -27,7 +29,6 @@
                             root: 'bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 w-10 px-0 gap-0 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                     }"
-                    class="mr-2"
                     :model="splitButtonOptions"
                 >
                     <template #dropdownicon>
@@ -41,7 +42,7 @@
                         >
                     </span>
                 </SplitButton>
-                <IconField>
+                <IconField class="ml-2">
                     <InputIcon class="pi pi-search" />
                     <InputText
                         v-model="filters['global'].value"
