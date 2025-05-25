@@ -14,7 +14,6 @@ const setRoutes = require("./routes/setRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 // TODO: Clean up npm vulnerabilities on the back-end
-// TODO: Prevent add/edit/delete backend functions from being executed unless done by an admin user
 // TODO: Get nuxt and other package files out of my search results in VS Code
 
 const corsOptions = {

@@ -97,7 +97,9 @@ export async function deletePokemon(apiUrl, pokemonId) {
 
 export async function deleteType(apiUrl, typeName) {
     try {
-        await axios.delete(`${apiUrl}/types/${typeName}`);
+        await axios.delete(`${apiUrl}/types/${typeName}`, {
+            headers: getAuthHeaders(),
+        });
     } catch (error) {
         console.error("Error deleting type:", error);
         throw error;
@@ -140,11 +142,7 @@ export async function addType(apiUrl, typeName) {
         await axios.post(
             `${apiUrl}/types`,
             { typeName },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+            { headers: getAuthHeaders() }
         );
         return { success: true };
     } catch (error) {
