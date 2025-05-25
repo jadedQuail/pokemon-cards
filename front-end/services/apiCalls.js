@@ -3,6 +3,21 @@ import { useStore } from "~/store/store.js";
 
 // TODO: Split up these API calls into separate files, same organization as routes on the back-end
 
+function getAuthHeaders() {
+    const token = localStorage.getItem("jwt_token");
+
+    const authHeader = {};
+
+    if (token) {
+        authHeader.Authorization = `Bearer ${token}`;
+    }
+
+    return {
+        "Content-Type": "application/json",
+        ...authHeader,
+    };
+}
+
 export async function fetchPokemonData(apiUrl) {
     try {
         const response = await axios.get(`${apiUrl}/pokemon`);
@@ -23,9 +38,7 @@ export async function editPokemon(apiUrl, fields, id) {
             pokemonSet: fields.set.content,
         };
         await axios.post(`${apiUrl}/pokemon/edit/${id}`, dataToSend, {
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
         });
     } catch (error) {
         console.error("Error posting data:", error);
@@ -43,9 +56,7 @@ export async function addPokemon(apiUrl, fields) {
             pokemonSet: fields.set.content,
         };
         await axios.post(`${apiUrl}/pokemon/add`, dataToSend, {
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getAuthHeaders(),
         });
     } catch (error) {
         console.error("Error posting data:", error);
@@ -75,7 +86,9 @@ export async function getSetOptions(apiUrl) {
 
 export async function deletePokemon(apiUrl, pokemonId) {
     try {
-        await axios.delete(`${apiUrl}/pokemon/${pokemonId}`);
+        await axios.delete(`${apiUrl}/pokemon/${pokemonId}`, {
+            headers: getAuthHeaders(),
+        });
     } catch (error) {
         console.error("Error deleting Pokemon:", error);
         throw error;
