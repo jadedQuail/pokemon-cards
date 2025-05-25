@@ -18,6 +18,7 @@
                 },
             }"
         >
+            <!-- TODO: Wrap the other form components in a <form> tag -->
             <form @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">

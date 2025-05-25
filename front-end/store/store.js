@@ -15,7 +15,7 @@ import {
     CategoriesFormMode,
 } from "~/static/constants.js";
 
-function getDefaultUser() {
+function getNullUser() {
     return {
         id: null,
         username: "",
@@ -25,13 +25,14 @@ function getDefaultUser() {
 
 export const useStore = defineStore("store", {
     state: () => ({
-        user: getDefaultUser(),
+        user: getNullUser(),
         pokemonData: [],
         editingPokemonId: null,
         dataLoaded: false,
         addPokemonDialogVisible: false,
         categoriesDialogVisible: false,
         loginDialogVisible: false,
+        logoutDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
@@ -168,6 +169,12 @@ export const useStore = defineStore("store", {
         hideLoginDialog() {
             this.loginDialogVisible = false;
         },
+        showLogoutDialog() {
+            this.logoutDialogVisible = true;
+        },
+        hideLogoutDialog() {
+            this.logoutDialogVisible = false;
+        },
         setFieldContentForEditDialog(pokemon) {
             this.rawFields[FieldIds.ID].content = pokemon.id || "";
             this.rawFields[FieldIds.Name].content = pokemon.name || "";
@@ -187,7 +194,7 @@ export const useStore = defineStore("store", {
         },
         // TODO: Shouldn't this be the responsibility of a "logout" function? I'm not sure
         clearUser() {
-            this.user = null;
+            this.user = getNullUser();
             localStorage.removeItem("jwt_token");
         },
     },

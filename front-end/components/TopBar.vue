@@ -61,7 +61,7 @@
                 <Button
                     size="small"
                     :icon="loginIcon"
-                    @click="store.showLoginDialog()"
+                    @click="handleLoginLogoutClick()"
                     :pt="{
                         root: {
                             class: 'whitespace-nowrap ml-4 mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
@@ -114,4 +114,12 @@ const splitButtonOptions = [
 const loginIcon = computed(() => {
     return store.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
 });
+
+function handleLoginLogoutClick() {
+    if (store.isLoggedIn) {
+        store.showLogoutDialog();
+    } else {
+        store.showLoginDialog();
+    }
+}
 </script>

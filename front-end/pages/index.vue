@@ -5,6 +5,7 @@
         <AddPokemonDialog />
         <CategoriesDialog />
         <LoginDialog />
+        <LogoutDialog />
         <TopBar
             @search-change="updateFilters"
             class="fixed top-0 left-0 w-full z-[100]"
@@ -26,6 +27,7 @@ import AddPokemonDialog from "../components/AddPokemonDialog.vue";
 import ConfirmDeletionDialog from "../components/ConfirmDeletionDialog.vue";
 import CategoriesDialog from "../components/CategoriesDialog.vue";
 import LoginDialog from "../components/LoginDialog.vue";
+import LogoutDialog from "../components/LogoutDialog.vue";
 
 const filters = ref({});
 
