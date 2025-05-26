@@ -13,7 +13,7 @@
             }"
         >
             <form @submit.prevent="handleSubmit">
-                <!-- Username --->
+                <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label class="font-semibold w-24">Username</label>
                     <div class="flex flex-col flex-auto">
@@ -39,8 +39,81 @@
                         </small>
                     </div>
                 </div>
-                <!-- Password --->
-                <!-- Confirm Password --->
+                <!-- Password -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label class="font-semibold w-24">Password</label>
+                    <div class="flex flex-col flex-auto">
+                        <Password
+                            v-model="fields[RegisterFieldIds.Password].content"
+                            :id="RegisterFieldIds.Password"
+                            :feedback="false"
+                            autocomplete="off"
+                            :inputStyle="{ width: '100%' }"
+                            :invalid="!fields[RegisterFieldIds.Password].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[RegisterFieldIds.Password]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[RegisterFieldIds.Password].valid"
+                            class="text-red-500"
+                        >
+                            You must provide a password.
+                        </small>
+                    </div>
+                </div>
+                <!-- Confirm Password -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label class="font-semibold w-24">Confirm Password</label>
+                    <div class="flex flex-col flex-auto">
+                        <Password
+                            v-model="
+                                fields[RegisterFieldIds.ConfirmPassword].content
+                            "
+                            :id="RegisterFieldIds.Password"
+                            :feedback="false"
+                            autocomplete="off"
+                            :inputStyle="{ width: '100%' }"
+                            :invalid="
+                                !fields[RegisterFieldIds.ConfirmPassword].valid
+                            "
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[RegisterFieldIds.ConfirmPassword]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="
+                                !fields[RegisterFieldIds.ConfirmPassword].valid
+                            "
+                            class="text-red-500"
+                        >
+                            You must type your password again
+                        </small>
+                        <!-- TODO: Need this error message to be dynamic based on whether this is blank or doesn't match the password -->
+                    </div>
+                </div>
+                <!-- Buttons -->
+                <div class="flex justify-end gap-2">
+                    <Button
+                        type="button"
+                        label="Cancel"
+                        severity="secondary"
+                        @click="closeDialog"
+                    ></Button>
+                    <Button
+                        type="button"
+                        label="Save"
+                        @click="handleSubmit"
+                    ></Button>
+                </div>
             </form>
         </Dialog>
     </div>
@@ -66,4 +139,8 @@ const setValidityFlagForField = (value, field) => {
 };
 
 const handleSubmit = () => {};
+
+const closeDialog = () => {
+    store.hideRegisterDialog();
+};
 </script>
