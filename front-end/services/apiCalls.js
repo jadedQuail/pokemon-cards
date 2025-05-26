@@ -157,6 +157,37 @@ export async function addType(apiUrl, typeName) {
     }
 }
 
+export async function createUser(
+    apiUrl,
+    username,
+    password,
+    confirmPassword,
+    isAdmin = false
+) {
+    try {
+        await axios.post(
+            `${apiUrl}/auth/create-user`,
+            {
+                username,
+                password,
+                confirmPassword,
+                isAdmin,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        return { success: true };
+    } catch {
+        const errorCode = error.response?.data?.errorCode;
+
+        // TODO: Handle each error code, pass message along to be used on front end
+    }
+}
+
 export async function logUserIn(apiUrl, username, password) {
     const store = useStore();
 
