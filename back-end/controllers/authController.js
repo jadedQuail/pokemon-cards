@@ -2,6 +2,7 @@ const db = require("../database/db-connector");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const RegistrationErrorCodes = require("../utils/errorCodes");
 const { validatePassword } = require("../utils/passwordValidator");
 
 // TODO: Figure out a way to protect this so a malicious user does not create a billion users as a DDoS. Maybe a CAPTCHA?
@@ -10,12 +11,16 @@ exports.createUser = async (req, res) => {
     const { username, password, confirmPassword, isAdmin = false } = req.body;
 
     if (!username || !password || !confirmPassword) {
-        return res.sendStatus(400);
+        return res.status(400).json({
+            errorCode: RegistrationErrorCodes.MISSING_FIELDS,
+        });
     }
 
     const validation = validatePassword(password, confirmPassword);
     if (!validation.valid) {
-        return res.status(400).json({ message: validation.message });
+        return res.status(400).json({
+            errorCode: validation.code,
+        });
     }
 
     try {
@@ -26,11 +31,15 @@ exports.createUser = async (req, res) => {
         return res.sendStatus(201);
     } catch (err) {
         if (err.code === "ER_DUP_ENTRY") {
-            return res.sendStatus(409);
+            return res.status(409).json({
+                errorCode: RegistrationErrorCodes.DUPLICATE_USER,
+            });
         }
 
         console.error("Error creating user:", err);
-        return res.sendStatus(500);
+        return res.status(500).json({
+            errorCode: RegistrationErrorCodes.UNKNOWN_ERROR,
+        });
     }
 };
 

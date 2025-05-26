@@ -1,0 +1,9 @@
+const RegistrationErrorCodes = {
+    PASSWORD_MISMATCH: "PASSWORD_MISMATCH",
+    PASSWORD_WEAK: "PASSWORD_WEAK",
+    MISSING_FIELDS: "MISSING_FIELDS",
+    DUPLICATE_USER: "DUPLICATE_USER",
+    UNKNOWN_ERROR: "UNKNOWN_ERROR",
+};
+
+module.exports = RegistrationErrorCodes;

@@ -1,8 +1,10 @@
+const RegistrationErrorCodes = require("./errorCodes");
+
 function validatePassword(password, confirmPassword) {
     if (password !== confirmPassword) {
         return {
             valid: false,
-            message: "Passwords do not match.",
+            code: RegistrationErrorCodes.PASSWORD_MISMATCH,
         };
     }
 
@@ -14,8 +16,7 @@ function validatePassword(password, confirmPassword) {
     if (!passwordRegex.test(password)) {
         return {
             valid: false,
-            message:
-                "Password must be 8-20 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
+            code: RegistrationErrorCodes.PASSWORD_WEAK,
         };
     }
 
