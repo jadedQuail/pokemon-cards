@@ -100,6 +100,10 @@
                         </small>
                     </div>
                 </div>
+                <div v-if="registrationError" class="text-red-500">
+                    There was an error registering your account.
+                    <!-- TODO: Make this dynamic so that it indicates either a lack of complexity or some misc error -->
+                </div>
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2">
                     <Button
@@ -130,11 +134,14 @@ const store = useStore();
 
 const fields = ref(store.registerFields);
 
+const registrationError = ref(false);
+
 const confirmPasswordErrorMessage = ref("");
 
 const resetForm = () => {
     resetValidationFlags();
     resetFieldContent();
+    resetRegistrationErrorState();
 };
 
 const resetValidationFlags = () => {
@@ -153,7 +160,12 @@ const resetFieldContent = () => {
     }
 };
 
+const resetRegistrationErrorState = () => {
+    registrationError.value = false;
+};
+
 const setValidityFlagForField = (value, field) => {
+    // TODO: Fix this so that the "Passwords must match" error doesn't show up until failure on submission
     if (field.name === RegisterFieldIds.ConfirmPassword) {
         if (value.length < 1) {
             field.valid = false;
@@ -191,13 +203,31 @@ const areAllFieldsValid = () => {
     return true;
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     setValidityFlagForAllFields();
 
     const formReady = areAllFieldsValid();
 
     if (formReady) {
-        console.log("Successful submission");
+        const registrationSucceeded = await submitRegistrationHandler();
+        if (registrationSucceeded) {
+            console.log("Successful registration");
+        }
+    }
+};
+
+const submitRegistrationHandler = async () => {
+    try {
+        const apiUrl = config.public.API_URL;
+
+        // // API Call
+        // const result = await something();
+
+        // setRegistrationErrorState(result);
+
+        // return result && result.success;
+    } catch {
+        console.error("Error registering:", error);
     }
 };
 
