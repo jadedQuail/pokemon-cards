@@ -165,7 +165,6 @@ const resetRegistrationErrorState = () => {
 };
 
 const setValidityFlagForField = (value, field) => {
-    // TODO: Fix this so that the "Passwords must match" error doesn't show up until failure on submission
     if (field.name === RegisterFieldIds.ConfirmPassword) {
         if (value.length < 1) {
             field.valid = false;
