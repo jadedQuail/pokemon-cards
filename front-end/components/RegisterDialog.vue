@@ -128,6 +128,8 @@ import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import { RegisterFieldIds } from "~/static/constants.js";
 
+import { createUser } from "@/services/apiCalls";
+
 const config = useRuntimeConfig();
 
 const store = useStore();
@@ -210,7 +212,7 @@ const handleSubmit = async () => {
     if (formReady) {
         const registrationSucceeded = await submitRegistrationHandler();
         if (registrationSucceeded) {
-            console.log("Successful registration");
+            closeDialog();
         }
     }
 };
@@ -219,15 +221,32 @@ const submitRegistrationHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
 
-        // // API Call
-        // const result = await something();
+        const username = fields.value[RegisterFieldIds.Username].content;
+        const password = fields.value[RegisterFieldIds.Password].content;
+        const confirmPassword =
+            fields.value[RegisterFieldIds.ConfirmPassword].content;
 
-        // setRegistrationErrorState(result);
+        const result = await createUser(
+            apiUrl,
+            username,
+            password,
+            confirmPassword
+        );
 
-        // return result && result.success;
-    } catch {
+        // TODO: If result.success = false, then come up with the proper error messaging
+
+        setRegistrationErrorState(result);
+
+        return result && result.success;
+    } catch (error) {
         console.error("Error registering:", error);
     }
+};
+
+const setRegistrationErrorState = (registrationAttemptResult) => {
+    registrationError.value = !(
+        registrationAttemptResult && registrationAttemptResult.success
+    );
 };
 
 const closeDialog = () => {

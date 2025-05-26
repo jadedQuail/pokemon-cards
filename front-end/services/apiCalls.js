@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useStore } from "~/store/store.js";
 
+import { RegistrationErrorCodes } from "../../shared/errorCodes";
+
 // TODO: Split up these API calls into separate files, same organization as routes on the back-end
 
 function getAuthHeaders() {
@@ -157,13 +159,7 @@ export async function addType(apiUrl, typeName) {
     }
 }
 
-export async function createUser(
-    apiUrl,
-    username,
-    password,
-    confirmPassword,
-    isAdmin = false
-) {
+export async function createUser(apiUrl, username, password, confirmPassword) {
     try {
         await axios.post(
             `${apiUrl}/auth/create-user`,
@@ -171,7 +167,6 @@ export async function createUser(
                 username,
                 password,
                 confirmPassword,
-                isAdmin,
             },
             {
                 headers: {
@@ -181,10 +176,11 @@ export async function createUser(
         );
 
         return { success: true };
-    } catch {
-        const errorCode = error.response?.data?.errorCode;
-
-        // TODO: Handle each error code, pass message along to be used on front end
+    } catch (error) {
+        const errorCode =
+            error.response?.data?.errorCode ||
+            RegistrationErrorCodes.UNKNOWN_ERROR;
+        return { success: false, errorCode };
     }
 }
 

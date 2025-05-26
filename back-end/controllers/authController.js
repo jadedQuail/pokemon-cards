@@ -2,13 +2,13 @@ const db = require("../database/db-connector");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const RegistrationErrorCodes = require("../utils/errorCodes");
+const RegistrationErrorCodes = require("../../shared/errorCodes");
 const { validatePassword } = require("../utils/passwordValidator");
 
 // TODO: Figure out a way to protect this so a malicious user does not create a billion users as a DDoS. Maybe a CAPTCHA?
 
 exports.createUser = async (req, res) => {
-    const { username, password, confirmPassword, isAdmin = false } = req.body;
+    const { username, password, confirmPassword } = req.body;
 
     if (!username || !password || !confirmPassword) {
         return res.status(400).json({
@@ -25,6 +25,9 @@ exports.createUser = async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        const isAdmin = false;
+
         const query = `INSERT INTO Users (username, password_hash, is_admin) VALUES (?, ?, ?)`;
 
         await db.pool.query(query, [username, hashedPassword, isAdmin]);
