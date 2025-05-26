@@ -34,6 +34,7 @@ export const useStore = defineStore("store", {
         categoriesDialogVisible: false,
         loginDialogVisible: false,
         logoutDialogVisible: false,
+        registerDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
@@ -175,6 +176,12 @@ export const useStore = defineStore("store", {
         },
         hideLogoutDialog() {
             this.logoutDialogVisible = false;
+        },
+        showRegisterDialog() {
+            this.registerDialogVisible = true;
+        },
+        hideRegisterDialog() {
+            this.registerDialogVisible = false;
         },
         setFieldContentForEditDialog(pokemon) {
             this.rawFields[FieldIds.ID].content = pokemon.id || "";

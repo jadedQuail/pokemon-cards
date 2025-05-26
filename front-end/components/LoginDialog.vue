@@ -80,8 +80,11 @@
                 <div class="flex justify-between items-center mt-4">
                     <div>
                         New user?
-                        <a href="#" class="text-blue-500">
-                            Click here to register</a
+                        <span
+                            class="text-blue-500 underline hover:text-blue-700 cursor-pointer"
+                            @click="handleRegisterClick"
+                        >
+                            Click here to register</span
                         >
                     </div>
                     <div class="flex justify-end gap-2">
@@ -199,6 +202,11 @@ const submitLoginHandler = async () => {
 
 const setLoginErrorState = (loginAttemptResult) => {
     loginError.value = !(loginAttemptResult && loginAttemptResult.success);
+};
+
+const handleRegisterClick = () => {
+    closeDialog();
+    store.showRegisterDialog();
 };
 
 const closeDialog = () => {
