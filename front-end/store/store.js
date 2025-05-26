@@ -11,6 +11,7 @@ import {
 import {
     FieldIds,
     LoginFieldIds,
+    RegisterFieldIds,
     PokemonFormMode,
     CategoriesFormMode,
 } from "~/static/constants.js";
@@ -48,6 +49,23 @@ export const useStore = defineStore("store", {
             },
             [LoginFieldIds.Password]: {
                 name: LoginFieldIds.Password,
+                content: "",
+                valid: true,
+            },
+        },
+        registerFields: {
+            [RegisterFieldIds.Username]: {
+                name: RegisterFieldIds.Username,
+                content: "",
+                valid: true,
+            },
+            [RegisterFieldIds.Password]: {
+                name: RegisterFieldIds.Password,
+                content: "",
+                valid: true,
+            },
+            [RegisterFieldIds.ConfirmPassword]: {
+                name: RegisterFieldIds.ConfirmPassword,
                 content: "",
                 valid: true,
             },

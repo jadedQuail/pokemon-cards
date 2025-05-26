@@ -12,6 +12,12 @@ export const LoginFieldIds = Object.freeze({
     Password: "password",
 });
 
+export const RegisterFieldIds = Object.freeze({
+    Username: "username",
+    Password: "password",
+    ConfirmPassword: "confirmPassword",
+});
+
 export const SeverityLevels = Object.freeze({
     Success: "success",
     Info: "info",
