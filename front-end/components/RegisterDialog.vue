@@ -6,6 +6,7 @@
             modal
             header="Register"
             class="min-w-[500px] !w-[30vw]"
+            @hide="resetForm"
             :pt="{
                 pcCloseButton: {
                     style: 'box-shadow: none;',
@@ -95,9 +96,8 @@
                             "
                             class="text-red-500"
                         >
-                            You must type your password again
+                            {{ confirmPasswordErrorMessage }}
                         </small>
-                        <!-- TODO: Need this error message to be dynamic based on whether this is blank or doesn't match the password -->
                     </div>
                 </div>
                 <!-- Buttons -->
@@ -130,15 +130,76 @@ const store = useStore();
 
 const fields = ref(store.registerFields);
 
-const setValidityFlagForField = (value, field) => {
-    if (value.length < 1) {
-        field.valid = false;
-    } else {
-        field.valid = true;
+const confirmPasswordErrorMessage = ref("");
+
+const resetForm = () => {
+    resetValidationFlags();
+    resetFieldContent();
+};
+
+const resetValidationFlags = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].valid = true;
+        }
     }
 };
 
-const handleSubmit = () => {};
+const resetFieldContent = () => {
+    for (const key in fields.value) {
+        if (fields.value.hasOwnProperty(key)) {
+            fields.value[key].content = "";
+        }
+    }
+};
+
+const setValidityFlagForField = (value, field) => {
+    if (field.name === RegisterFieldIds.ConfirmPassword) {
+        if (value.length < 1) {
+            field.valid = false;
+            confirmPasswordErrorMessage.value =
+                "You must type your password again.";
+        } else if (value != fields.value[RegisterFieldIds.Password].content) {
+            field.valid = false;
+            confirmPasswordErrorMessage.value = "Passwords must match.";
+        } else {
+            field.valid = true;
+        }
+    } else {
+        if (value.length < 1) {
+            field.valid = false;
+        } else {
+            field.valid = true;
+        }
+    }
+};
+
+const setValidityFlagForAllFields = () => {
+    for (const key in fields.value) {
+        const field = fields.value[key];
+        setValidityFlagForField(field.content, field);
+    }
+};
+
+const areAllFieldsValid = () => {
+    for (const key in fields.value) {
+        if (fields.value[key].valid === false) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const handleSubmit = () => {
+    setValidityFlagForAllFields();
+
+    const formReady = areAllFieldsValid();
+
+    if (formReady) {
+        console.log("Successful submission");
+    }
+};
 
 const closeDialog = () => {
     store.hideRegisterDialog();
