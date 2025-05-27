@@ -1,4 +1,5 @@
-const RegistrationErrorCodes = require("../../shared/errorCodes");
+const errorCodes = require("../../shared/errorCodes");
+const RegistrationErrorCodes = errorCodes.RegistrationErrorCodes;
 
 function validatePassword(password, confirmPassword) {
     if (password !== confirmPassword) {

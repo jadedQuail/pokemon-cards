@@ -15,6 +15,7 @@ const authRoutes = require("./routes/authRoutes");
 
 // TODO: Clean up npm vulnerabilities on the back-end
 // TODO: Get nuxt and other package files out of my search results in VS Code
+// TODO: Convert the back-end to ES Modules ("import") from CommonJS ("require")
 
 const corsOptions = {
     origin: function (origin, callback) {

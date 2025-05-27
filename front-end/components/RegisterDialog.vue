@@ -105,7 +105,7 @@
                     <!-- TODO: Make this dynamic so that it indicates either a lack of complexity or some misc error -->
                 </div>
                 <!-- Buttons -->
-                <div class="flex justify-end gap-2">
+                <div class="flex justify-end gap-2 mt-4">
                     <Button
                         type="button"
                         label="Cancel"
@@ -233,9 +233,8 @@ const submitRegistrationHandler = async () => {
             confirmPassword
         );
 
-        // TODO: If result.success = false, then come up with the proper error messaging
-
         setRegistrationErrorState(result);
+        getRegistrationErrorMessage(result.errorCode);
 
         return result && result.success;
     } catch (error) {
@@ -247,6 +246,10 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
     registrationError.value = !(
         registrationAttemptResult && registrationAttemptResult.success
     );
+};
+
+const getRegistrationErrorMessage = (errorCode) => {
+    // TODO: If result.success = false, then come up with the proper error messaging
 };
 
 const closeDialog = () => {

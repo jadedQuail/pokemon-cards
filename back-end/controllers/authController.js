@@ -2,7 +2,9 @@ const db = require("../database/db-connector");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const RegistrationErrorCodes = require("../../shared/errorCodes");
+const errorCodes = require("../../shared/errorCodes");
+const RegistrationErrorCodes = errorCodes.RegistrationErrorCodes;
+
 const { validatePassword } = require("../utils/passwordValidator");
 
 // TODO: Figure out a way to protect this so a malicious user does not create a billion users as a DDoS. Maybe a CAPTCHA?
