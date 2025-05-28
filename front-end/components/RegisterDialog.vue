@@ -27,6 +27,7 @@
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
+                                    resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.Username]
@@ -56,6 +57,7 @@
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
+                                    resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.Password]
@@ -89,6 +91,7 @@
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
+                                    resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.ConfirmPassword]

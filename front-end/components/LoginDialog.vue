@@ -14,8 +14,7 @@
             }"
         >
             <!-- TODO: Wrap the other form components in a <form> tag -->
-            <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; same for Register -->
-            <!-- TODO: Hitting 'enter' when Password field is highlighted red still tries to submit and gets the overall error message, it shouldn't do that -->
+            <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; it's because of an auto-focus on the X button upon the dialog opening -->
             <form @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
@@ -30,6 +29,7 @@
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
+                                    resetLoginErrorState();
                                     setValidityFlagForField(
                                         value,
                                         fields[LoginFieldIds.Username]
@@ -59,6 +59,7 @@
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
+                                    resetLoginErrorState();
                                     setValidityFlagForField(
                                         value,
                                         fields[LoginFieldIds.Password]
@@ -176,6 +177,7 @@ const areAllFieldsValid = () => {
 
 const handleSubmit = async () => {
     userHasTypedAgain.value = false;
+
     setValidityFlagForAllFields();
 
     const formReady = areAllFieldsValid();
