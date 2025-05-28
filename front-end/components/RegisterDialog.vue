@@ -25,11 +25,13 @@
                             autocomplete="off"
                             :invalid="!fields[RegisterFieldIds.Username].valid"
                             @update:model-value="
-                                (value) =>
+                                (value) => {
+                                    userHasTypedAgain = true;
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.Username]
-                                    )
+                                    );
+                                }
                             "
                         />
                         <small
@@ -52,11 +54,13 @@
                             :inputStyle="{ width: '100%' }"
                             :invalid="!fields[RegisterFieldIds.Password].valid"
                             @update:model-value="
-                                (value) =>
+                                (value) => {
+                                    userHasTypedAgain = true;
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.Password]
-                                    )
+                                    );
+                                }
                             "
                         />
                         <small
@@ -83,11 +87,13 @@
                                 !fields[RegisterFieldIds.ConfirmPassword].valid
                             "
                             @update:model-value="
-                                (value) =>
+                                (value) => {
+                                    userHasTypedAgain = true;
                                     setValidityFlagForField(
                                         value,
                                         fields[RegisterFieldIds.ConfirmPassword]
-                                    )
+                                    );
+                                }
                             "
                         />
                         <small
@@ -100,10 +106,11 @@
                         </small>
                     </div>
                 </div>
-                <div v-if="registrationError" class="text-red-500">
-                    There was an error registering your account.
-                    <!-- TODO: Make this dynamic so that it indicates either a lack of complexity or some misc error -->
-                </div>
+                <!-- Error Message -->
+                <RegistrationErrorMessage
+                    v-if="registrationError && !userHasTypedAgain"
+                    :registrationErrorCode="registrationErrorCode"
+                />
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2 mt-4">
                     <Button
@@ -130,6 +137,8 @@ import { RegisterFieldIds } from "~/static/constants.js";
 
 import { createUser } from "@/services/apiCalls";
 
+import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
+
 const config = useRuntimeConfig();
 
 const store = useStore();
@@ -137,8 +146,11 @@ const store = useStore();
 const fields = ref(store.registerFields);
 
 const registrationError = ref(false);
+const registrationErrorCode = ref(null);
 
 const confirmPasswordErrorMessage = ref("");
+
+const userHasTypedAgain = ref(false);
 
 const resetForm = () => {
     resetValidationFlags();
@@ -205,6 +217,9 @@ const areAllFieldsValid = () => {
 };
 
 const handleSubmit = async () => {
+    userHasTypedAgain.value = false;
+    clearRegistrationErrorCode();
+
     setValidityFlagForAllFields();
 
     const formReady = areAllFieldsValid();
@@ -234,12 +249,20 @@ const submitRegistrationHandler = async () => {
         );
 
         setRegistrationErrorState(result);
-        getRegistrationErrorMessage(result.errorCode);
+        setRegistrationErrorCode(result.errorCode);
 
         return result && result.success;
     } catch (error) {
         console.error("Error registering:", error);
     }
+};
+
+const setRegistrationErrorCode = (code) => {
+    registrationErrorCode.value = code;
+};
+
+const clearRegistrationErrorCode = () => {
+    registrationErrorCode.value = null;
 };
 
 const setRegistrationErrorState = (registrationAttemptResult) => {
@@ -248,9 +271,7 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
     );
 };
 
-const getRegistrationErrorMessage = (errorCode) => {
-    // TODO: If result.success = false, then come up with the proper error messaging
-};
+// TODO: Make sure you can hit "enter" key to submit this form, like with login
 
 const closeDialog = () => {
     store.hideRegisterDialog();
