@@ -135,7 +135,7 @@ import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import { RegisterFieldIds } from "~/static/constants.js";
 
-import { createUser } from "@/services/apiCalls";
+import { createUser, logUserIn } from "@/services/apiCalls";
 
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
 
@@ -227,8 +227,22 @@ const handleSubmit = async () => {
     if (formReady) {
         const registrationSucceeded = await submitRegistrationHandler();
         if (registrationSucceeded) {
+            logUserInAfterRegistration();
             closeDialog();
         }
+    }
+};
+
+const logUserInAfterRegistration = async () => {
+    const apiUrl = config.public.API_URL;
+
+    const username = fields.value[RegisterFieldIds.Username].content;
+    const password = fields.value[RegisterFieldIds.Password].content;
+
+    try {
+        await logUserIn(apiUrl, username, password);
+    } catch (error) {
+        console.error("Error logging user in after registering:", error);
     }
 };
 
