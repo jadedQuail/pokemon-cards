@@ -120,7 +120,7 @@
                         @click="closeDialog"
                     ></Button>
                     <Button
-                        type="button"
+                        type="submit"
                         label="Save"
                         @click="handleSubmit"
                     ></Button>

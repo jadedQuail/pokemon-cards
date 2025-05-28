@@ -1,8 +1,3 @@
-<!-- 
-    TODO: I think I could take this component and the AddPokemonDialog.vue component and create a base "form" component out of them
-    Ask ChatGPT about this!
--->
-
 <template>
     <div class="flex justify-center">
         <Dialog
@@ -19,6 +14,8 @@
             }"
         >
             <!-- TODO: Wrap the other form components in a <form> tag -->
+            <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; same for Register -->
+            <!-- TODO: Hitting 'enter' when Password field is highlighted red still tries to submit and gets the overall error message, it shouldn't do that -->
             <form @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
@@ -31,11 +28,13 @@
                             autocomplete="off"
                             :invalid="!fields[LoginFieldIds.Username].valid"
                             @update:model-value="
-                                (value) =>
+                                (value) => {
+                                    userHasTypedAgain = true;
                                     setValidityFlagForField(
                                         value,
                                         fields[LoginFieldIds.Username]
-                                    )
+                                    );
+                                }
                             "
                         />
                         <small
@@ -58,11 +57,13 @@
                             :inputStyle="{ width: '100%' }"
                             :invalid="!fields[LoginFieldIds.Password].valid"
                             @update:model-value="
-                                (value) =>
+                                (value) => {
+                                    userHasTypedAgain = true;
                                     setValidityFlagForField(
                                         value,
                                         fields[LoginFieldIds.Password]
-                                    )
+                                    );
+                                }
                             "
                         />
                         <small
@@ -73,7 +74,10 @@
                         </small>
                     </div>
                 </div>
-                <div v-if="loginError" class="text-red-500">
+                <div
+                    v-if="loginError && !userHasTypedAgain"
+                    class="text-red-500"
+                >
                     Your username or password is incorrect. Please try again!
                 </div>
                 <!-- Buttons -->
@@ -116,6 +120,8 @@ const store = useStore();
 const fields = ref(store.loginFields);
 
 const loginError = ref(false);
+
+const userHasTypedAgain = ref(false);
 
 const resetForm = () => {
     resetValidationFlags();
@@ -169,6 +175,7 @@ const areAllFieldsValid = () => {
 };
 
 const handleSubmit = async () => {
+    userHasTypedAgain.value = false;
     setValidityFlagForAllFields();
 
     const formReady = areAllFieldsValid();
