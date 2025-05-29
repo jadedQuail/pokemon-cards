@@ -1,9 +1,10 @@
 import { useStore } from "~/store/store.js";
+import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 
 export function initializeAuth() {
     const store = useStore();
-    // TODO: Rename this to "pokemondb_token"
-    const token = localStorage.getItem("jwt_token");
+
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
 
     if (token) {
         try {
@@ -13,10 +14,10 @@ export function initializeAuth() {
             if (!isExpired) {
                 store.setUserFromToken(token);
             } else {
-                localStorage.removeItem("jwt_token");
+                localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
             }
         } catch {
-            localStorage.removeItem("jwt_token");
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
         }
     }
 

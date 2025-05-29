@@ -14,6 +14,7 @@ import {
     RegisterFieldIds,
     PokemonFormMode,
     CategoriesFormMode,
+    LOCAL_STORAGE_TOKEN_KEY,
 } from "~/static/constants.js";
 
 function getNullUser() {
@@ -220,7 +221,7 @@ export const useStore = defineStore("store", {
         },
         clearUser() {
             this.user = getNullUser();
-            localStorage.removeItem("jwt_token");
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
         },
         finishAuthInit() {
             this.isAuthInitialized = true;

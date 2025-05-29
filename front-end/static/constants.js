@@ -38,3 +38,5 @@ export const CategoriesFormMode = Object.freeze({
     Sets: "sets",
     None: "none",
 });
+
+export const LOCAL_STORAGE_TOKEN_KEY = "pokemondb_token";

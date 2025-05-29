@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useStore } from "~/store/store.js";
+import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
 
 // TODO: Split up these API calls into separate files, same organization as routes on the back-end
 
 function getAuthHeaders() {
-    const token = localStorage.getItem("jwt_token");
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
 
     const authHeader = {};
 
@@ -202,7 +203,7 @@ export async function logUserIn(apiUrl, username, password) {
         );
 
         const token = response.data.token;
-        localStorage.setItem("jwt_token", token);
+        localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
 
         store.setUserFromToken(token);
 

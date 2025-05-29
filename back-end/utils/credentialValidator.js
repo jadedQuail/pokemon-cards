@@ -25,8 +25,6 @@ function validatePasswordChoice(password, confirmPassword) {
     const passwordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,20}$/;
 
-    console.log(typeof passwordRegex);
-
     if (!passwordRegex.test(password)) {
         return {
             valid: false,
