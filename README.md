@@ -51,4 +51,11 @@ DB_HOST=127.0.0.1
 DB_USER=username
 DB_PASSWORD=password
 DATABASE=database_name
+
+# CORS Settings - for development testing purposes ONLY
+ALLOW_ALL_ORIGINS=true
+
+# JSON Web Token
+JWT_SECRET=your_secret_jwt_key
+JWT_EXPIRES_IN=1d
 ```
