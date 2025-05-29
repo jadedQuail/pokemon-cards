@@ -176,12 +176,9 @@
 import { onMounted } from "vue";
 import { FieldIds, PokemonFormMode } from "~/static/constants.js";
 
-import {
-    addPokemon,
-    editPokemon,
-    getTypeOptions,
-    getSetOptions,
-} from "@/services/apiCalls";
+import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
+import { getTypeOptions } from "@/services/apiCalls";
+import { getSetOptions } from "@/services/apiClient/set.js";
 
 import { useStore } from "~/store/store.js";
 

@@ -1,3 +1,4 @@
+<!-- TODO: Add a toast that tells the user when they've successfully registered (and logged in) -->
 <template>
     <div class="flex justify-center">
         <Dialog

@@ -89,14 +89,8 @@
 import { ref } from "vue";
 import { useStore } from "~/store/store.js";
 import { CategoriesFormMode } from "~/static/constants.js";
-import {
-    getTypeOptions,
-    getSetOptions,
-    deleteType,
-    deleteSet,
-    addType,
-    addSet,
-} from "@/services/apiCalls";
+import { getTypeOptions, deleteType, addType } from "@/services/apiCalls";
+import { getSetOptions, addSet, deleteSet } from "@/services/apiClient/set.js";
 
 const config = useRuntimeConfig();
 

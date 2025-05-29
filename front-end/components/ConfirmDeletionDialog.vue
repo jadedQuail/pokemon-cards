@@ -51,7 +51,7 @@
 
 <script setup>
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
-import { deletePokemon } from "@/services/apiCalls";
+import { deletePokemon } from "@/services/apiClient/pokemon.js";
 import { useStore } from "~/store/store.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 

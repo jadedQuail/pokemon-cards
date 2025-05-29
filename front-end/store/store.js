@@ -1,13 +1,9 @@
 import { defineStore } from "pinia";
-import {
-    fetchPokemonData,
-    getTypeOptions,
-    getSetOptions,
-    addType,
-    addSet,
-    deleteType,
-    deleteSet,
-} from "@/services/apiCalls";
+
+import { fetchPokemonData } from "@/services/apiClient/pokemon.js";
+import { getSetOptions, addSet, deleteSet } from "@/services/apiClient/set.js";
+import { getTypeOptions, addType, deleteType } from "@/services/apiCalls";
+
 import {
     FieldIds,
     LoginFieldIds,
