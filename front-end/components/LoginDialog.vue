@@ -112,7 +112,7 @@ import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import { LoginFieldIds } from "~/static/constants.js";
 
-import { logUserIn } from "@/services/apiCalls";
+import { logUserIn } from "@/services/apiClient/auth.js";
 
 const config = useRuntimeConfig();
 

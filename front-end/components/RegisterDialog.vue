@@ -138,7 +138,7 @@ import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
 import { RegisterFieldIds } from "~/static/constants.js";
 
-import { createUser, logUserIn } from "@/services/apiCalls";
+import { createUser, logUserIn } from "@/services/apiClient/auth.js";
 
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
 
