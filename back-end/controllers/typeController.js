@@ -1,5 +1,7 @@
 const db = require("../database/db-connector");
 
+// TODO: Need to validate that new types and new sets being added are acceptable, i.e. not dangerous or with weird characters
+
 exports.getTypes = async (req, res) => {
     try {
         const [rows] = await db.pool.query(`SELECT type_name FROM Types;`);
