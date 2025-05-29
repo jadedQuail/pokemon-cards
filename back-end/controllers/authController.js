@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 const errorCodes = require("../../shared/errorCodes");
 const RegistrationErrorCodes = errorCodes.RegistrationErrorCodes;
 
-const { validatePassword } = require("../utils/passwordValidator");
+const {
+    validateUsernameChoice,
+    validatePasswordChoice,
+} = require("../utils/credentialValidator");
 
 // TODO: Figure out a way to protect this so a malicious user does not create a billion users as a DDoS. Maybe a CAPTCHA?
 
@@ -18,10 +21,20 @@ exports.createUser = async (req, res) => {
         });
     }
 
-    const validation = validatePassword(password, confirmPassword);
-    if (!validation.valid) {
+    const usernameValidation = validateUsernameChoice(username);
+    if (!usernameValidation.valid) {
         return res.status(400).json({
-            errorCode: validation.code,
+            errorCode: usernameValidation.code,
+        });
+    }
+
+    const passwordValidation = validatePasswordChoice(
+        password,
+        confirmPassword
+    );
+    if (!passwordValidation.valid) {
+        return res.status(400).json({
+            errorCode: passwordValidation.code,
         });
     }
 

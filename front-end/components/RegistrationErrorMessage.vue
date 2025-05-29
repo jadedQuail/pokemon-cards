@@ -10,6 +10,22 @@
 
         <template
             v-else-if="
+                registrationErrorCode ===
+                RegistrationErrorCodes.USERNAME_INVALID
+            "
+        >
+            <p>Your username must meet the following criteria:</p>
+            <ul class="list-disc list-inside mt-1">
+                <li>3-20 characters long</li>
+                <li>Starts with a letter</li>
+                <li>
+                    Contains only letters and numbers (no symbols, no spaces)
+                </li>
+            </ul>
+        </template>
+
+        <template
+            v-else-if="
                 registrationErrorCode === RegistrationErrorCodes.PASSWORD_WEAK
             "
         >
