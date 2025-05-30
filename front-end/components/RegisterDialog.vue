@@ -125,7 +125,6 @@
                     <Button
                         type="submit"
                         label="Save"
-                        @click="handleSubmit"
                     ></Button>
                 </div>
             </form>

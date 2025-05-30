@@ -14,160 +14,161 @@
                 },
             }"
         >
-            <!-- Name -->
-            <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Name" class="font-semibold w-24"
-                    >Name</label
-                >
-                <div class="flex flex-col flex-auto">
-                    <InputText
-                        v-model="fields[FieldIds.Name].content"
-                        :id="FieldIds.Name"
-                        class="w-full"
-                        autocomplete="off"
-                        :invalid="!fields[FieldIds.Name].valid"
-                        @update:model-value="
-                            (value) =>
-                                setValidityFlagForField(
-                                    value,
-                                    fields[FieldIds.Name]
-                                )
-                        "
-                    />
-                    <small
-                        v-if="!fields[FieldIds.Name].valid"
-                        class="text-red-500"
+            <form @submit.prevent="handleSubmit">
+                <!-- Name -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label :for="FieldIds.Name" class="font-semibold w-24"
+                        >Name</label
                     >
-                        You must provide a name for this Pokemon card.
-                    </small>
+                    <div class="flex flex-col flex-auto">
+                        <InputText
+                            v-model="fields[FieldIds.Name].content"
+                            :id="FieldIds.Name"
+                            class="w-full"
+                            autocomplete="off"
+                            :invalid="!fields[FieldIds.Name].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[FieldIds.Name]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[FieldIds.Name].valid"
+                            class="text-red-500"
+                        >
+                            You must provide a name for this Pokemon card.
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <!-- HP -->
-            <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.HP" class="font-semibold w-24">HP</label>
-                <div class="flex flex-col flex-auto">
-                    <InputText
-                        v-model="fields[FieldIds.HP].content"
-                        :id="FieldIds.HP"
-                        class="w-full"
-                        autocomplete="off"
-                        :invalid="!fields[FieldIds.HP].valid"
-                        @update:model-value="
-                            (value) =>
-                                setValidityFlagForField(
-                                    value,
-                                    fields[FieldIds.HP]
-                                )
-                        "
-                    />
-                    <small
-                        v-if="!fields[FieldIds.HP].valid"
-                        class="text-red-500"
+                <!-- HP -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label :for="FieldIds.HP" class="font-semibold w-24">HP</label>
+                    <div class="flex flex-col flex-auto">
+                        <InputText
+                            v-model="fields[FieldIds.HP].content"
+                            :id="FieldIds.HP"
+                            class="w-full"
+                            autocomplete="off"
+                            :invalid="!fields[FieldIds.HP].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[FieldIds.HP]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[FieldIds.HP].valid"
+                            class="text-red-500"
+                        >
+                            You must provide a <em>valid</em> HP value for this
+                            Pokemon card.
+                        </small>
+                    </div>
+                </div>
+                <!-- Type -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label :for="FieldIds.Type" class="font-semibold w-24"
+                        >Type</label
                     >
-                        You must provide a <em>valid</em> HP value for this
-                        Pokemon card.
-                    </small>
+                    <div class="flex flex-col flex-auto">
+                        <Select
+                            v-model="fields[FieldIds.Type].content"
+                            :options="store.types"
+                            placeholder=""
+                            class="flex-auto"
+                            :invalid="!fields[FieldIds.Type].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[FieldIds.Type]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[FieldIds.Type].valid"
+                            id="type-error"
+                            class="text-red-500"
+                        >
+                            You must select a type for this Pokemon card.
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <!-- Type -->
-            <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Type" class="font-semibold w-24"
-                    >Type</label
-                >
-                <div class="flex flex-col flex-auto">
-                    <Select
-                        v-model="fields[FieldIds.Type].content"
-                        :options="store.types"
-                        placeholder=""
-                        class="flex-auto"
-                        :invalid="!fields[FieldIds.Type].valid"
-                        @update:model-value="
-                            (value) =>
-                                setValidityFlagForField(
-                                    value,
-                                    fields[FieldIds.Type]
-                                )
-                        "
-                    />
-                    <small
-                        v-if="!fields[FieldIds.Type].valid"
-                        id="type-error"
-                        class="text-red-500"
+                <!-- Set -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label :for="FieldIds.Set" class="font-semibold w-24"
+                        >Set</label
                     >
-                        You must select a type for this Pokemon card.
-                    </small>
+                    <div class="flex flex-col flex-auto">
+                        <Select
+                            v-model="fields[FieldIds.Set].content"
+                            :options="store.sets"
+                            placeholder=""
+                            class="flex-auto"
+                            :invalid="!fields[FieldIds.Set].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[FieldIds.Set]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[FieldIds.Set].valid"
+                            class="text-red-500"
+                        >
+                            You must select a valid set for this Pokemon card.
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <!-- Set -->
-            <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.Set" class="font-semibold w-24"
-                    >Set</label
-                >
-                <div class="flex flex-col flex-auto">
-                    <Select
-                        v-model="fields[FieldIds.Set].content"
-                        :options="store.sets"
-                        placeholder=""
-                        class="flex-auto"
-                        :invalid="!fields[FieldIds.Set].valid"
-                        @update:model-value="
-                            (value) =>
-                                setValidityFlagForField(
-                                    value,
-                                    fields[FieldIds.Set]
-                                )
-                        "
-                    />
-                    <small
-                        v-if="!fields[FieldIds.Set].valid"
-                        class="text-red-500"
+                <!-- Flavor Text -->
+                <div class="flex items-start gap-4 mb-4 mt-1">
+                    <label :for="FieldIds.FlavorText" class="font-semibold w-24"
+                        >Flavor Text</label
                     >
-                        You must select a valid set for this Pokemon card.
-                    </small>
+                    <div class="flex flex-col flex-auto">
+                        <Textarea
+                            v-model="fields[FieldIds.FlavorText].content"
+                            rows="5"
+                            cols="5"
+                            class="flex-auto resize-none leading-snug"
+                            :invalid="!fields[FieldIds.FlavorText].valid"
+                            @update:model-value="
+                                (value) =>
+                                    setValidityFlagForField(
+                                        value,
+                                        fields[FieldIds.FlavorText]
+                                    )
+                            "
+                        />
+                        <small
+                            v-if="!fields[FieldIds.FlavorText].valid"
+                            class="text-red-500"
+                        >
+                            You must enter valid flavor text for this Pokemon card.
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <!-- Flavor Text -->
-            <div class="flex items-start gap-4 mb-4 mt-1">
-                <label :for="FieldIds.FlavorText" class="font-semibold w-24"
-                    >Flavor Text</label
-                >
-                <div class="flex flex-col flex-auto">
-                    <Textarea
-                        v-model="fields[FieldIds.FlavorText].content"
-                        rows="5"
-                        cols="5"
-                        class="flex-auto resize-none leading-snug"
-                        :invalid="!fields[FieldIds.FlavorText].valid"
-                        @update:model-value="
-                            (value) =>
-                                setValidityFlagForField(
-                                    value,
-                                    fields[FieldIds.FlavorText]
-                                )
-                        "
-                    />
-                    <small
-                        v-if="!fields[FieldIds.FlavorText].valid"
-                        class="text-red-500"
-                    >
-                        You must enter valid flavor text for this Pokemon card.
-                    </small>
+                <!-- Buttons -->
+                <div class="flex justify-end gap-2">
+                    <Button
+                        type="button"
+                        label="Cancel"
+                        severity="secondary"
+                        @click="closeDialog"
+                    ></Button>
+                    <Button
+                        type="submit"
+                        label="Save"
+                    ></Button>
                 </div>
-            </div>
-            <!-- Buttons -->
-            <div class="flex justify-end gap-2">
-                <Button
-                    type="button"
-                    label="Cancel"
-                    severity="secondary"
-                    @click="closeDialog"
-                ></Button>
-                <Button
-                    type="button"
-                    label="Save"
-                    @click="handleSubmit"
-                ></Button>
-            </div>
+            </form>
         </Dialog>
     </div>
 </template>
