@@ -13,7 +13,6 @@
                 },
             }"
         >
-            <!-- TODO: Wrap the other form components in a <form> tag -->
             <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; it's because of an auto-focus on the X button upon the dialog opening -->
             <form @submit.prevent="handleSubmit">
                 <!-- Username -->

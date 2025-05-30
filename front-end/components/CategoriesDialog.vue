@@ -26,61 +26,62 @@
                     {{ dialogHeaderPlural }}
                 </div>
             </template>
-            <div class="mt-1 mb-5 space-x-2">
-                <InputText type="text" v-model="newCategoryToAdd" />
-                <Button
-                    type="button"
-                    :label="'Add ' + dialogHeaderSingular"
-                    @click="addCategoryConfirmation(newCategoryToAdd)"
-                ></Button>
-                <Button
-                    type="button"
-                    label="Remove Selected"
-                    :disabled="removeCategoriesDisabled"
-                    :severity="removeCategoriesDisabled ? null : 'danger'"
-                    @click="removeCategoryConfirmation"
-                ></Button>
-            </div>
-            <div class="space-y-1">
-                <!-- Types -->
-                <div
-                    v-if="store.categoriesFormMode === CategoriesFormMode.Types"
-                >
+            <form @submit.prevent="addCategoryConfirmation(newCategoryToAdd)">
+                <div class="mt-1 mb-5 space-x-2">
+                    <InputText type="text" v-model="newCategoryToAdd" />
+                    <Button
+                        type="submit"
+                        :label="'Add ' + dialogHeaderSingular"
+                    ></Button>
+                    <Button
+                        type="button"
+                        label="Remove Selected"
+                        :disabled="removeCategoriesDisabled"
+                        :severity="removeCategoriesDisabled ? null : 'danger'"
+                        @click="removeCategoryConfirmation"
+                    ></Button>
+                </div>
+                <div class="space-y-1">
+                    <!-- Types -->
                     <div
-                        v-for="type in types"
-                        :key="type"
-                        class="flex items-center gap-2"
+                        v-if="store.categoriesFormMode === CategoriesFormMode.Types"
                     >
-                        <Checkbox
-                            v-model="selectedCategories"
-                            :inputId="type"
-                            name="type"
-                            :value="type"
-                        />
-                        <label :for="type">{{ type }}</label>
+                        <div
+                            v-for="type in types"
+                            :key="type"
+                            class="flex items-center gap-2"
+                        >
+                            <Checkbox
+                                v-model="selectedCategories"
+                                :inputId="type"
+                                name="type"
+                                :value="type"
+                            />
+                            <label :for="type">{{ type }}</label>
+                        </div>
+                    </div>
+                    <!-- Sets -->
+                    <div
+                        v-else-if="
+                            store.categoriesFormMode === CategoriesFormMode.Sets
+                        "
+                    >
+                        <div
+                            v-for="set in sets"
+                            :key="set"
+                            class="flex items-center gap-2"
+                        >
+                            <Checkbox
+                                v-model="selectedCategories"
+                                :inputId="set"
+                                name="set"
+                                :value="set"
+                            />
+                            <label :for="set">{{ set }}</label>
+                        </div>
                     </div>
                 </div>
-                <!-- Sets -->
-                <div
-                    v-else-if="
-                        store.categoriesFormMode === CategoriesFormMode.Sets
-                    "
-                >
-                    <div
-                        v-for="set in sets"
-                        :key="set"
-                        class="flex items-center gap-2"
-                    >
-                        <Checkbox
-                            v-model="selectedCategories"
-                            :inputId="set"
-                            name="set"
-                            :value="set"
-                        />
-                        <label :for="set">{{ set }}</label>
-                    </div>
-                </div>
-            </div>
+            </form>
         </Dialog>
     </div>
 </template>
