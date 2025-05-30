@@ -30,8 +30,6 @@ export async function createUser(apiUrl, username, password, confirmPassword) {
 }
 
 export async function logUserIn(apiUrl, username, password) {
-    console.log("Made it in here!");
-
     const store = useStore();
 
     try {
