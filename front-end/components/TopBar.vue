@@ -1,3 +1,4 @@
+<!-- TODO: When you're an admin user and have the Add Pokemon button and the window is smaller, it doesn't have great left margins when the header title disappears-->
 <template>
     <div>
         <div class="h-14 bg-custom-blue-800 flex items-center justify-between">
@@ -23,7 +24,7 @@
                     v-if="store.user.isAdmin"
                     :pt="{
                         pcButton: {
-                            root: 'bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
+                            root: 'bg-white relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-default overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                         pcDropdown: {
                             root: 'bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 w-10 px-0 gap-0 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
