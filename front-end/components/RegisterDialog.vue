@@ -1,4 +1,3 @@
-<!-- TODO: Add a toast that tells the user when they've successfully registered (and logged in) -->
 <template>
     <div class="flex justify-center">
         <Dialog
@@ -231,7 +230,7 @@ const handleSubmit = async () => {
         const registrationSucceeded = await submitRegistrationHandler();
         if (registrationSucceeded) {
             showToast(
-                SeverityLevels.Info,
+                SeverityLevels.Success,
                 "You've successfully created an account!",
                 "You've also been logged in."
             );
