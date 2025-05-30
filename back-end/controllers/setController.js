@@ -1,5 +1,8 @@
 const db = require("../database/db-connector");
 
+const errorCodes = require("../../shared/errorCodes");
+const CategoryErrorCodes = errorCodes.CategoryErrorCodes;
+
 exports.getSets = async (req, res) => {
     try {
         const [rows] = await db.pool.query(`SELECT set_name FROM Sets;`);
@@ -14,6 +17,13 @@ exports.getSets = async (req, res) => {
 exports.addSet = async (req, res) => {
     const { setName } = req.body;
     const query = `INSERT INTO Sets (set_name) VALUES (?);`;
+
+    const isValid = /^[a-zA-Z0-9\- ]+$/.test(setName);
+    if (!isValid) {
+        return res.status(400).json({
+            errorCode: CategoryErrorCodes.INVALID_CHARACTERS,
+        });
+    }
 
     try {
         await db.pool.query(query, [setName]);

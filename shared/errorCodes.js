@@ -6,3 +6,7 @@ export const RegistrationErrorCodes = {
     USERNAME_INVALID: "USERNAME_INVALID",
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
 };
+
+export const CategoryErrorCodes = {
+    INVALID_CHARACTERS: "INVALID_CHARACTERS",
+};

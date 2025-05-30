@@ -10,8 +10,7 @@ const {
     validatePasswordChoice,
 } = require("../utils/credentialValidator");
 
-// TODO: Figure out a way to protect this so a malicious user does not create a billion users as a DDoS. Maybe a CAPTCHA?
-//    - express-rate-limit and eventually a CAPTCHA
+// TODO: Add a CAPTCHA to new user creation (later)
 
 exports.createUser = async (req, res) => {
     const { username, password, confirmPassword } = req.body;

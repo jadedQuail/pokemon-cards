@@ -1,5 +1,8 @@
 const db = require("../database/db-connector");
 
+const errorCodes = require("../../shared/errorCodes");
+const CategoryErrorCodes = errorCodes.CategoryErrorCodes;
+
 // TODO: Need to validate that new types and new sets being added are acceptable, i.e. not dangerous or with weird characters
 
 exports.getTypes = async (req, res) => {
@@ -16,6 +19,13 @@ exports.getTypes = async (req, res) => {
 exports.addType = async (req, res) => {
     const { typeName } = req.body;
     const query = `INSERT INTO Types (type_name) VALUES (?);`;
+
+    const isValid = /^[a-zA-Z0-9\- ]+$/.test(typeName);
+    if (!isValid) {
+        return res.status(400).json({
+            errorCode: CategoryErrorCodes.INVALID_CHARACTERS,
+        });
+    }
 
     try {
         await db.pool.query(query, [typeName]);

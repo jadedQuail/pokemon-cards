@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAuthHeaders } from "./utils";
+import { CategoryErrorCodes } from "../../../shared/errorCodes";
 
 export async function getSetOptions(apiUrl) {
     try {
@@ -24,6 +25,11 @@ export async function addSet(apiUrl, setName) {
             return {
                 success: false,
                 message: "You can't add a duplicate category!",
+            };
+        } else if (error.response?.data?.errorCode === CategoryErrorCodes.INVALID_CHARACTERS) {
+            return {
+                success: false,
+                message: "Invalid characters detected; you can only use alphanumeric characters, spaces, and dashes."
             };
         }
 
