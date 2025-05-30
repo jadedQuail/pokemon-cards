@@ -135,17 +135,16 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 import { useStore } from "~/store/store.js";
-import { RegisterFieldIds } from "~/static/constants.js";
-
+import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
+import { useToastNotifications } from "@/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
-
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
 
 const config = useRuntimeConfig();
 
 const store = useStore();
+const { showToast } = useToastNotifications();
 
 const fields = ref(store.registerFields);
 
@@ -231,6 +230,11 @@ const handleSubmit = async () => {
     if (formReady) {
         const registrationSucceeded = await submitRegistrationHandler();
         if (registrationSucceeded) {
+            showToast(
+                SeverityLevels.Info,
+                "You've successfully created an account!",
+                "You've also been logged in."
+            );
             logUserInAfterRegistration();
             closeDialog();
         }
