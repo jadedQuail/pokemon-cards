@@ -36,7 +36,6 @@
                         <i class="pi pi-angle-down text-custom-blue-800"></i>
                     </template>
                     <span class="flex items-center">
-                        <!-- TODO: Make it so this More button doesn't have a hover effect or mouse change on hover -->
                         <span
                             class="!text-custom-blue-800 font-medium !text-[14px]"
                             >More</span
@@ -112,7 +111,6 @@ const splitButtonOptions = [
     },
 ];
 
-// TODO: Get this icon to stop flickering on page reload
 const loginIcon = computed(() => {
     return store.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
 });
