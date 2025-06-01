@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 
+// TODO: Split out this store
+
 import { fetchPokemonData } from "@/services/apiClient/pokemon.js";
 import { getSetOptions, addSet, deleteSet } from "@/services/apiClient/set.js";
 import {
@@ -41,7 +43,7 @@ export const useStore = defineStore("store", {
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
         sets: [],
-        // TO-DO: Rename this to be more indicative of fields specifically for adding pokemon
+        // TODO: Rename this to be more indicative of fields specifically for adding pokemon
         loginFields: {
             [LoginFieldIds.Username]: {
                 name: LoginFieldIds.Username,

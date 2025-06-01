@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3000;
 const ALLOW_ALL_ORIGINS = process.env.ALLOW_ALL_ORIGINS === "true";
 const ALLOW_LIST = [process.env.FRONTEND];
 
-// TODO: Clean up npm vulnerabilities on the back-end
 // TODO: Create a unit test and journey tests for this app
 
 const corsOptions = {
