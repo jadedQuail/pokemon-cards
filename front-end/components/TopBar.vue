@@ -1,11 +1,10 @@
-<!-- TODO: When you're an admin user and have the Add Pokemon button and the window is smaller, it doesn't have great left margins when the header title disappears-->
 <template>
     <div>
         <div class="h-14 bg-custom-blue-800 flex items-center justify-between">
             <!-- Left Content -->
             <div class="flex items-center">
                 <h1
-                    class="m-4 pb-1 text-white text-xl font-sans hidden lg:block"
+                    class="ml-4 mr-2 pb-1 text-white text-xl font-sans hidden lg:block"
                 >
                     Pokemon Card Database
                 </h1>
@@ -16,11 +15,12 @@
                     @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
                     :pt="{
                         root: {
-                            class: 'whitespace-nowrap mr-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
+                            class: 'whitespace-nowrap ml-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
                         },
                     }"
                 />
                 <SplitButton
+                    class="ml-2"
                     v-if="store.user.isAdmin"
                     :pt="{
                         pcButton: {
