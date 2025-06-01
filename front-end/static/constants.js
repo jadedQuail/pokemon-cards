@@ -1,4 +1,4 @@
-export const FieldIds = Object.freeze({
+export const AddPokemonFieldIds = Object.freeze({
     ID: "id",
     Name: "name",
     HP: "hp",

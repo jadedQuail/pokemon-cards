@@ -11,7 +11,7 @@ import {
 } from "@/services/apiClient/type.js";
 
 import {
-    FieldIds,
+    AddPokemonFieldIds,
     LoginFieldIds,
     RegisterFieldIds,
     PokemonFormMode,
@@ -43,7 +43,6 @@ export const useStore = defineStore("store", {
         categoriesFormMode: CategoriesFormMode.None,
         types: [],
         sets: [],
-        // TODO: Rename this to be more indicative of fields specifically for adding pokemon
         loginFields: {
             [LoginFieldIds.Username]: {
                 name: LoginFieldIds.Username,
@@ -73,34 +72,34 @@ export const useStore = defineStore("store", {
                 valid: true,
             },
         },
-        rawFields: {
-            [FieldIds.ID]: {
-                name: FieldIds.ID,
+        addPokemonFields: {
+            [AddPokemonFieldIds.ID]: {
+                name: AddPokemonFieldIds.ID,
                 content: "",
                 valid: true,
             },
-            [FieldIds.Name]: {
-                name: FieldIds.Name,
+            [AddPokemonFieldIds.Name]: {
+                name: AddPokemonFieldIds.Name,
                 content: "",
                 valid: true,
             },
-            [FieldIds.HP]: {
-                name: FieldIds.HP,
+            [AddPokemonFieldIds.HP]: {
+                name: AddPokemonFieldIds.HP,
                 content: "",
                 valid: true,
             },
-            [FieldIds.Type]: {
-                name: FieldIds.Type,
+            [AddPokemonFieldIds.Type]: {
+                name: AddPokemonFieldIds.Type,
                 content: "",
                 valid: true,
             },
-            [FieldIds.Set]: {
-                name: FieldIds.Set,
+            [AddPokemonFieldIds.Set]: {
+                name: AddPokemonFieldIds.Set,
                 content: "",
                 valid: true,
             },
-            [FieldIds.FlavorText]: {
-                name: FieldIds.FlavorText,
+            [AddPokemonFieldIds.FlavorText]: {
+                name: AddPokemonFieldIds.FlavorText,
                 content: "",
                 valid: true,
             },
@@ -205,12 +204,17 @@ export const useStore = defineStore("store", {
             this.registerDialogVisible = false;
         },
         setFieldContentForEditDialog(pokemon) {
-            this.rawFields[FieldIds.ID].content = pokemon.id || "";
-            this.rawFields[FieldIds.Name].content = pokemon.name || "";
-            this.rawFields[FieldIds.HP].content = pokemon.hp || "";
-            this.rawFields[FieldIds.Type].content = pokemon.type || "";
-            this.rawFields[FieldIds.Set].content = pokemon.set || "";
-            this.rawFields[FieldIds.FlavorText].content =
+            this.addPokemonFields[AddPokemonFieldIds.ID].content =
+                pokemon.id || "";
+            this.addPokemonFields[AddPokemonFieldIds.Name].content =
+                pokemon.name || "";
+            this.addPokemonFields[AddPokemonFieldIds.HP].content =
+                pokemon.hp || "";
+            this.addPokemonFields[AddPokemonFieldIds.Type].content =
+                pokemon.type || "";
+            this.addPokemonFields[AddPokemonFieldIds.Set].content =
+                pokemon.set || "";
+            this.addPokemonFields[AddPokemonFieldIds.FlavorText].content =
                 pokemon.flavorText || "";
         },
         setUserFromToken(token) {
