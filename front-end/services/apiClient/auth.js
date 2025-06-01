@@ -56,8 +56,6 @@ export async function logUserIn(apiUrl, username, password) {
             user: JSON.parse(atob(token.split(".")[1])),
         };
     } catch (error) {
-        console.log(error);
-
         return {
             success: false,
             message: error.response?.data?.message || "Login failed.",
