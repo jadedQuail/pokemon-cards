@@ -1,12 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const controller = require("../controllers/typeController");
+import express from "express";
+import * as controller from "../controllers/typeController.js";
+import requireAdmin from "../middleware/requireAdmin.js";
 
-const requireAdmin = require("../middleware/requireAdmin");
+const router = express.Router();
 
 router.get("/", controller.getTypes);
 
 router.post("/", requireAdmin, controller.addType);
 router.delete("/:type", requireAdmin, controller.deleteType);
 
-module.exports = router;
+export default router;

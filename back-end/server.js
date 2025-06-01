@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
@@ -6,8 +6,6 @@ import pokemonRoutes from "./routes/pokemonRoutes.js";
 import typeRoutes from "./routes/typeRoutes.js";
 import setRoutes from "./routes/setRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-
-dotenv.config();
 
 const app = express();
 

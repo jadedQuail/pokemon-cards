@@ -1,9 +1,7 @@
-const db = require("../database/db-connector");
+import db from "../database/db-connector.js";
+import { CategoryErrorCodes } from "../../shared/errorCodes.js";
 
-const errorCodes = require("../../shared/errorCodes");
-const CategoryErrorCodes = errorCodes.CategoryErrorCodes;
-
-exports.getTypes = async (req, res) => {
+export const getTypes = async (req, res) => {
     try {
         const [rows] = await db.pool.query(`SELECT type_name FROM Types;`);
         const types = rows.map((typeObject) => typeObject.type_name);
@@ -14,7 +12,7 @@ exports.getTypes = async (req, res) => {
     }
 };
 
-exports.addType = async (req, res) => {
+export const addType = async (req, res) => {
     const { typeName } = req.body;
     const query = `INSERT INTO Types (type_name) VALUES (?);`;
 
@@ -37,7 +35,7 @@ exports.addType = async (req, res) => {
     }
 };
 
-exports.deleteType = async (req, res) => {
+export const deleteType = async (req, res) => {
     const typeName = req.params.type;
     const query = `DELETE FROM Types WHERE type_name = ?`;
 
