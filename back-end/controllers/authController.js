@@ -1,18 +1,15 @@
-const db = require("../database/db-connector");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-
-const errorCodes = require("../../shared/errorCodes");
-const RegistrationErrorCodes = errorCodes.RegistrationErrorCodes;
-
-const {
+import db from "../database/db-connector.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { RegistrationErrorCodes } from "../../shared/errorCodes.js";
+import {
     validateUsernameChoice,
     validatePasswordChoice,
-} = require("../utils/credentialValidator");
+} from "../utils/credentialValidator.js";
 
 // TODO: Add a CAPTCHA to new user creation (later)
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
     const { username, password, confirmPassword } = req.body;
 
     if (!username || !password || !confirmPassword) {
@@ -61,7 +58,7 @@ exports.createUser = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {

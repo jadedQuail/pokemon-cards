@@ -1,17 +1,19 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
 
-const express = require("express");
-const cors = require("cors");
+import pokemonRoutes from "./routes/pokemonRoutes.js";
+import typeRoutes from "./routes/typeRoutes.js";
+import setRoutes from "./routes/setRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+
+dotenv.config();
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const ALLOW_ALL_ORIGINS = process.env.ALLOW_ALL_ORIGINS === "true";
 const ALLOW_LIST = [process.env.FRONTEND];
-
-const pokemonRoutes = require("./routes/pokemonRoutes");
-const typeRoutes = require("./routes/typeRoutes");
-const setRoutes = require("./routes/setRoutes");
-const authRoutes = require("./routes/authRoutes");
 
 // TODO: Clean up npm vulnerabilities on the back-end
 // TODO: Convert the back-end to ES Modules ("import") from CommonJS ("require")

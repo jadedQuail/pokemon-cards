@@ -1,7 +1,6 @@
-const errorCodes = require("../../shared/errorCodes");
-const RegistrationErrorCodes = errorCodes.RegistrationErrorCodes;
+import { RegistrationErrorCodes } from "../../shared/errorCodes.js";
 
-function validateUsernameChoice(username) {
+export function validateUsernameChoice(username) {
     const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]{2,19}$/;
 
     if (!username || !usernameRegex.test(username)) {
@@ -14,7 +13,7 @@ function validateUsernameChoice(username) {
     return { valid: true };
 }
 
-function validatePasswordChoice(password, confirmPassword) {
+export function validatePasswordChoice(password, confirmPassword) {
     if (password !== confirmPassword) {
         return {
             valid: false,
@@ -34,5 +33,3 @@ function validatePasswordChoice(password, confirmPassword) {
 
     return { valid: true };
 }
-
-module.exports = { validateUsernameChoice, validatePasswordChoice };

@@ -122,10 +122,7 @@
                         severity="secondary"
                         @click="closeDialog"
                     ></Button>
-                    <Button
-                        type="submit"
-                        label="Save"
-                    ></Button>
+                    <Button type="submit" label="Save"></Button>
                 </div>
             </form>
         </Dialog>
@@ -290,8 +287,6 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
         registrationAttemptResult && registrationAttemptResult.success
     );
 };
-
-// TODO: Make sure you can hit "enter" key to submit this form, like with login
 
 const closeDialog = () => {
     store.hideRegisterDialog();
