@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-function isAdmin(req, res, next) {
+export default function isAdmin(req, res, next) {
     const authHeader = req.headers["authorization"];
     const token = authHeader?.split(" ")[1];
 
@@ -22,5 +22,3 @@ function isAdmin(req, res, next) {
         return res.sendStatus(403);
     }
 }
-
-module.exports = isAdmin;

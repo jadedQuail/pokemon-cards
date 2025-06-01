@@ -1,6 +1,6 @@
-const db = require("../database/db-connector");
+import db from "../database/db-connector.js";
 
-exports.getPokemon = async (req, res) => {
+export async function getPokemon(req, res) {
     const query = `
         SELECT 
             Pokemon.pokemon_id AS 'id', 
@@ -21,9 +21,9 @@ exports.getPokemon = async (req, res) => {
         console.error(err);
         return res.sendStatus(500);
     }
-};
+}
 
-exports.getColumnHeaders = async (req, res) => {
+export async function getColumnHeaders(req, res) {
     try {
         let [, fields] = await db.pool.query(mainGetQuery);
         const headers = fields.map((field) => field.name);
@@ -32,9 +32,9 @@ exports.getColumnHeaders = async (req, res) => {
         console.error(err);
         return res.sendStatus(500);
     }
-};
+}
 
-exports.editPokemon = async (req, res) => {
+export async function editPokemon(req, res) {
     let data = req.body;
     let pokemonId = req.params.id;
 
@@ -66,9 +66,9 @@ exports.editPokemon = async (req, res) => {
         console.error(err);
         return res.sendStatus(500);
     }
-};
+}
 
-exports.addPokemon = async (req, res) => {
+export async function addPokemon(req, res) {
     let data = req.body;
 
     let query = `
@@ -95,9 +95,9 @@ exports.addPokemon = async (req, res) => {
         console.error(err);
         return res.sendStatus(500);
     }
-};
+}
 
-exports.deletePokemon = async (req, res) => {
+export async function deletePokemon(req, res) {
     const pokemonId = req.params.id;
 
     const deleteQuery = `DELETE FROM Pokemon WHERE pokemon_id = ?`;
@@ -109,4 +109,4 @@ exports.deletePokemon = async (req, res) => {
         console.error("Error deleting Pokemon:", err);
         return res.sendStatus(500);
     }
-};
+}
