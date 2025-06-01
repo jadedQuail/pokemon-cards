@@ -1,12 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const controller = require("../controllers/setController");
+import express from "express";
+import * as controller from "../controllers/setController.js";
+import requireAdmin from "../middleware/requireAdmin.js";
 
-const requireAdmin = require("../middleware/requireAdmin");
+const router = express.Router();
 
 router.get("/", controller.getSets);
 
 router.post("/", requireAdmin, controller.addSet);
 router.delete("/:set", requireAdmin, controller.deleteSet);
 
-module.exports = router;
+export default router;

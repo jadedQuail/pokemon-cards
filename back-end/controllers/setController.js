@@ -1,9 +1,7 @@
-const db = require("../database/db-connector");
+import db from "../database/db-connector.js";
+import { CategoryErrorCodes } from "../../shared/errorCodes.js";
 
-const errorCodes = require("../../shared/errorCodes");
-const CategoryErrorCodes = errorCodes.CategoryErrorCodes;
-
-exports.getSets = async (req, res) => {
+export const getSets = async (req, res) => {
     try {
         const [rows] = await db.pool.query(`SELECT set_name FROM Sets;`);
         const sets = rows.map((setObject) => setObject.set_name);
@@ -14,7 +12,7 @@ exports.getSets = async (req, res) => {
     }
 };
 
-exports.addSet = async (req, res) => {
+export const addSet = async (req, res) => {
     const { setName } = req.body;
     const query = `INSERT INTO Sets (set_name) VALUES (?);`;
 
@@ -37,7 +35,7 @@ exports.addSet = async (req, res) => {
     }
 };
 
-exports.deleteSet = async (req, res) => {
+export const deleteSet = async (req, res) => {
     const setName = req.params.set;
     const query = `DELETE FROM Sets WHERE set_name = ?`;
 
