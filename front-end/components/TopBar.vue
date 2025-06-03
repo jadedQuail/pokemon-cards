@@ -9,7 +9,7 @@
                     Pokemon Card Database
                 </h1>
                 <Button
-                    v-if="store.user.isAdmin"
+                    v-if="authStore.user.isAdmin"
                     size="small"
                     label="Add Pokemon"
                     @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
@@ -21,7 +21,7 @@
                 />
                 <SplitButton
                     class="ml-2"
-                    v-if="store.user.isAdmin"
+                    v-if="authStore.user.isAdmin"
                     :pt="{
                         pcButton: {
                             root: 'bg-white relative items-center inline-flex text-center align-bottom justify-center leading-[normal] px-3 py-2 rounded-md text-primary-contrast bg-primary transition duration-200 ease-in-out cursor-default overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
@@ -77,11 +77,15 @@
 import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
-import { useStore } from "~/store/store.js";
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
+import { useStore } from "~/stores/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
+
 const emit = defineEmits(["search-change"]);
+
 const store = useStore();
+const authStore = useAuthStore();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -92,7 +96,7 @@ const emitSearch = () => {
 };
 
 const getGreetingText = () => {
-    const username = store.user?.username;
+    const username = authStore.user?.username;
     return username && username.trim() !== "" ? `Hello, ${username}` : "Login";
 };
 
@@ -112,14 +116,14 @@ const splitButtonOptions = [
 ];
 
 const loginIcon = computed(() => {
-    return store.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
+    return authStore.isLoggedIn ? "pi pi-sign-out" : "pi pi-sign-in";
 });
 
 function handleLoginLogoutClick() {
-    if (store.isLoggedIn) {
-        store.showLogoutDialog();
+    if (authStore.isLoggedIn) {
+        authStore.showLogoutDialog();
     } else {
-        store.showLoginDialog();
+        authStore.showLoginDialog();
     }
 }
 </script>

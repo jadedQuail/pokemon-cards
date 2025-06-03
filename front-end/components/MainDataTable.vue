@@ -26,7 +26,7 @@
             <Column
                 header="Options"
                 bodyClass="!pl-3"
-                v-if="store.user.isAdmin"
+                v-if="authStore.user.isAdmin"
             >
                 <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
@@ -53,7 +53,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useStore } from "~/store/store.js";
+import { useStore } from "~/stores/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
 import "primeicons/primeicons.css";
 import { PokemonFormMode } from "~/static/constants.js";
 
@@ -61,6 +62,7 @@ import { useConfirmDialog } from "@/composables/useConfirmDialog";
 const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
 
 const store = useStore();
+const authStore = useAuthStore();
 
 const config = useRuntimeConfig();
 

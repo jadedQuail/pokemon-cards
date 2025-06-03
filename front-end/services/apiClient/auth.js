@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useStore } from "~/store/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
 
 import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
@@ -30,7 +30,7 @@ export async function createUser(apiUrl, username, password, confirmPassword) {
 }
 
 export async function logUserIn(apiUrl, username, password) {
-    const store = useStore();
+    const authStore = useAuthStore();
 
     try {
         const response = await axios.post(
@@ -49,7 +49,7 @@ export async function logUserIn(apiUrl, username, password) {
         const token = response.data.token;
         localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
 
-        store.setUserFromToken(token);
+        authStore.setUserFromToken(token);
 
         return {
             success: true,

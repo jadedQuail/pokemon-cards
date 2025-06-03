@@ -195,7 +195,7 @@ import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
 import { getTypeOptions } from "@/services/apiClient/type.js";
 import { getSetOptions } from "@/services/apiClient/set.js";
 
-import { useStore } from "~/store/store.js";
+import { useStore } from "~/stores/store.js";
 
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { SeverityLevels } from "~/static/constants.js";

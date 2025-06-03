@@ -44,7 +44,10 @@
                 <div class="space-y-1">
                     <!-- Types -->
                     <div
-                        v-if="store.categoriesFormMode === CategoriesFormMode.Types"
+                        v-if="
+                            store.categoriesFormMode ===
+                            CategoriesFormMode.Types
+                        "
                     >
                         <div
                             v-for="type in types"
@@ -88,7 +91,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useStore } from "~/store/store.js";
+import { useStore } from "~/stores/store.js";
 import { CategoriesFormMode } from "~/static/constants.js";
 import {
     getTypeOptions,

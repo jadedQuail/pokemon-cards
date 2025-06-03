@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="store.registerDialogVisible"
+            v-model:visible="authStore.registerDialogVisible"
             :draggable="false"
             modal
             header="Register"
@@ -130,7 +130,8 @@
 </template>
 
 <script setup>
-import { useStore } from "~/store/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
+
 import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
@@ -138,10 +139,11 @@ import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue"
 
 const config = useRuntimeConfig();
 
-const store = useStore();
+const authStore = useAuthStore();
+
 const { showToast } = useToastNotifications();
 
-const fields = ref(store.registerFields);
+const fields = ref(authStore.registerFields);
 
 const registrationError = ref(false);
 const registrationErrorCode = ref(null);
@@ -289,6 +291,6 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
 };
 
 const closeDialog = () => {
-    store.hideRegisterDialog();
+    authStore.hideRegisterDialog();
 };
 </script>

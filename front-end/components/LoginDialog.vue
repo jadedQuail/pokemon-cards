@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="store.loginDialogVisible"
+            v-model:visible="authStore.loginDialogVisible"
             :draggable="false"
             modal
             header="Login"
@@ -108,16 +108,17 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useStore } from "~/store/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
+
 import { LoginFieldIds } from "~/static/constants.js";
 
 import { logUserIn } from "@/services/apiClient/auth.js";
 
 const config = useRuntimeConfig();
 
-const store = useStore();
+const authStore = useAuthStore();
 
-const fields = ref(store.loginFields);
+const fields = ref(authStore.loginFields);
 
 const loginError = ref(false);
 
@@ -214,10 +215,10 @@ const setLoginErrorState = (loginAttemptResult) => {
 
 const handleRegisterClick = () => {
     closeDialog();
-    store.showRegisterDialog();
+    authStore.showRegisterDialog();
 };
 
 const closeDialog = () => {
-    store.hideLoginDialog();
+    authStore.hideLoginDialog();
 };
 </script>

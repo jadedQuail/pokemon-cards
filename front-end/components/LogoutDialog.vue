@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="store.logoutDialogVisible"
+            v-model:visible="authStore.logoutDialogVisible"
             :draggable="false"
             modal
             header="Logout"
@@ -37,11 +37,11 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useStore } from "~/store/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
 
 const config = useRuntimeConfig();
 
-const store = useStore();
+const authStore = useAuthStore();
 
 const handleConfirmClick = () => {
     logUserOut();
@@ -49,11 +49,11 @@ const handleConfirmClick = () => {
 };
 
 const logUserOut = async () => {
-    store.clearUser();
+    authStore.clearUser();
     await nextTick();
 };
 
 const closeDialog = () => {
-    store.hideLogoutDialog();
+    authStore.hideLogoutDialog();
 };
 </script>

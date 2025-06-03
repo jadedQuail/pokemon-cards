@@ -1,8 +1,8 @@
-import { useStore } from "~/store/store.js";
+import { useAuthStore } from "~/stores/authStore.js";
 import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 
 export function initializeAuth() {
-    const store = useStore();
+    const authStore = useAuthStore();
 
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
 
@@ -12,7 +12,7 @@ export function initializeAuth() {
             const isExpired = payload.exp && Date.now() >= payload.exp * 1000;
 
             if (!isExpired) {
-                store.setUserFromToken(token);
+                authStore.setUserFromToken(token);
             } else {
                 localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
             }
@@ -21,5 +21,5 @@ export function initializeAuth() {
         }
     }
 
-    store.finishAuthInit();
+    authStore.finishAuthInit();
 }
