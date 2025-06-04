@@ -1,10 +1,6 @@
 import { defineStore } from "pinia";
-import { getSetOptions, addSet, deleteSet } from "@/services/apiClient/set.js";
-import {
-    getTypeOptions,
-    addType,
-    deleteType,
-} from "@/services/apiClient/type.js";
+import { getSetOptions } from "@/services/apiClient/set.js";
+import { getTypeOptions } from "@/services/apiClient/type.js";
 import { CategoriesFormMode } from "~/static/constants.js";
 
 export const useCategoryStore = defineStore("category", {
@@ -29,29 +25,6 @@ export const useCategoryStore = defineStore("category", {
             } catch (error) {
                 console.error("Error fetching set options:", error);
             }
-        },
-        // TODO - this not being used?
-        async addCategory(apiUrl, categoryName) {
-            if (this.categoriesFormMode === CategoriesFormMode.Types) {
-                await addType(apiUrl, categoryName);
-            } else {
-                await addSet(apiUrl, categoryName);
-            }
-            await this.refreshCategories(apiUrl);
-        },
-        // TODO - this also not being used?
-        async removeCategories(apiUrl, categoriesToRemove) {
-            const isType = this.categoriesFormMode === CategoriesFormMode.Types;
-
-            for (const category of categoriesToRemove) {
-                if (isType) {
-                    await deleteType(apiUrl, category);
-                } else {
-                    await deleteSet(apiUrl, category);
-                }
-            }
-
-            await this.refreshCategories(apiUrl);
         },
         async refreshCategories(apiUrl) {
             await this.loadTypeOptions(apiUrl);
