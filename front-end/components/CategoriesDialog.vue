@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="store.categoriesDialogVisible"
+            v-model:visible="categoryStore.categoriesDialogVisible"
             modal
             :draggable="false"
             @hide="closeDialog"
@@ -45,7 +45,7 @@
                     <!-- Types -->
                     <div
                         v-if="
-                            store.categoriesFormMode ===
+                            categoryStore.categoriesFormMode ===
                             CategoriesFormMode.Types
                         "
                     >
@@ -66,7 +66,8 @@
                     <!-- Sets -->
                     <div
                         v-else-if="
-                            store.categoriesFormMode === CategoriesFormMode.Sets
+                            categoryStore.categoriesFormMode ===
+                            CategoriesFormMode.Sets
                         "
                     >
                         <div
@@ -91,7 +92,9 @@
 
 <script setup>
 import { ref } from "vue";
-import { useStore } from "~/stores/store.js";
+
+import { usePokemonStore } from "~/stores/pokemonStore.js";
+import { useCategoryStore } from "~/stores/categoryStore.js";
 import { CategoriesFormMode } from "~/static/constants.js";
 import {
     getTypeOptions,
@@ -102,7 +105,8 @@ import { getSetOptions, addSet, deleteSet } from "@/services/apiClient/set.js";
 
 const config = useRuntimeConfig();
 
-const store = useStore();
+const pokemonStore = usePokemonStore();
+const categoryStore = useCategoryStore();
 
 // TODO: Make these types and sets store objects so they can be used both here and on AddPokemonDialog
 const types = ref([]);
@@ -144,18 +148,18 @@ const resetDialogInput = async () => {
 const closeDialog = async () => {
     await resetDialogInput();
 
-    store.hideCategoriesDialog();
+    categoryStore.hideCategoriesDialog();
 };
 
 const dialogHeaderSingular = computed(() => {
-    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+    if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
         return "Type";
     }
     return "Set";
 });
 
 const dialogHeaderPlural = computed(() => {
-    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+    if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
         return "Types";
     }
     return "Sets";
@@ -174,7 +178,7 @@ const addCategory = async (categoryName) => {
     const apiUrl = config.public.API_URL;
     let result;
 
-    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+    if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
         result = await addType(apiUrl, categoryName);
     } else {
         result = await addSet(apiUrl, categoryName);
@@ -187,7 +191,7 @@ const addCategory = async (categoryName) => {
 
     await resetDialogInput();
     await refreshCategories();
-    await store.fetchPokemonData(apiUrl);
+    await pokemonStore.fetchPokemonData(apiUrl);
 };
 
 const removeCategoryConfirmation = async () => {
@@ -202,7 +206,7 @@ const removeCategoryConfirmation = async () => {
 const removeCategories = async () => {
     const apiUrl = config.public.API_URL;
 
-    if (store.categoriesFormMode === CategoriesFormMode.Types) {
+    if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
         for (const category of selectedCategories.value) {
             await deleteType(apiUrl, category);
         }
@@ -214,7 +218,7 @@ const removeCategories = async () => {
 
     await resetDialogInput();
     await refreshCategories();
-    await store.fetchPokemonData(apiUrl);
+    await pokemonStore.fetchPokemonData(apiUrl);
 };
 
 const removeCategoriesDisabled = computed(() => {

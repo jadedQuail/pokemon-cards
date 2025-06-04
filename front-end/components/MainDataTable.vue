@@ -3,7 +3,7 @@
         <DataTable
             :filters="filters"
             @update:filters="updateFilters"
-            :value="store.pokemonData"
+            :value="pokemonStore.pokemonData"
             scrollable
             removableSort
             :scrollHeight="scrollHeight"
@@ -14,7 +14,7 @@
             :rowsPerPageOptions="[20, 50, 100]"
             tableStyle="min-width: 50rem"
             class="fixed-header"
-            :loading="!store.dataLoaded"
+            :loading="!pokemonStore.dataLoaded"
             loadingIcon="null"
         >
             <Column field="id" header="ID" sortable></Column>
@@ -43,7 +43,7 @@
             </Column>
         </DataTable>
         <div
-            v-if="!store.dataLoaded"
+            v-if="!pokemonStore.dataLoaded"
             class="text-3xl flex items-center justify-center mt-4"
         >
             <i class="pi pi-spinner animate-spin text-3xl"></i>
@@ -53,16 +53,18 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useStore } from "~/stores/store.js";
+
 import { useAuthStore } from "~/stores/authStore.js";
+import { usePokemonStore } from "~/stores/pokemonStore.js";
+
 import "primeicons/primeicons.css";
 import { PokemonFormMode } from "~/static/constants.js";
 
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
 const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
 
-const store = useStore();
 const authStore = useAuthStore();
+const pokemonStore = usePokemonStore();
 
 const config = useRuntimeConfig();
 
@@ -87,7 +89,7 @@ const updateScrollHeight = () => {
 };
 
 onMounted(async () => {
-    await store.fetchPokemonData(config.public.API_URL);
+    await pokemonStore.fetchPokemonData(config.public.API_URL);
     updateScrollHeight();
     window.addEventListener("resize", updateScrollHeight);
 });
@@ -112,9 +114,9 @@ const deleteRow = (rowData) => {
 };
 
 const editRow = (rowData) => {
-    store.editingPokemonId = rowData.id;
+    pokemonStore.editingPokemonId = rowData.id;
 
-    store.setFieldContentForEditDialog({
+    pokemonStore.setFieldContentForEditDialog({
         id: rowData.id,
         name: rowData.name,
         hp: String(rowData.hp),
@@ -122,6 +124,6 @@ const editRow = (rowData) => {
         set: rowData.set,
         flavorText: rowData.flavorText,
     });
-    store.showAddPokemonDialog(PokemonFormMode.Edit);
+    pokemonStore.showAddPokemonDialog(PokemonFormMode.Edit);
 };
 </script>

@@ -12,7 +12,9 @@
                     v-if="authStore.user.isAdmin"
                     size="small"
                     label="Add Pokemon"
-                    @click="store.showAddPokemonDialog(PokemonFormMode.Add)"
+                    @click="
+                        pokemonStore.showAddPokemonDialog(PokemonFormMode.Add)
+                    "
                     :pt="{
                         root: {
                             class: 'whitespace-nowrap ml-2 py-[9px] px-3 !text-custom-blue-800 bg-white hover:!bg-custom-blue-100 relative items-center inline-flex text-center align-bottom justify-center leading-[normal] text-sm py-1.5 px-3 gap-2 rounded-md text-primary-contrast bg-primary hover:bg-primary-emphasis transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none [&>[data-pc-name=badge]]:min-w-4 [&>[data-pc-name=badge]]:h-4 [&>[data-pc-name=badge]]:leading-4',
@@ -79,13 +81,15 @@ import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
-import { useStore } from "~/stores/store.js";
 import { useAuthStore } from "~/stores/authStore.js";
+import { usePokemonStore } from "~/stores/pokemonStore.js";
+import { useCategoryStore } from "~/stores/categoryStore.js";
 
 const emit = defineEmits(["search-change"]);
 
-const store = useStore();
 const authStore = useAuthStore();
+const pokemonStore = usePokemonStore();
+const categoryStore = useCategoryStore();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -104,13 +108,13 @@ const splitButtonOptions = [
     {
         label: "Edit Types",
         command: () => {
-            store.showCategoriesDialog(CategoriesFormMode.Types);
+            categoryStore.showCategoriesDialog(CategoriesFormMode.Types);
         },
     },
     {
         label: "Edit Sets",
         command: () => {
-            store.showCategoriesDialog(CategoriesFormMode.Sets);
+            categoryStore.showCategoriesDialog(CategoriesFormMode.Sets);
         },
     },
 ];

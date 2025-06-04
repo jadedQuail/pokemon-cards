@@ -52,15 +52,17 @@
 <script setup>
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
 import { deletePokemon } from "@/services/apiClient/pokemon.js";
-import { useStore } from "~/stores/store.js";
-import { useToastNotifications } from "@/composables/useToastNotification";
 
+import { usePokemonStore } from "~/stores/pokemonStore.js";
+
+import { useToastNotifications } from "@/composables/useToastNotification";
 import { SeverityLevels } from "~/static/constants.js";
 
 const { showToast } = useToastNotifications();
-
 const { isVisible, message, currentPokemonData } = useConfirmDialog();
-const store = useStore();
+
+const pokemonStore = usePokemonStore();
+
 const config = useRuntimeConfig();
 
 const deletePokemonHandler = async () => {
@@ -69,7 +71,7 @@ const deletePokemonHandler = async () => {
         const deleteId = currentPokemonData.value.id;
 
         await deletePokemon(apiUrl, deleteId);
-        await store.fetchPokemonData(apiUrl);
+        await pokemonStore.fetchPokemonData(apiUrl);
         isVisible.value = false;
 
         showToast(

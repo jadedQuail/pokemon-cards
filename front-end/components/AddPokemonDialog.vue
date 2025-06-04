@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center">
         <Dialog
-            v-model:visible="store.addPokemonDialogVisible"
+            v-model:visible="pokemonStore.addPokemonDialogVisible"
             :draggable="false"
             modal
             :header="dialogHeader"
@@ -86,7 +86,7 @@
                     <div class="flex flex-col flex-auto">
                         <Select
                             v-model="fields[AddPokemonFieldIds.Type].content"
-                            :options="store.types"
+                            :options="categoryStore.types"
                             placeholder=""
                             class="flex-auto"
                             :invalid="!fields[AddPokemonFieldIds.Type].valid"
@@ -117,7 +117,7 @@
                     <div class="flex flex-col flex-auto">
                         <Select
                             v-model="fields[AddPokemonFieldIds.Set].content"
-                            :options="store.sets"
+                            :options="categoryStore.sets"
                             placeholder=""
                             class="flex-auto"
                             :invalid="!fields[AddPokemonFieldIds.Set].valid"
@@ -195,12 +195,14 @@ import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
 import { getTypeOptions } from "@/services/apiClient/type.js";
 import { getSetOptions } from "@/services/apiClient/set.js";
 
-import { useStore } from "~/stores/store.js";
+import { usePokemonStore } from "~/stores/pokemonStore.js";
+import { useCategoryStore } from "~/stores/categoryStore.js";
 
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { SeverityLevels } from "~/static/constants.js";
 
-const store = useStore();
+const pokemonStore = usePokemonStore();
+const categoryStore = useCategoryStore();
 
 const { showToast } = useToastNotifications();
 
@@ -217,7 +219,7 @@ const handleSubmit = async () => {
     }
 };
 
-const fields = ref(store.addPokemonFields);
+const fields = ref(pokemonStore.addPokemonFields);
 
 const resetForm = () => {
     resetValidationFlags();
@@ -276,7 +278,7 @@ const submitPokemonHandler = async () => {
         const cardHpForToast = fields.value.hp.content;
         const cardTypeForToast = fields.value.type.content;
 
-        if (store.pokemonFormMode === PokemonFormMode.Add) {
+        if (pokemonStore.pokemonFormMode === PokemonFormMode.Add) {
             await addPokemon(apiUrl, fields.value);
 
             showToast(
@@ -284,7 +286,7 @@ const submitPokemonHandler = async () => {
                 "Card Created",
                 `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
             );
-        } else if (store.pokemonFormMode === PokemonFormMode.Edit) {
+        } else if (pokemonStore.pokemonFormMode === PokemonFormMode.Edit) {
             await editPokemon(apiUrl, fields.value, fields.value.id.content);
 
             showToast(
@@ -294,18 +296,18 @@ const submitPokemonHandler = async () => {
             );
         }
 
-        await store.fetchPokemonData(apiUrl); // Fetch data after submitting
+        await pokemonStore.fetchPokemonData(apiUrl); // Fetch data after submitting
     } catch (error) {
         console.error("Error posting data:", error);
     }
 };
 
 const closeDialog = () => {
-    store.hideAddPokemonDialog();
+    pokemonStore.hideAddPokemonDialog();
 };
 
 const dialogHeader = computed(() => {
-    if (store.pokemonFormMode === PokemonFormMode.Edit) {
+    if (pokemonStore.pokemonFormMode === PokemonFormMode.Edit) {
         return "Edit Pokemon Card";
     }
     return "Add Pokemon Card";
@@ -330,7 +332,7 @@ const setValidityFlagsForAllFields = () => {
 const refreshCategories = async () => {
     const apiUrl = config.public.API_URL;
 
-    await store.refreshCategories(apiUrl);
+    await categoryStore.refreshCategories(apiUrl);
 };
 
 onMounted(async () => {
