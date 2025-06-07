@@ -23,17 +23,6 @@ export const getPokemon = async (req, res) => {
     }
 };
 
-export const getColumnHeaders = async (req, res) => {
-    try {
-        let [, fields] = await db.pool.query(mainGetQuery);
-        const headers = fields.map((field) => field.name);
-        return res.status(200).json(headers);
-    } catch (err) {
-        console.error(err);
-        return res.sendStatus(500);
-    }
-};
-
 export const editPokemon = async (req, res) => {
     let data = req.body;
     let pokemonId = req.params.id;
