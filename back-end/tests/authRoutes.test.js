@@ -193,4 +193,54 @@ describe("POST /auth/login", () => {
             token: dummyToken,
         });
     });
+
+    it("returns 401 if the password does not match the username", async () => {
+        const fakeUser = {
+            user_id: 7,
+            username: "user1",
+            password_hash: "stored-hash",
+            is_admin: false,
+        };
+
+        db.pool.query.mockResolvedValueOnce([[fakeUser]]);
+
+        bcrypt.compare.mockResolvedValueOnce(false);
+
+        const res = await request(app)
+            .post("/auth/login")
+            .send({
+                username: "user1",
+                password: "wrongpassword",
+            })
+            .set("Accept", "application/json");
+
+        expect(db.pool.query).toHaveBeenCalledWith(
+            expect.stringMatching(
+                /^SELECT \* FROM Users WHERE username = \? LIMIT 1/
+            ),
+            ["user1"]
+        );
+
+        expect(bcrypt.compare).toHaveBeenCalledWith(
+            "wrongpassword",
+            "stored-hash"
+        );
+
+        expect(res.status).toBe(401);
+    });
+
+    it("returns 500 if the DB query throws", async () => {
+        const dbErr = new Error("DB failure");
+        db.pool.query.mockRejectedValueOnce(dbErr);
+
+        const res = await request(app)
+            .post("/auth/login")
+            .send({
+                username: "anyuser",
+                password: "anypass",
+            })
+            .set("Accept", "application/json");
+
+        expect(res.status).toBe(500);
+    });
 });
