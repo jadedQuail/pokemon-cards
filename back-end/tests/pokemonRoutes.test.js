@@ -19,6 +19,7 @@ import db from "../database/db-connector.js";
 describe("GET /pokemon", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(console, "error").mockImplementation(() => {});
     });
 
     it("should return a list of Pokémon with status 200", async () => {
@@ -60,6 +61,7 @@ describe("POST /pokemon/add", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(console, "error").mockImplementation(() => {});
     });
 
     it("inserts a new Pokémon and returns 201 (no body)", async () => {
@@ -102,6 +104,7 @@ describe("POST /pokemon/edit/:id", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(console, "error").mockImplementation(() => {});
     });
 
     it("returns 200 when the update succeeds", async () => {
@@ -143,6 +146,7 @@ describe("DELETE /pokemon/:id", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(console, "error").mockImplementation(() => {});
     });
 
     it("returns 200 when delete succeeds", async () => {
