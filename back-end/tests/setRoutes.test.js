@@ -11,6 +11,10 @@ vi.mock("../database/db-connector.js", () => ({
     },
 }));
 
+vi.mock("../middleware/requireAdmin.js", () => ({
+    default: (_req, _res, next) => next(),
+}));
+
 describe("GET /sets", () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -37,5 +41,28 @@ describe("GET /sets", () => {
         const res = await request(app).get("/sets");
 
         expect(res.status).toBe(500);
+    });
+});
+
+describe("POST /sets", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    it("returns 201 and calls the INSERT query when setName is valid", async () => {
+        db.pool.query.mockResolvedValueOnce([{}]);
+
+        const res = await request(app)
+            .post("/sets")
+            .send({ setName: "New Expansion" });
+
+        expect(res.status).toBe(201);
+        expect(db.pool.query).toHaveBeenCalledWith(
+            expect.stringMatching(
+                /^INSERT INTO Sets \(set_name\) VALUES \(\?\);$/
+            ),
+            ["New Expansion"]
+        );
     });
 });
