@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import request from "supertest";
 import app from "../app.js";
+import db from "../database/db-connector.js";
 
 vi.mock("../database/db-connector.js", () => ({
     default: {
@@ -13,8 +14,6 @@ vi.mock("../database/db-connector.js", () => ({
 vi.mock("../middleware/requireAdmin.js", () => ({
     default: (_req, _res, next) => next(),
 }));
-
-import db from "../database/db-connector.js";
 
 describe("GET /pokemon", () => {
     beforeEach(() => {

@@ -3,6 +3,12 @@ import request from "supertest";
 import jwt from "jsonwebtoken";
 import app from "../app.js";
 import { RegistrationErrorCodes } from "../../shared/errorCodes.js";
+import db from "../database/db-connector.js";
+import bcrypt from "bcrypt";
+import {
+    validateUsernameChoice,
+    validatePasswordChoice,
+} from "../utils/credentialValidator.js";
 
 vi.mock("../middleware/registerLimiter.js", () => ({
     registerLimiter: (_req, _res, next) => next(),
@@ -28,13 +34,6 @@ vi.mock("../utils/credentialValidator.js", () => ({
     validateUsernameChoice: vi.fn().mockReturnValue({ valid: true }),
     validatePasswordChoice: vi.fn().mockReturnValue({ valid: true }),
 }));
-
-import db from "../database/db-connector.js";
-import bcrypt from "bcrypt";
-import {
-    validateUsernameChoice,
-    validatePasswordChoice,
-} from "../utils/credentialValidator.js";
 
 describe("POST /auth/create-user", async () => {
     beforeEach(() => {
