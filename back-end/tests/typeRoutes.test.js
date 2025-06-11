@@ -25,26 +25,30 @@ describe("GET /types", () => {
         const mockRows = [
             { type_name: "Fire" },
             { type_name: "Water" },
-            { type_name: "Grass" }
+            { type_name: "Grass" },
         ];
-        
+
         db.pool.query.mockResolvedValueOnce([mockRows]);
 
         const res = await request(app).get("/types");
 
-        expect(db.pool.query).toHaveBeenCalledWith("SELECT type_name FROM Types;");
+        expect(db.pool.query).toHaveBeenCalledWith(
+            "SELECT type_name FROM Types;"
+        );
         expect(res.status).toBe(200);
         expect(res.body).toEqual(["Fire", "Water", "Grass"]);
     });
 
     it("should return status 500 if the database query throws an error", async () => {
         const mockError = new Error("DB failure");
-        
+
         db.pool.query.mockRejectedValueOnce(mockError);
 
         const res = await request(app).get("/types");
 
-        expect(db.pool.query).toHaveBeenCalledWith("SELECT type_name FROM Types;");
+        expect(db.pool.query).toHaveBeenCalledWith(
+            "SELECT type_name FROM Types;"
+        );
         expect(console.error).toHaveBeenCalledWith(mockError);
         expect(res.status).toBe(500);
     });
