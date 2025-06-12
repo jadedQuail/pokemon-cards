@@ -144,4 +144,17 @@ describe("DELETE /types/:type", () => {
             ["OldType"]
         );
     });
+
+    it("returns 500 if the database throws an error", async () => {
+        const genericError = new Error("DB failure");
+        db.pool.query.mockRejectedValueOnce(genericError);
+
+        const res = await request(app).delete("/types/SomeType");
+
+        expect(res.status).toBe(500);
+        expect(db.pool.query).toHaveBeenCalledWith(
+            expect.stringMatching(/^DELETE FROM Types WHERE type_name = \?$/),
+            ["SomeType"]
+        );
+    });
 });
