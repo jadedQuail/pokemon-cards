@@ -7,9 +7,16 @@ import { FilterMatchMode } from "@primevue/core/api";
 
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
+let isLoggedIn = false;
+
+const showLoginDialogMock = vi.fn();
+const showLogoutDialogMock = vi.fn();
 vi.mock("~/stores/authStore.js", () => ({
     useAuthStore: () => ({
         user: { isAdmin: true },
+        isLoggedIn,
+        showLoginDialog: showLoginDialogMock,
+        showLogoutDialog: showLogoutDialogMock,
     }),
 }));
 
@@ -31,6 +38,9 @@ describe("TopBar.vue", () => {
     beforeEach(() => {
         showAddPokemonDialogMock.mockClear();
         showCategoriesDialogMock.mockClear();
+        showLoginDialogMock.mockClear();
+        showLogoutDialogMock.mockClear();
+        isLoggedIn = false;
     });
 
     it("opens the Add Pokemon dialog when Add Pokemon button is clicked", async () => {
@@ -125,5 +135,39 @@ describe("TopBar.vue", () => {
                 },
             },
         ]);
+    });
+
+    it("Opens login dialog when the login button is clicked (and user is not logged in)", async () => {
+        isLoggedIn = false;
+
+        const wrapper = shallowMount(TopBar, {
+            global: {
+                plugins: [createPinia()],
+            },
+        });
+
+        const loginButton = wrapper.find('[data-testid="login-logout-button"]');
+        await loginButton.trigger("click");
+
+        expect(showLoginDialogMock).toHaveBeenCalledTimes(1);
+        expect(showLogoutDialogMock).not.toHaveBeenCalled();
+    });
+
+    it("Opens logout dialog when the logout button is clicked (and the user is logged in)", async () => {
+        isLoggedIn = true;
+
+        const wrapper = shallowMount(TopBar, {
+            global: {
+                plugins: [createPinia()],
+            },
+        });
+
+        const logoutButton = wrapper.find(
+            '[data-testid="login-logout-button"]'
+        );
+        await logoutButton.trigger("click");
+
+        expect(showLogoutDialogMock).toHaveBeenCalledTimes(1);
+        expect(showLoginDialogMock).not.toHaveBeenCalled();
     });
 });
