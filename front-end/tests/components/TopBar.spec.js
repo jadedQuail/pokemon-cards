@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import TopBar from "~/components/TopBar.vue";
+import { FilterMatchMode } from "@primevue/core/api";
 
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 
@@ -87,5 +88,42 @@ describe("TopBar.vue", () => {
         expect(showCategoriesDialogMock).toHaveBeenCalledWith(
             CategoriesFormMode.Sets
         );
+    });
+
+    it("Emits a search-change when new text is entered into the search box", async () => {
+        const wrapper = shallowMount(TopBar, {
+            global: {
+                plugins: [createPinia()],
+                stubs: {
+                    InputText: {
+                        props: ["modelValue", "placeholder"],
+                        emits: ["update:modelValue"],
+                        template: `
+                            <input
+                                :value="modelValue"
+                                :placeholder="placeholder"
+                                @input="$emit('update:modelValue', $event.target.value)"
+                            />
+                        `,
+                    },
+                },
+            },
+        });
+
+        const input = wrapper.find('[data-testid="search-input"]');
+        expect(input.exists()).toBe(true);
+
+        await input.setValue("pikachu");
+        const emitted = wrapper.emitted("search-change");
+        expect(emitted).toHaveLength(1);
+
+        expect(emitted[0]).toEqual([
+            {
+                global: {
+                    value: "pikachu",
+                    matchMode: FilterMatchMode.CONTAINS,
+                },
+            },
+        ]);
     });
 });

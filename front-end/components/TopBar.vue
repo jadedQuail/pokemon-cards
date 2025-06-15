@@ -48,6 +48,7 @@
                 <IconField class="ml-2">
                     <InputIcon class="pi pi-search" />
                     <InputText
+                        data-testid="search-input"
                         v-model="filters['global'].value"
                         placeholder="Search"
                         @update:modelValue="emitSearch(filters)"
