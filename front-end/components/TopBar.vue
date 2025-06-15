@@ -9,6 +9,7 @@
                     Pokemon Card Database
                 </h1>
                 <Button
+                    data-testid="add-pokemon-button"
                     v-if="authStore.user.isAdmin"
                     size="small"
                     label="Add Pokemon"
@@ -76,6 +77,7 @@
 </template>
 
 <script setup>
+import { ref, computed } from "vue";
 import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
