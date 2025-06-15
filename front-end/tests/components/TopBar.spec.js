@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, config } from "@vue/test-utils";
 import { createPinia } from "pinia";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -6,6 +6,8 @@ import TopBar from "~/components/TopBar.vue";
 import { FilterMatchMode } from "@primevue/core/api";
 
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
+
+config.global.config.warnHandler = () => {};
 
 let isLoggedIn = false;
 

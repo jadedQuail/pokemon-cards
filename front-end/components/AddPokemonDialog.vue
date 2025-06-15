@@ -175,6 +175,7 @@
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2">
                     <Button
+                        data-testid="cancel-add-pokemon-button"
                         type="button"
                         label="Cancel"
                         severity="secondary"
@@ -188,7 +189,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
 
 import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
