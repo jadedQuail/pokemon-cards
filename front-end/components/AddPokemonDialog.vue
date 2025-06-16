@@ -14,7 +14,7 @@
                 },
             }"
         >
-            <form @submit.prevent="handleSubmit">
+            <form data-testid="add-pokemon-form" @submit.prevent="handleSubmit">
                 <!-- Name -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label

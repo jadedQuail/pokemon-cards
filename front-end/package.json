@@ -7,7 +7,7 @@
         "build": "nuxt build",
         "start": "nuxt start",
         "generate": "nuxt generate",
-        "unit-tests": "vitest --run"
+        "unit-tests": "vitest --run --reporter verbose"
     },
     "dependencies": {
         "@pinia/nuxt": "^0.5.4",
