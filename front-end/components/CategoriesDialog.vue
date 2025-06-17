@@ -26,7 +26,10 @@
                     {{ dialogHeaderPlural }}
                 </div>
             </template>
-            <form @submit.prevent="addCategoryConfirmation(newCategoryToAdd)">
+            <form
+                data-testid="categories-form"
+                @submit.prevent="addCategoryConfirmation(newCategoryToAdd)"
+            >
                 <div class="mt-1 mb-5 space-x-2">
                     <InputText type="text" v-model="newCategoryToAdd" />
                     <Button
@@ -34,6 +37,7 @@
                         :label="'Add ' + dialogHeaderSingular"
                     ></Button>
                     <Button
+                        data-testid="remove-categories-button"
                         type="button"
                         label="Remove Selected"
                         :disabled="removeCategoriesDisabled"
@@ -91,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
