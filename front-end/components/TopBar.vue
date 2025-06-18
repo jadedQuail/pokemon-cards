@@ -9,6 +9,7 @@
                     Pokemon Card Database
                 </h1>
                 <Button
+                    data-testid="add-pokemon-button"
                     v-if="authStore.user.isAdmin"
                     size="small"
                     label="Add Pokemon"
