@@ -36,7 +36,10 @@
                     :model="splitButtonOptions"
                 >
                     <template #dropdownicon>
-                        <i class="pi pi-angle-down text-custom-blue-800"></i>
+                        <i
+                            class="pi pi-angle-down text-custom-blue-800"
+                            data-testid="dropdown-button"
+                        ></i>
                     </template>
                     <span class="flex items-center">
                         <span
@@ -48,6 +51,7 @@
                 <IconField class="ml-2">
                     <InputIcon class="pi pi-search" />
                     <InputText
+                        data-testid="search-input"
                         v-model="filters['global'].value"
                         placeholder="Search"
                         @update:modelValue="emitSearch(filters)"
