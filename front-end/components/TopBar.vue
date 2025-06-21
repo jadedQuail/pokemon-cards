@@ -66,6 +66,7 @@
                     </h1>
                 </div>
                 <Button
+                    data-testid="login-logout-button"
                     size="small"
                     :icon="loginIcon"
                     @click="handleLoginLogoutClick()"
