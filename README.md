@@ -35,8 +35,8 @@ You will need to have a MySQL database to connect to in order for this web appli
 # API Link
 API_URL=http://localhost:3000
 
-# Front end port
-NITRO_PORT=1111
+# Characters to be printed when debugging the DOM in testing suite
+DEBUG_PRINT_LIMIT=100000
 ```
 
 ## Back-End `.env` File Template
