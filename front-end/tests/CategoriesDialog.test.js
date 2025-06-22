@@ -7,20 +7,16 @@ import "@testing-library/jest-dom";
 import { CategoriesFormMode } from "~/static/constants.js";
 
 let CategoriesDialog;
-let addTypeMock;
-let deleteTypeMock;
-let types;
-let refreshCategoriesMock;
-let hideCategoriesDialogMock;
+
+const addTypeMock = vi.fn(() => ({ success: true }));
+const deleteTypeMock = vi.fn();
+const types = ["Fire", "Water"];
+const refreshCategoriesMock = vi.fn();
+const hideCategoriesDialogMock = vi.fn();
 
 beforeEach(async () => {
+    vi.clearAllMocks();
     vi.resetModules();
-
-    addTypeMock = vi.fn(() => Promise.resolve({ success: true }));
-    deleteTypeMock = vi.fn(() => Promise.resolve({ success: true }));
-    types = ["Fire", "Water"];
-    refreshCategoriesMock = vi.fn();
-    hideCategoriesDialogMock = vi.fn();
 
     window.confirm = vi.fn(() => true);
 

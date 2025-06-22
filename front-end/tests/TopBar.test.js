@@ -3,42 +3,46 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import TopBar from "~/components/TopBar.vue";
 import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 import { FilterMatchMode } from "@primevue/core/api";
 
-// TODO - Add a note to the README on how to actually run theses tests (backend as well)
-
+let TopBar;
 let isLoggedIn = true;
 
 const showLoginDialogMock = vi.fn();
 const showLogoutDialogMock = vi.fn();
-vi.mock("~/stores/authStore.js", () => ({
-    useAuthStore: () => ({
-        user: { isAdmin: true },
-        isLoggedIn,
-        showLoginDialog: showLoginDialogMock,
-        showLogoutDialog: showLogoutDialogMock,
-    }),
-}));
-
 const showAddPokemonDialogMock = vi.fn();
-vi.mock("~/stores/pokemonStore.js", () => ({
-    usePokemonStore: () => ({
-        showAddPokemonDialog: showAddPokemonDialogMock,
-    }),
-}));
-
 const showCategoriesDialogMock = vi.fn();
-vi.mock("~/stores/categoryStore.js", () => ({
-    useCategoryStore: () => ({
-        showCategoriesDialog: showCategoriesDialogMock,
-    }),
-}));
 
-beforeEach(() => {
+beforeEach(async () => {
     vi.clearAllMocks();
+    vi.resetModules();
+
     isLoggedIn = true;
+
+    vi.doMock("~/stores/authStore.js", () => ({
+        useAuthStore: () => ({
+            user: { isAdmin: true },
+            isLoggedIn,
+            showLoginDialog: showLoginDialogMock,
+            showLogoutDialog: showLogoutDialogMock,
+        }),
+    }));
+
+    vi.doMock("~/stores/pokemonStore.js", () => ({
+        usePokemonStore: () => ({
+            showAddPokemonDialog: showAddPokemonDialogMock,
+        }),
+    }));
+
+    vi.doMock("~/stores/categoryStore.js", () => ({
+        useCategoryStore: () => ({
+            showCategoriesDialog: showCategoriesDialogMock,
+        }),
+    }));
+
+    const module = await import("~/components/TopBar.vue");
+    TopBar = module.default;
 });
 
 test("opens the Add Pokemon dialog when Add Pokemon button is clicked", async () => {
