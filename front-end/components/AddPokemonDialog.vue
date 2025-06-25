@@ -14,7 +14,7 @@
                 },
             }"
         >
-            <form @submit.prevent="handleSubmit">
+            <form data-testid="add-pokemon-form" @submit.prevent="handleSubmit">
                 <!-- Name -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
@@ -24,6 +24,7 @@
                     >
                     <div class="flex flex-col flex-auto">
                         <InputText
+                            data-testid="pokemon-name"
                             v-model="fields[AddPokemonFieldIds.Name].content"
                             :id="AddPokemonFieldIds.Name"
                             class="w-full"
@@ -54,6 +55,7 @@
                     >
                     <div class="flex flex-col flex-auto">
                         <InputText
+                            data-testid="pokemon-hp"
                             v-model="fields[AddPokemonFieldIds.HP].content"
                             :id="AddPokemonFieldIds.HP"
                             class="w-full"
@@ -85,6 +87,7 @@
                     >
                     <div class="flex flex-col flex-auto">
                         <Select
+                            data-testid="pokemon-type"
                             v-model="fields[AddPokemonFieldIds.Type].content"
                             :options="categoryStore.types"
                             placeholder=""
@@ -116,6 +119,7 @@
                     >
                     <div class="flex flex-col flex-auto">
                         <Select
+                            data-testid="pokemon-set"
                             v-model="fields[AddPokemonFieldIds.Set].content"
                             :options="categoryStore.sets"
                             placeholder=""
@@ -146,6 +150,7 @@
                     >
                     <div class="flex flex-col flex-auto">
                         <Textarea
+                            data-testid="pokemon-flavortext"
                             v-model="
                                 fields[AddPokemonFieldIds.FlavorText].content
                             "
@@ -175,6 +180,7 @@
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2">
                     <Button
+                        data-testid="cancel-add-pokemon-button"
                         type="button"
                         label="Cancel"
                         severity="secondary"

@@ -7,7 +7,7 @@ import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
 import { FilterMatchMode } from "@primevue/core/api";
 
 let TopBar;
-let isLoggedIn = true;
+let isLoggedIn;
 
 const showLoginDialogMock = vi.fn();
 const showLogoutDialogMock = vi.fn();
