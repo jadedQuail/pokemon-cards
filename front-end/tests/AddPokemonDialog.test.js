@@ -1,7 +1,7 @@
 import { beforeEach, expect, test, vi } from "vitest";
 import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { within } from "@testing-library/vue";
-import { screen, fireEvent } from "@testing-library/vue";
+import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
 import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
@@ -142,4 +142,23 @@ test("pre-fills form fields when the dialog is opened in Edit mode", async () =>
     expect(pokemonFlavorTextArea).toHaveValue(
         addPokemonFieldsMock[AddPokemonFieldIds.FlavorText].content
     );
+});
+
+test("submits the form and calls the API client function when all fields are valid", async () => {
+    await renderSuspended(AddPokemonDialog);
+
+    const addPokemonForm = screen.getByTestId("add-pokemon-form");
+    await fireEvent.submit(addPokemonForm);
+
+    await waitFor(() => {
+        expect(addPokemonMock).toHaveBeenCalledTimes(1);
+        expect(showToastMock).toHaveBeenCalledWith(
+            SeverityLevels.Info,
+            "Card Created",
+            expect.stringContaining(
+                addPokemonFieldsMock[AddPokemonFieldIds.Name].content
+            )
+        );
+        expect(hideAddPokemonDialogMock).toHaveBeenCalledTimes(1);
+    });
 });

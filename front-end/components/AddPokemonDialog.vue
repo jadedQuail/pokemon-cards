@@ -309,6 +309,7 @@ const submitPokemonHandler = async () => {
 };
 
 const closeDialog = () => {
+    console.log("Now we are closing.");
     pokemonStore.hideAddPokemonDialog();
 };
 
