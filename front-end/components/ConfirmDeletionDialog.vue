@@ -35,12 +35,14 @@
 
         <div class="flex justify-end gap-2">
             <Button
+                data-testid="cancel-delete-pokemon-button"
                 type="button"
                 label="Cancel"
                 severity="secondary"
                 @click="isVisible = false"
             ></Button>
             <Button
+                data-testid="delete-pokemon-button"
                 type="button"
                 label="Delete"
                 @click="deletePokemonHandler"
