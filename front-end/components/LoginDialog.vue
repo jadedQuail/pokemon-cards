@@ -98,7 +98,11 @@
                             severity="secondary"
                             @click="closeDialog"
                         ></Button>
-                        <Button type="submit" label="Login"></Button>
+                        <Button
+                            data-testid="login-submit-button"
+                            type="submit"
+                            label="Login"
+                        ></Button>
                     </div>
                 </div>
             </form>
@@ -184,6 +188,7 @@ const handleSubmit = async () => {
 
     if (formReady) {
         const loginSucceeded = await submitLoginHandler();
+        console.log("Yeppers");
         if (loginSucceeded) {
             closeDialog();
         }
