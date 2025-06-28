@@ -55,3 +55,24 @@ test("calls the API client function to log the user in upon submission", async (
         expect(hideLoginDialogMock).toHaveBeenCalledTimes(1);
     });
 });
+
+test("hides the login dialog when the user clicks cancel", async () => {
+    await renderSuspended(LoginDialog);
+
+    const cancelButton = screen.getByTestId("cancel-login-button");
+    await fireEvent.click(cancelButton);
+
+    expect(hideLoginDialogMock).toHaveBeenCalledTimes(1);
+});
+
+test("form does not submit when a required field is blank", async () => {
+    loginFieldsMock[LoginFieldIds.Username].content = "";
+
+    await renderSuspended(LoginDialog);
+
+    const loginForm = screen.getByTestId("login-form");
+    await fireEvent.submit(loginForm);
+
+    expect(logUserInMock).not.toHaveBeenCalled();
+    expect(hideLoginDialogMock).not.toHaveBeenCalled();
+});

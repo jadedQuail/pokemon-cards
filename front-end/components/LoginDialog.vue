@@ -14,7 +14,7 @@
             }"
         >
             <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; it's because of an auto-focus on the X button upon the dialog opening -->
-            <form @submit.prevent="handleSubmit">
+            <form data-testid="login-form" @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label class="font-semibold w-24">Username</label>
@@ -93,6 +93,7 @@
                     </div>
                     <div class="flex justify-end gap-2">
                         <Button
+                            data-testid="cancel-login-button"
                             type="button"
                             label="Cancel"
                             severity="secondary"
