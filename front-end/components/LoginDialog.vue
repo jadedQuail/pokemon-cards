@@ -189,7 +189,6 @@ const handleSubmit = async () => {
 
     if (formReady) {
         const loginSucceeded = await submitLoginHandler();
-        console.log("Yeppers");
         if (loginSucceeded) {
             closeDialog();
         }
