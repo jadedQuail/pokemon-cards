@@ -19,12 +19,14 @@
             <div class="flex justify-center items-center mt-4">
                 <div class="flex justify-end gap-2">
                     <Button
+                        data-testid="cancel-logout-button"
                         type="button"
                         label="Cancel"
                         severity="secondary"
                         @click="closeDialog"
                     ></Button>
                     <Button
+                        data-testid="logout-submit-button"
                         type="submit"
                         label="Confirm"
                         @click="handleConfirmClick"
