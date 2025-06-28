@@ -6,6 +6,8 @@ import "@testing-library/jest-dom";
 let MainDataTable;
 let pokemonDataMock;
 
+const showAddPokemonDialogMock = vi.fn();
+
 beforeEach(async () => {
     vi.clearAllMocks();
     vi.resetModules();
@@ -37,10 +39,16 @@ beforeEach(async () => {
         },
     ];
 
+    vi.doMock("~/stores/authStore.js", () => ({
+        useAuthStore: () => ({ user: { isAdmin: true } }),
+    }));
+
     vi.doMock("~/stores/pokemonStore.js", () => ({
         usePokemonStore: () => ({
             pokemonData: pokemonDataMock,
+            showAddPokemonDialog: showAddPokemonDialogMock,
             fetchPokemonData: vi.fn(),
+            setFieldContentForEditDialog: vi.fn(),
         }),
     }));
 
@@ -61,4 +69,15 @@ test("shows pokemon in the table", async () => {
     for (const val of expected) {
         expect(rendered).toContain(val);
     }
+});
+
+test("clicking the pencil icon on a row opens the edit dialog", async () => {
+    await renderSuspended(MainDataTable);
+
+    const editIcons = await screen.findAllByTestId("edit-icon");
+    expect(editIcons.length).toBeGreaterThan(0);
+
+    await fireEvent.click(editIcons[0]);
+
+    expect(showAddPokemonDialogMock).toHaveBeenCalledTimes(1);
 });

@@ -31,6 +31,7 @@
                 <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
                         <InputIcon
+                            data-testid="edit-icon"
                             class="pi pi-pencil text-green-600 cursor-pointer"
                             @click="editRow(slotProps.data)"
                         />
@@ -124,6 +125,7 @@ const editRow = (rowData) => {
         set: rowData.set,
         flavorText: rowData.flavorText,
     });
+
     pokemonStore.showAddPokemonDialog(PokemonFormMode.Edit);
 };
 </script>
