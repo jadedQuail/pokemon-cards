@@ -50,10 +50,8 @@ test("calls the API client function to log the user in upon submission", async (
     const loginButton = screen.getByTestId("login-submit-button");
     await fireEvent.click(loginButton);
 
-    await waitFor(() => {
-        expect(logUserInMock).toHaveBeenCalledTimes(1);
-        expect(hideLoginDialogMock).toHaveBeenCalledTimes(1);
-    });
+    expect(logUserInMock).toHaveBeenCalledTimes(1);
+    expect(hideLoginDialogMock).toHaveBeenCalledTimes(1);
 });
 
 test("hides the login dialog when the user clicks cancel", async () => {

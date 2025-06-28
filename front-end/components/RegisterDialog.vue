@@ -13,7 +13,7 @@
                 },
             }"
         >
-            <form @submit.prevent="handleSubmit">
+            <form data-testid="register-form" @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label class="font-semibold w-24">Username</label>
@@ -117,12 +117,17 @@
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2 mt-4">
                     <Button
+                        data-testid="cancel-register-button"
                         type="button"
                         label="Cancel"
                         severity="secondary"
                         @click="closeDialog"
                     ></Button>
-                    <Button type="submit" label="Save"></Button>
+                    <Button
+                        data-testid="register-button"
+                        type="submit"
+                        label="Register"
+                    ></Button>
                 </div>
             </form>
         </Dialog>
