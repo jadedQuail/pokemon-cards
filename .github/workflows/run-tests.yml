@@ -1,0 +1,27 @@
+name: Run tests
+
+on:
+    push: {}
+    pull_request: {}
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18"
+
+            - name: Install & run frontend tests
+              run: |
+                  npm install --prefix front-end
+                  npm test --prefix front-end
+
+            - name: Install & run backend tests
+              run: |
+                  npm install --prefix back-end
+                  npm test --prefix back-end
