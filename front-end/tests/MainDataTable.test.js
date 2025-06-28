@@ -1,6 +1,6 @@
 import { beforeEach, expect, test, vi } from "vitest";
 import { renderSuspended } from "@nuxt/test-utils/runtime";
-import { screen, fireEvent, waitFor } from "@testing-library/vue";
+import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
 let MainDataTable;

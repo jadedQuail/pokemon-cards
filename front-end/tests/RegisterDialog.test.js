@@ -1,6 +1,6 @@
 import { beforeEach, expect, test, vi } from "vitest";
 import { renderSuspended } from "@nuxt/test-utils/runtime";
-import { screen, fireEvent, waitFor } from "@testing-library/vue";
+import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
 import { RegisterFieldIds } from "~/static/constants.js";
@@ -56,8 +56,6 @@ beforeEach(async () => {
     const module = await import("~/components/RegisterDialog.vue");
     RegisterDialog = module.default;
 });
-
-// TODO - go back through other component tests and see if you can get rid of waitFor by having mocks that resolve immediately
 
 test("calls the API client function to register the user upon submission", async () => {
     await renderSuspended(RegisterDialog);
