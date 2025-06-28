@@ -199,6 +199,9 @@
 </template>
 
 <script setup>
+// TODO: Add GitHub CI/CD validation, i.e. run all the tests
+// TODO: Add testing instructions to the README
+
 import { onMounted } from "vue";
 import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
 
