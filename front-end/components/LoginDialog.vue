@@ -6,6 +6,7 @@
             modal
             header="Login"
             class="min-w-[500px] !w-[30vw]"
+            @show="dialogTools.clearFocus"
             @hide="resetForm"
             :pt="{
                 pcCloseButton: {
@@ -13,7 +14,6 @@
                 },
             }"
         >
-            <!-- TODO: Hitting 'enter' key on totally empty field closes the dialog instead of doing nothing; it's because of an auto-focus on the X button upon the dialog opening -->
             <form data-testid="login-form" @submit.prevent="handleSubmit">
                 <!-- Username -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
@@ -112,16 +112,18 @@
 </template>
 
 <script setup>
+// TODO: Make this a TypeScript project
+
 import { onMounted } from "vue";
 import { useAuthStore } from "~/stores/authStore.js";
-
 import { LoginFieldIds } from "~/static/constants.js";
-
 import { logUserIn } from "@/services/apiClient/auth.js";
+import { useDialogTools } from "~/composables/useDialogTools.js";
 
 const config = useRuntimeConfig();
 
 const authStore = useAuthStore();
+const dialogTools = useDialogTools();
 
 const fields = ref(authStore.loginFields);
 

@@ -5,6 +5,7 @@
             modal
             :draggable="false"
             @hide="closeDialog"
+            @show="dialogTools.clearFocus"
             class="min-w-[450px] !max-h-[500px]"
             :pt="{
                 header: {
@@ -103,9 +104,12 @@ import { ref, computed, onMounted } from "vue";
 
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
+import { useDialogTools } from "~/composables/useDialogTools.js";
 import { CategoriesFormMode } from "~/static/constants.js";
 import { deleteType, addType } from "@/services/apiClient/type.js";
 import { addSet, deleteSet } from "@/services/apiClient/set.js";
+
+const dialogTools = useDialogTools();
 
 const config = useRuntimeConfig();
 const pokemonStore = usePokemonStore();

@@ -4,6 +4,7 @@
             v-model:visible="authStore.logoutDialogVisible"
             :draggable="false"
             modal
+            @show="dialogTools.clearFocus"
             header="Logout"
             class="min-w-[350px] !w-[20vw]"
             :pt="{
@@ -40,6 +41,9 @@
 <script setup>
 import { onMounted } from "vue";
 import { useAuthStore } from "~/stores/authStore.js";
+import { useDialogTools } from "~/composables/useDialogTools.js";
+
+const dialogTools = useDialogTools();
 
 const config = useRuntimeConfig();
 

@@ -7,7 +7,12 @@
             :header="dialogHeader"
             class="min-w-[500px] !w-[30vw]"
             @hide="resetForm"
-            @show="refreshCategories"
+            @show="
+                () => {
+                    dialogTools.clearFocus();
+                    refreshCategories();
+                }
+            "
             :pt="{
                 pcCloseButton: {
                     style: 'box-shadow: none;',
@@ -203,9 +208,12 @@ import { getSetOptions } from "@/services/apiClient/set.js";
 
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
+import { useDialogTools } from "~/composables/useDialogTools.js";
 
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { SeverityLevels } from "~/static/constants.js";
+
+const dialogTools = useDialogTools();
 
 const pokemonStore = usePokemonStore();
 const categoryStore = useCategoryStore();

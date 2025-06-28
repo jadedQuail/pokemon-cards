@@ -6,6 +6,7 @@
             modal
             header="Register"
             class="min-w-[500px] !w-[30vw]"
+            @show="dialogTools.clearFocus"
             @hide="resetForm"
             :pt="{
                 pcCloseButton: {
@@ -136,11 +137,14 @@
 
 <script setup>
 import { useAuthStore } from "~/stores/authStore.js";
+import { useDialogTools } from "~/composables/useDialogTools.js";
 
 import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
+
+const dialogTools = useDialogTools();
 
 const config = useRuntimeConfig();
 
