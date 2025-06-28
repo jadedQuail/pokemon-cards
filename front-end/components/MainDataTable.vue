@@ -31,11 +31,12 @@
                 <template #body="slotProps">
                     <div class="flex justify-center space-x-5">
                         <InputIcon
-                            data-testid="edit-icon"
+                            data-testid="edit-pokemon-icon"
                             class="pi pi-pencil text-green-600 cursor-pointer"
                             @click="editRow(slotProps.data)"
                         />
                         <InputIcon
+                            data-testid="delete-pokemon-icon"
                             class="pi pi-trash text-red-600 cursor-pointer"
                             @click="deleteRow(slotProps.data)"
                         />

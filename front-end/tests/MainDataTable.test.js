@@ -7,6 +7,7 @@ let MainDataTable;
 let pokemonDataMock;
 
 const showAddPokemonDialogMock = vi.fn();
+const openConfirmDialogMock = vi.fn();
 
 beforeEach(async () => {
     vi.clearAllMocks();
@@ -52,6 +53,12 @@ beforeEach(async () => {
         }),
     }));
 
+    vi.doMock("@/composables/useConfirmDialog", () => ({
+        useConfirmDialog: () => ({
+            openConfirmDialog: openConfirmDialogMock,
+        }),
+    }));
+
     const module = await import("~/components/MainDataTable.vue");
     MainDataTable = module.default;
 });
@@ -74,10 +81,21 @@ test("shows pokemon in the table", async () => {
 test("clicking the pencil icon on a row opens the edit dialog", async () => {
     await renderSuspended(MainDataTable);
 
-    const editIcons = await screen.findAllByTestId("edit-icon");
+    const editIcons = await screen.findAllByTestId("edit-pokemon-icon");
     expect(editIcons.length).toBeGreaterThan(0);
 
     await fireEvent.click(editIcons[0]);
 
     expect(showAddPokemonDialogMock).toHaveBeenCalledTimes(1);
+});
+
+test("clicking the trash can icon on a row opens the confirmation dialog", async () => {
+    await renderSuspended(MainDataTable);
+
+    const deleteIcons = await screen.findAllByTestId("delete-pokemon-icon");
+    expect(deleteIcons.length).toBeGreaterThan(0);
+
+    await fireEvent.click(deleteIcons[0]);
+
+    expect(openConfirmDialogMock).toHaveBeenCalledTimes(1);
 });
