@@ -5,6 +5,7 @@ export const RegistrationErrorCodes = {
     DUPLICATE_USER: "DUPLICATE_USER",
     USERNAME_INVALID: "USERNAME_INVALID",
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
+    TURNSTILE_VALIDATION_FAILED: "TURNSTILE_VALIDATION_FAILED",
 };
 
 export const CategoryErrorCodes = {
