@@ -74,11 +74,12 @@
                         </small>
                     </div>
                 </div>
+                <!-- TODO: A feature flag to turn off Turnstile locally, because of my internet issues -->
                 <div
-                    v-if="loginError && !userHasTypedAgain"
+                    v-if="loginError.hasError && !userHasTypedAgain"
                     class="text-red-500"
                 >
-                    Your username or password is incorrect. Please try again!
+                    {{ loginError.message }}
                 </div>
                 <!-- Buttons -->
                 <div class="flex justify-between items-center mt-4">
@@ -106,6 +107,7 @@
                         ></Button>
                     </div>
                 </div>
+                <NuxtTurnstile v-model="turnstileToken" />
             </form>
         </Dialog>
     </div>
@@ -127,9 +129,14 @@ const dialogTools = useDialogTools();
 
 const fields = ref(authStore.loginFields);
 
-const loginError = ref(false);
+const loginError = reactive({
+    hasError: false,
+    message: "",
+});
 
 const userHasTypedAgain = ref(false);
+
+const turnstileToken = ref("");
 
 const resetForm = () => {
     resetValidationFlags();
@@ -154,7 +161,8 @@ const resetFieldContent = () => {
 };
 
 const resetLoginErrorState = () => {
-    loginError.value = false;
+    loginError.hasError = false;
+    loginError.message = "";
 };
 
 const setValidityFlagForField = (value, field) => {
@@ -190,12 +198,30 @@ const handleSubmit = async () => {
     const formReady = areAllFieldsValid();
 
     if (formReady) {
+        try {
+            await validateThroughTurnstile();
+        } catch {
+            loginError.hasError = true;
+            loginError.message =
+                "An unexpected error occurred. Please try again.";
+            return;
+        }
+
         const loginSucceeded = await submitLoginHandler();
         if (loginSucceeded) {
             closeDialog();
         }
     }
 };
+
+async function validateThroughTurnstile() {
+    const data = await $fetch("/api/validateTurnstile", {
+        method: "POST",
+        body: {
+            token: turnstileToken.value,
+        },
+    });
+}
 
 const submitLoginHandler = async () => {
     try {
@@ -210,14 +236,18 @@ const submitLoginHandler = async () => {
 
         return result && result.success;
     } catch (error) {
-        console.error("Error logging in:", error);
         loginError.value = true;
+        loginError.message = "An unexpected error occurred. Please try again.";
         return false;
     }
 };
 
 const setLoginErrorState = (loginAttemptResult) => {
-    loginError.value = !(loginAttemptResult && loginAttemptResult.success);
+    loginError.hasError = !(loginAttemptResult && loginAttemptResult.success);
+    loginError.message = loginError.hasError
+        ? loginAttemptResult?.message ||
+          "An unexpected error occurred. Please try again."
+        : "";
 };
 
 const handleRegisterClick = () => {

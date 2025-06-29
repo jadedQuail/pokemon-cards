@@ -5,7 +5,6 @@ import path from "path";
 dotenv.config();
 
 export default defineNuxtConfig({
-    // Global page headers
     app: {
         head: {
             title: "pokemon-cards",
@@ -24,7 +23,6 @@ export default defineNuxtConfig({
             link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
         },
     },
-
     devtools: { enabled: true },
     css: ["~/assets/css/global.css"],
     postcss: {
@@ -33,36 +31,26 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
-
     runtimeConfig: {
         public: {
             API_URL: process.env.API_URL,
         },
+        turnstile: {
+            secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY,
+        },
     },
-
-    // Plugins
     plugins: ["~/plugins/auth.client.js"],
-
-    // Auto import components
     components: true,
-
-    // Modules for dev and build (recommended)
     buildModules: [],
-
-    // Modules
-    modules: ["@primevue/nuxt-module", "@pinia/nuxt"],
-
+    modules: ["@primevue/nuxt-module", "@pinia/nuxt", "@nuxtjs/turnstile"],
+    turnstile: {
+        siteKey: "0x4AAAAAABiwR9ZxUeZqq9H0",
+    },
     primevue: {
         options: {
             unstyled: true,
         },
         importPT: { as: "Aura", from: "~/presets/aura" }, //import and apply preset
     },
-
-    // Build Configuration
-    build: {
-        // Add build configuration here
-    },
-
     compatibilityDate: "2024-07-27",
 });

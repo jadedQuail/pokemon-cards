@@ -199,8 +199,6 @@
 </template>
 
 <script setup>
-// TODO: Add testing instructions to the README
-
 import { onMounted } from "vue";
 import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
 

@@ -1,6 +1,8 @@
 import { useAuthStore } from "~/stores/authStore.js";
 import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 
+// TODO: Move @nuxtjs/turnstile out of dependencies and into devDependencies
+
 export function initializeAuth() {
     const authStore = useAuthStore();
 
