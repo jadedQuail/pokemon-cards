@@ -115,6 +115,7 @@
                     v-if="registrationError && !userHasTypedAgain"
                     :registrationErrorCode="registrationErrorCode"
                 />
+                <NuxtTurnstile v-model="turnstileToken" />
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2 mt-4">
                     <Button
@@ -139,6 +140,7 @@
 import { useAuthStore } from "~/stores/authStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
+import { RegistrationErrorCodes } from "../../shared/errorCodes";
 import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
@@ -160,6 +162,8 @@ const registrationErrorCode = ref(null);
 const confirmPasswordErrorMessage = ref("");
 
 const userHasTypedAgain = ref(false);
+
+const turnstileToken = ref("");
 
 const resetForm = () => {
     resetValidationFlags();
@@ -269,6 +273,16 @@ const submitRegistrationHandler = async () => {
         const confirmPassword =
             fields.value[RegisterFieldIds.ConfirmPassword].content;
 
+        try {
+            await validateThroughTurnstile();
+        } catch {
+            setRegistrationErrorState({ success: false });
+            setRegistrationErrorCode(
+                RegistrationErrorCodes.TURNSTILE_VALIDATION_FAILED
+            );
+            return false;
+        }
+
         const result = await createUser(
             apiUrl,
             username,
@@ -302,4 +316,13 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
 const closeDialog = () => {
     authStore.hideRegisterDialog();
 };
+
+async function validateThroughTurnstile() {
+    const data = await $fetch("/api/validateTurnstile", {
+        method: "POST",
+        body: {
+            token: turnstileToken.value,
+        },
+    });
+}
 </script>

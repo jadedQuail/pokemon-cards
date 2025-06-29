@@ -1,6 +1,6 @@
 import { beforeEach, expect, test, vi } from "vitest";
 import { renderSuspended } from "@nuxt/test-utils/runtime";
-import { screen, fireEvent } from "@testing-library/vue";
+import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
 import { RegisterFieldIds } from "~/static/constants.js";
@@ -16,6 +16,8 @@ const showToastMock = vi.fn();
 beforeEach(async () => {
     vi.clearAllMocks();
     vi.resetModules();
+
+    vi.stubGlobal("$fetch", vi.fn().mockResolvedValue({}));
 
     registerFieldsMock = {
         [RegisterFieldIds.Username]: {
@@ -63,14 +65,15 @@ test("calls the API client function to register the user upon submission", async
     const registerButton = screen.getByTestId("register-button");
     await fireEvent.click(registerButton);
 
-    expect(createUserMock).toHaveBeenCalledTimes(1);
-    expect(hideRegisterDialogMock).toHaveBeenCalledTimes(1);
-
-    expect(showToastMock).toHaveBeenCalledWith(
-        SeverityLevels.Success,
-        "You've successfully created an account!",
-        "You've also been logged in."
-    );
+    await waitFor(() => {
+        expect(createUserMock).toHaveBeenCalledTimes(1);
+        expect(hideRegisterDialogMock).toHaveBeenCalledTimes(1);
+        expect(showToastMock).toHaveBeenCalledWith(
+            SeverityLevels.Success,
+            "You've successfully created an account!",
+            "You've also been logged in."
+        );
+    });
 });
 
 test("hides the register dialog when the user clicks cancel", async () => {

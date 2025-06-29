@@ -107,7 +107,6 @@
                         ></Button>
                     </div>
                 </div>
-                <NuxtTurnstile v-model="turnstileToken" />
             </form>
         </Dialog>
     </div>
@@ -135,8 +134,6 @@ const loginError = reactive({
 });
 
 const userHasTypedAgain = ref(false);
-
-const turnstileToken = ref("");
 
 const resetForm = () => {
     resetValidationFlags();
@@ -198,30 +195,12 @@ const handleSubmit = async () => {
     const formReady = areAllFieldsValid();
 
     if (formReady) {
-        try {
-            await validateThroughTurnstile();
-        } catch {
-            loginError.hasError = true;
-            loginError.message =
-                "An unexpected error occurred. Please try again.";
-            return;
-        }
-
         const loginSucceeded = await submitLoginHandler();
         if (loginSucceeded) {
             closeDialog();
         }
     }
 };
-
-async function validateThroughTurnstile() {
-    const data = await $fetch("/api/validateTurnstile", {
-        method: "POST",
-        body: {
-            token: turnstileToken.value,
-        },
-    });
-}
 
 const submitLoginHandler = async () => {
     try {
