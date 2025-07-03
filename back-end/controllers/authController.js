@@ -7,8 +7,6 @@ import {
     validatePasswordChoice,
 } from "../utils/credentialValidator.js";
 
-// TODO: Add a CAPTCHA to new user creation (later)
-
 export const createUser = async (req, res) => {
     const { username, password, confirmPassword } = req.body;
 

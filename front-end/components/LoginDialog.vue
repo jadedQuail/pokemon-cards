@@ -74,7 +74,6 @@
                         </small>
                     </div>
                 </div>
-                <!-- TODO: A feature flag to turn off Turnstile locally, because of my internet issues -->
                 <div
                     v-if="loginError.hasError && !userHasTypedAgain"
                     class="text-red-500"
