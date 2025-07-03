@@ -47,18 +47,22 @@ To run the front-end tests:
 
 ```
 # API Link
-API_URL=http://localhost:3000
+API_URL=http://localhost:1111
 
 # Characters to be printed when debugging the DOM in testing suite
 DEBUG_PRINT_LIMIT=100000
+
+# Turnstile (requires internet connection to validate)
+ENABLE_TURNSTILE=true
+NUXT_TURNSTILE_SECRET_KEY=<your-secret-key>
 ```
 
 ## Back-End `.env` File Template
 
 ```
 # Back-end
-PORT=3000
-FRONTEND=http://localhost:1111
+PORT=1111
+FRONTEND=http://localhost:3000
 
 # Database
 DB_HOST=127.0.0.1

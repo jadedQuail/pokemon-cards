@@ -115,7 +115,10 @@
                     v-if="registrationError && !userHasTypedAgain"
                     :registrationErrorCode="registrationErrorCode"
                 />
-                <NuxtTurnstile v-model="turnstileToken" />
+                <NuxtTurnstile
+                    v-model="turnstileToken"
+                    v-if="enableTurnstile"
+                />
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2 mt-4">
                     <Button
@@ -164,6 +167,8 @@ const confirmPasswordErrorMessage = ref("");
 const userHasTypedAgain = ref(false);
 
 const turnstileToken = ref("");
+
+const enableTurnstile = computed(() => config.public.ENABLE_TURNSTILE);
 
 const resetForm = () => {
     resetValidationFlags();
@@ -273,14 +278,16 @@ const submitRegistrationHandler = async () => {
         const confirmPassword =
             fields.value[RegisterFieldIds.ConfirmPassword].content;
 
-        try {
-            await validateThroughTurnstile();
-        } catch {
-            setRegistrationErrorState({ success: false });
-            setRegistrationErrorCode(
-                RegistrationErrorCodes.TURNSTILE_VALIDATION_FAILED
-            );
-            return false;
+        if (enableTurnstile.value) {
+            try {
+                await validateThroughTurnstile();
+            } catch {
+                setRegistrationErrorState({ success: false });
+                setRegistrationErrorCode(
+                    RegistrationErrorCodes.TURNSTILE_VALIDATION_FAILED
+                );
+                return false;
+            }
         }
 
         const result = await createUser(

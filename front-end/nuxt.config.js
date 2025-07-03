@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             API_URL: process.env.API_URL,
+            ENABLE_TURNSTILE: process.env.ENABLE_TURNSTILE === 'true',
         },
         turnstile: {
             secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY,
