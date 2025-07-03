@@ -118,6 +118,7 @@
                 <NuxtTurnstile
                     v-model="turnstileToken"
                     v-if="enableTurnstile"
+                    :options="{ theme: 'light' }"
                 />
                 <!-- Buttons -->
                 <div class="flex justify-end gap-2 mt-4">
