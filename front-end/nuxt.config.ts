@@ -1,6 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
 import dotenv from "dotenv";
-import path from "path";
 
 dotenv.config();
 
@@ -17,7 +16,6 @@ export default defineNuxtConfig({
                     name: "viewport",
                     content: "width=device-width, initial-scale=1",
                 },
-                { hid: "description", name: "description", content: "" },
                 { name: "format-detection", content: "telephone=no" },
             ],
             link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
@@ -42,7 +40,6 @@ export default defineNuxtConfig({
     },
     plugins: ["~/plugins/auth.client.js"],
     components: true,
-    buildModules: [],
     modules: ["@primevue/nuxt-module", "@pinia/nuxt", "@nuxtjs/turnstile"],
     turnstile: {
         siteKey: "0x4AAAAAABiwR9ZxUeZqq9H0",
