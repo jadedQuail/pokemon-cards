@@ -19,6 +19,7 @@ jobs:
             - name: Install & run frontend tests
               run: |
                   npm install --prefix front-end
+                  npx --prefix front-end nuxi prepare
                   npm test --prefix front-end
 
             - name: Install & run backend tests
