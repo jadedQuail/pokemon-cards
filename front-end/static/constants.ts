@@ -21,24 +21,24 @@ export const RegisterFieldIds = Object.freeze({
 });
 
 export enum SeverityLevel {
-    Success = 'success',
-    Info = 'info',
-    Warn = 'warn',
-    Error = 'error',
-    Secondary = 'secondary',
-    Contrast  = 'contrast',
+    Success = "success",
+    Info = "info",
+    Warn = "warn",
+    Error = "error",
+    Secondary = "secondary",
+    Contrast  = "contrast",
 }
 
-export const PokemonFormMode = Object.freeze({
-    Add: "add",
-    Edit: "edit",
-    None: "none",
-});
+export enum PokemonFormMode {
+    Add = "add",
+    Edit = "edit",
+    None = "none",
+}
 
-export const CategoriesFormMode = Object.freeze({
-    Types: "types",
-    Sets: "sets",
-    None: "none",
-});
+export enum CategoriesFormMode {
+    Types = "types",
+    Sets = "sets",
+    None = "none",
+}
 
 export const LOCAL_STORAGE_TOKEN_KEY = "pokemondb_token";
