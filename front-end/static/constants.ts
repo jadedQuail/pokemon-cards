@@ -9,16 +9,16 @@ export const AddPokemonFieldIds = Object.freeze({
     FlavorText: "flavorText",
 });
 
-export const LoginFieldIds = Object.freeze({
-    Username: "username",
-    Password: "password",
-});
+export enum LoginFieldId {
+    Username = "username",
+    Password = "password",
+}
 
-export const RegisterFieldIds = Object.freeze({
-    Username: "username",
-    Password: "password",
-    ConfirmPassword: "confirmPassword",
-});
+export enum RegisterFieldId {
+    Username = "username",
+    Password = "password",
+    ConfirmPassword = "confirmPassword",
+}
 
 export enum SeverityLevel {
     Success = "success",

@@ -20,24 +20,24 @@
                     <label class="font-semibold w-24">Username</label>
                     <div class="flex flex-col flex-auto">
                         <InputText
-                            v-model="fields[RegisterFieldIds.Username].content"
-                            :id="RegisterFieldIds.Username"
+                            v-model="fields[RegisterFieldId.Username].content"
+                            :id="RegisterFieldId.Username"
                             class="w-full"
                             autocomplete="off"
-                            :invalid="!fields[RegisterFieldIds.Username].valid"
+                            :invalid="!fields[RegisterFieldId.Username].valid"
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
                                     resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
-                                        fields[RegisterFieldIds.Username]
+                                        fields[RegisterFieldId.Username]
                                     );
                                 }
                             "
                         />
                         <small
-                            v-if="!fields[RegisterFieldIds.Username].valid"
+                            v-if="!fields[RegisterFieldId.Username].valid"
                             class="text-red-500"
                         >
                             You must provide a username.
@@ -49,25 +49,25 @@
                     <label class="font-semibold w-24">Password</label>
                     <div class="flex flex-col flex-auto">
                         <Password
-                            v-model="fields[RegisterFieldIds.Password].content"
-                            :id="RegisterFieldIds.Password"
+                            v-model="fields[RegisterFieldId.Password].content"
+                            :id="RegisterFieldId.Password"
                             :feedback="false"
                             autocomplete="off"
                             :inputStyle="{ width: '100%' }"
-                            :invalid="!fields[RegisterFieldIds.Password].valid"
+                            :invalid="!fields[RegisterFieldId.Password].valid"
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
                                     resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
-                                        fields[RegisterFieldIds.Password]
+                                        fields[RegisterFieldId.Password]
                                     );
                                 }
                             "
                         />
                         <small
-                            v-if="!fields[RegisterFieldIds.Password].valid"
+                            v-if="!fields[RegisterFieldId.Password].valid"
                             class="text-red-500"
                         >
                             You must provide a password.
@@ -80,14 +80,14 @@
                     <div class="flex flex-col flex-auto">
                         <Password
                             v-model="
-                                fields[RegisterFieldIds.ConfirmPassword].content
+                                fields[RegisterFieldId.ConfirmPassword].content
                             "
-                            :id="RegisterFieldIds.Password"
+                            :id="RegisterFieldId.Password"
                             :feedback="false"
                             autocomplete="off"
                             :inputStyle="{ width: '100%' }"
                             :invalid="
-                                !fields[RegisterFieldIds.ConfirmPassword].valid
+                                !fields[RegisterFieldId.ConfirmPassword].valid
                             "
                             @update:model-value="
                                 (value) => {
@@ -95,14 +95,14 @@
                                     resetRegistrationErrorState();
                                     setValidityFlagForField(
                                         value,
-                                        fields[RegisterFieldIds.ConfirmPassword]
+                                        fields[RegisterFieldId.ConfirmPassword]
                                     );
                                 }
                             "
                         />
                         <small
                             v-if="
-                                !fields[RegisterFieldIds.ConfirmPassword].valid
+                                !fields[RegisterFieldId.ConfirmPassword].valid
                             "
                             class="text-red-500"
                         >
@@ -146,7 +146,7 @@ import { useAuthStore } from "~/stores/authStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
-import { RegisterFieldIds, SeverityLevel } from "~/static/constants";
+import { RegisterFieldId, SeverityLevel } from "~/static/constants";
 import { useToastNotifications } from "~/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
@@ -199,12 +199,12 @@ const resetRegistrationErrorState = () => {
 };
 
 const setValidityFlagForField = (value, field) => {
-    if (field.name === RegisterFieldIds.ConfirmPassword) {
+    if (field.name === RegisterFieldId.ConfirmPassword) {
         if (value.length < 1) {
             field.valid = false;
             confirmPasswordErrorMessage.value =
                 "You must type your password again.";
-        } else if (value != fields.value[RegisterFieldIds.Password].content) {
+        } else if (value != fields.value[RegisterFieldId.Password].content) {
             field.valid = false;
             confirmPasswordErrorMessage.value = "Passwords must match.";
         } else {
@@ -261,8 +261,8 @@ const handleSubmit = async () => {
 const logUserInAfterRegistration = async () => {
     const apiUrl = config.public.API_URL;
 
-    const username = fields.value[RegisterFieldIds.Username].content;
-    const password = fields.value[RegisterFieldIds.Password].content;
+    const username = fields.value[RegisterFieldId.Username].content;
+    const password = fields.value[RegisterFieldId.Password].content;
 
     try {
         await logUserIn(apiUrl, username, password);
@@ -275,10 +275,10 @@ const submitRegistrationHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
 
-        const username = fields.value[RegisterFieldIds.Username].content;
-        const password = fields.value[RegisterFieldIds.Password].content;
+        const username = fields.value[RegisterFieldId.Username].content;
+        const password = fields.value[RegisterFieldId.Password].content;
         const confirmPassword =
-            fields.value[RegisterFieldIds.ConfirmPassword].content;
+            fields.value[RegisterFieldId.ConfirmPassword].content;
 
         if (enableTurnstile.value) {
             try {
@@ -321,6 +321,9 @@ const setRegistrationErrorState = (registrationAttemptResult) => {
         registrationAttemptResult && registrationAttemptResult.success
     );
 };
+
+// TODO: Prevent user from rapid-firing the enter key for creating a new user
+// TODO: Add a small spinner or something that indicates that the "createuser" request is loading after submission
 
 const closeDialog = () => {
     authStore.hideRegisterDialog();

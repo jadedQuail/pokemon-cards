@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import {
     LOCAL_STORAGE_TOKEN_KEY,
-    LoginFieldIds,
-    RegisterFieldIds,
+    LoginFieldId,
+    RegisterFieldId,
 } from "~/static/constants";
 
 function getNullUser() {
@@ -21,30 +21,30 @@ export const useAuthStore = defineStore("auth", {
         logoutDialogVisible: false,
         registerDialogVisible: false,
         loginFields: {
-            [LoginFieldIds.Username]: {
-                name: LoginFieldIds.Username,
+            [LoginFieldId.Username]: {
+                name: LoginFieldId.Username,
                 content: "",
                 valid: true,
             },
-            [LoginFieldIds.Password]: {
-                name: LoginFieldIds.Password,
+            [LoginFieldId.Password]: {
+                name: LoginFieldId.Password,
                 content: "",
                 valid: true,
             },
         },
         registerFields: {
-            [RegisterFieldIds.Username]: {
-                name: RegisterFieldIds.Username,
+            [RegisterFieldId.Username]: {
+                name: RegisterFieldId.Username,
                 content: "",
                 valid: true,
             },
-            [RegisterFieldIds.Password]: {
-                name: RegisterFieldIds.Password,
+            [RegisterFieldId.Password]: {
+                name: RegisterFieldId.Password,
                 content: "",
                 valid: true,
             },
-            [RegisterFieldIds.ConfirmPassword]: {
-                name: RegisterFieldIds.ConfirmPassword,
+            [RegisterFieldId.ConfirmPassword]: {
+                name: RegisterFieldId.ConfirmPassword,
                 content: "",
                 valid: true,
             },

@@ -20,24 +20,24 @@
                     <label class="font-semibold w-24">Username</label>
                     <div class="flex flex-col flex-auto">
                         <InputText
-                            v-model="fields[LoginFieldIds.Username].content"
-                            :id="LoginFieldIds.Username"
+                            v-model="fields[LoginFieldId.Username].content"
+                            :id="LoginFieldId.Username"
                             class="w-full"
                             autocomplete="off"
-                            :invalid="!fields[LoginFieldIds.Username].valid"
+                            :invalid="!fields[LoginFieldId.Username].valid"
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
                                     resetLoginErrorState();
                                     setValidityFlagForField(
                                         value,
-                                        fields[LoginFieldIds.Username]
+                                        fields[LoginFieldId.Username]
                                     );
                                 }
                             "
                         />
                         <small
-                            v-if="!fields[LoginFieldIds.Username].valid"
+                            v-if="!fields[LoginFieldId.Username].valid"
                             class="text-red-500"
                         >
                             You must provide a username.
@@ -49,25 +49,25 @@
                     <label class="font-semibold w-24">Password</label>
                     <div class="flex flex-col flex-auto">
                         <Password
-                            v-model="fields[LoginFieldIds.Password].content"
-                            :id="LoginFieldIds.Password"
+                            v-model="fields[LoginFieldId.Password].content"
+                            :id="LoginFieldId.Password"
                             :feedback="false"
                             autocomplete="off"
                             :inputStyle="{ width: '100%' }"
-                            :invalid="!fields[LoginFieldIds.Password].valid"
+                            :invalid="!fields[LoginFieldId.Password].valid"
                             @update:model-value="
                                 (value) => {
                                     userHasTypedAgain = true;
                                     resetLoginErrorState();
                                     setValidityFlagForField(
                                         value,
-                                        fields[LoginFieldIds.Password]
+                                        fields[LoginFieldId.Password]
                                     );
                                 }
                             "
                         />
                         <small
-                            v-if="!fields[LoginFieldIds.Password].valid"
+                            v-if="!fields[LoginFieldId.Password].valid"
                             class="text-red-500"
                         >
                             You must provide a password.
@@ -116,7 +116,7 @@
 
 import { onMounted } from "vue";
 import { useAuthStore } from "~/stores/authStore.js";
-import { LoginFieldIds } from "~/static/constants";
+import { LoginFieldId } from "~/static/constants";
 import { logUserIn } from "@/services/apiClient/auth.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
@@ -205,8 +205,8 @@ const submitLoginHandler = async () => {
     try {
         const apiUrl = config.public.API_URL;
 
-        const username = fields.value[LoginFieldIds.Username].content;
-        const password = fields.value[LoginFieldIds.Password].content;
+        const username = fields.value[LoginFieldId.Username].content;
+        const password = fields.value[LoginFieldId.Password].content;
 
         const result = await logUserIn(apiUrl, username, password);
 

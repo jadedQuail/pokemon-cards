@@ -3,7 +3,7 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { RegisterFieldIds } from "~/static/constants";
+import { RegisterFieldId } from "~/static/constants";
 import { SeverityLevel } from "~/static/constants";
 
 let RegisterDialog;
@@ -20,18 +20,18 @@ beforeEach(async () => {
     vi.stubGlobal("$fetch", vi.fn().mockResolvedValue({}));
 
     registerFieldsMock = {
-        [RegisterFieldIds.Username]: {
-            name: RegisterFieldIds.Username,
+        [RegisterFieldId.Username]: {
+            name: RegisterFieldId.Username,
             content: "test-user",
             valid: true,
         },
-        [RegisterFieldIds.Password]: {
-            name: RegisterFieldIds.Password,
+        [RegisterFieldId.Password]: {
+            name: RegisterFieldId.Password,
             content: "testUserPassword1#",
             valid: true,
         },
-        [RegisterFieldIds.ConfirmPassword]: {
-            name: RegisterFieldIds.ConfirmPassword,
+        [RegisterFieldId.ConfirmPassword]: {
+            name: RegisterFieldId.ConfirmPassword,
             content: "testUserPassword1#",
             valid: true,
         },
@@ -86,7 +86,7 @@ test("hides the register dialog when the user clicks cancel", async () => {
 });
 
 test("form does not submit when a required field is blank", async () => {
-    registerFieldsMock[RegisterFieldIds.Username].content = "";
+    registerFieldsMock[RegisterFieldId.Username].content = "";
 
     await renderSuspended(RegisterDialog);
 

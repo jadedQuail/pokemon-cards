@@ -3,7 +3,7 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { LoginFieldIds } from "~/static/constants";
+import { LoginFieldId } from "~/static/constants";
 
 let LoginDialog;
 let loginFieldsMock;
@@ -16,13 +16,13 @@ beforeEach(async () => {
     vi.resetModules();
 
     loginFieldsMock = {
-        [LoginFieldIds.Username]: {
-            name: LoginFieldIds.Username,
+        [LoginFieldId.Username]: {
+            name: LoginFieldId.Username,
             content: "test-user",
             valid: true,
         },
-        [LoginFieldIds.Password]: {
-            name: LoginFieldIds.Password,
+        [LoginFieldId.Password]: {
+            name: LoginFieldId.Password,
             content: "testUserPassword1#",
             valid: true,
         },
@@ -64,7 +64,7 @@ test("hides the login dialog when the user clicks cancel", async () => {
 });
 
 test("form does not submit when a required field is blank", async () => {
-    loginFieldsMock[LoginFieldIds.Username].content = "";
+    loginFieldsMock[LoginFieldId.Username].content = "";
 
     await renderSuspended(LoginDialog);
 
