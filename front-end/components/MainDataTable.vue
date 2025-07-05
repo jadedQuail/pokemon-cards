@@ -60,7 +60,7 @@ import { useAuthStore } from "~/stores/authStore.js";
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 
 import "primeicons/primeicons.css";
-import { PokemonFormMode } from "~/static/constants.js";
+import { PokemonFormMode } from "~/static/constants";
 
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
 const { openConfirmDialog } = useConfirmDialog();

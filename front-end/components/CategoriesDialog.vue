@@ -105,7 +105,7 @@ import { ref, computed, onMounted } from "vue";
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
-import { CategoriesFormMode } from "~/static/constants.js";
+import { CategoriesFormMode } from "~/static/constants";
 import { deleteType, addType } from "@/services/apiClient/type.js";
 import { addSet, deleteSet } from "@/services/apiClient/set.js";
 

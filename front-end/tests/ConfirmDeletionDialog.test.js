@@ -3,7 +3,7 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { SeverityLevels } from "~/static/constants.js";
+import { SeverityLevel } from "~/static/constants";
 
 let ConfirmDeletionDialog;
 let isVisible;
@@ -50,7 +50,7 @@ test("calls the API client function to delete the pokemon upon deletion", async 
     await waitFor(() => {
         expect(deletePokemonMock).toHaveBeenCalledTimes(1);
         expect(showToastMock).toHaveBeenCalledWith(
-            SeverityLevels.Info,
+            SeverityLevel.Info,
             "Card Deleted",
             expect.stringContaining("Deleted card with ID:")
         );

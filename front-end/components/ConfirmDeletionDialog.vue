@@ -58,7 +58,7 @@ import { deletePokemon } from "@/services/apiClient/pokemon.js";
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 
 import { useToastNotifications } from "@/composables/useToastNotification";
-import { SeverityLevels } from "~/static/constants.js";
+import { SeverityLevel } from "~/static/constants";
 
 const { showToast } = useToastNotifications();
 const { isVisible, message, currentPokemonData } = useConfirmDialog();
@@ -77,7 +77,7 @@ const deletePokemonHandler = async () => {
         isVisible.value = false;
 
         showToast(
-            SeverityLevels.Info,
+            SeverityLevel.Info,
             "Card Deleted",
             `Deleted card with ID: ${deleteId}`
         );

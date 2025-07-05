@@ -3,8 +3,8 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { RegisterFieldIds } from "~/static/constants.js";
-import { SeverityLevels } from "~/static/constants.js";
+import { RegisterFieldIds } from "~/static/constants";
+import { SeverityLevel } from "~/static/constants";
 
 let RegisterDialog;
 let registerFieldsMock;
@@ -69,7 +69,7 @@ test("calls the API client function to register the user upon submission", async
         expect(createUserMock).toHaveBeenCalledTimes(1);
         expect(hideRegisterDialogMock).toHaveBeenCalledTimes(1);
         expect(showToastMock).toHaveBeenCalledWith(
-            SeverityLevels.Success,
+            SeverityLevel.Success,
             "You've successfully created an account!",
             "You've also been logged in."
         );

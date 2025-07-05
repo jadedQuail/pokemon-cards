@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useAuthStore } from "~/stores/authStore.js";
 
-import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
+import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants";
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
 
 export async function createUser(apiUrl, username, password, confirmPassword) {

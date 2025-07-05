@@ -146,8 +146,8 @@ import { useAuthStore } from "~/stores/authStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
-import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
-import { useToastNotifications } from "@/composables/useToastNotification";
+import { RegisterFieldIds, SeverityLevel } from "~/static/constants";
+import { useToastNotifications } from "~/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
 import RegistrationErrorMessage from "@/components/RegistrationErrorMessage.vue";
 
@@ -248,7 +248,7 @@ const handleSubmit = async () => {
         const registrationSucceeded = await submitRegistrationHandler();
         if (registrationSucceeded) {
             showToast(
-                SeverityLevels.Success,
+                SeverityLevel.Success,
                 "You've successfully created an account!",
                 "You've also been logged in."
             );

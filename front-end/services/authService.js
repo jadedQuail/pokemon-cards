@@ -1,5 +1,5 @@
 import { useAuthStore } from "~/stores/authStore.js";
-import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
+import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants";
 
 export function initializeAuth() {
     const authStore = useAuthStore();

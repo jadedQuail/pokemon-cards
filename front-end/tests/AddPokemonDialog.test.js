@@ -4,8 +4,8 @@ import { within } from "@testing-library/vue";
 import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
-import { SeverityLevels } from "~/static/constants.js";
+import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
+import { SeverityLevel } from "~/static/constants";
 
 let AddPokemonDialog;
 let pokemonFormModeMock;
@@ -153,7 +153,7 @@ test("submits the form and calls the API client function when all fields are val
     await waitFor(() => {
         expect(addPokemonMock).toHaveBeenCalledTimes(1);
         expect(showToastMock).toHaveBeenCalledWith(
-            SeverityLevels.Info,
+            SeverityLevel.Info,
             "Card Created",
             expect.stringContaining(
                 addPokemonFieldsMock[AddPokemonFieldIds.Name].content

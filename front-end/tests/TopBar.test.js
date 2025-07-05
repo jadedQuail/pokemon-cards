@@ -3,7 +3,7 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
+import { PokemonFormMode, CategoriesFormMode } from "~/static/constants";
 import { FilterMatchMode } from "@primevue/core/api";
 
 let TopBar;

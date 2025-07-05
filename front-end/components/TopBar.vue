@@ -85,7 +85,7 @@
 import Button from "primevue/button";
 import SplitButton from "primevue/splitbutton";
 import { FilterMatchMode } from "@primevue/core/api";
-import { PokemonFormMode, CategoriesFormMode } from "~/static/constants.js";
+import { PokemonFormMode, CategoriesFormMode } from "~/static/constants";
 
 import { useAuthStore } from "~/stores/authStore.js";
 import { usePokemonStore } from "~/stores/pokemonStore.js";

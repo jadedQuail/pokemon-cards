@@ -3,7 +3,7 @@ import { renderSuspended } from "@nuxt/test-utils/runtime";
 import { screen, fireEvent } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { LoginFieldIds } from "~/static/constants.js";
+import { LoginFieldIds } from "~/static/constants";
 
 let LoginDialog;
 let loginFieldsMock;

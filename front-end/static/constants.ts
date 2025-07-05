@@ -1,3 +1,5 @@
+// TODO: replace all of these with enums
+
 export const AddPokemonFieldIds = Object.freeze({
     ID: "id",
     Name: "name",
@@ -18,14 +20,14 @@ export const RegisterFieldIds = Object.freeze({
     ConfirmPassword: "confirmPassword",
 });
 
-export const SeverityLevels = Object.freeze({
-    Success: "success",
-    Info: "info",
-    Warn: "warn",
-    Error: "error",
-    Secondary: "secondary",
-    Contrast: "contrast",
-});
+export enum SeverityLevel {
+    Success = 'success',
+    Info = 'info',
+    Warn = 'warn',
+    Error = 'error',
+    Secondary = 'secondary',
+    Contrast  = 'contrast',
+}
 
 export const PokemonFormMode = Object.freeze({
     Add: "add",

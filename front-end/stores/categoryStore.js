@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { getSetOptions } from "@/services/apiClient/set.js";
 import { getTypeOptions } from "@/services/apiClient/type.js";
-import { CategoriesFormMode } from "~/static/constants.js";
+import { CategoriesFormMode } from "~/static/constants";
 
 export const useCategoryStore = defineStore("category", {
     state: () => ({

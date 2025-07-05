@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { fetchPokemonData } from "@/services/apiClient/pokemon.js";
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
+import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
 
 export const usePokemonStore = defineStore("pokemon", {
     state: () => ({

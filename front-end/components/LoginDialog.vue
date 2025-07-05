@@ -116,7 +116,7 @@
 
 import { onMounted } from "vue";
 import { useAuthStore } from "~/stores/authStore.js";
-import { LoginFieldIds } from "~/static/constants.js";
+import { LoginFieldIds } from "~/static/constants";
 import { logUserIn } from "@/services/apiClient/auth.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 

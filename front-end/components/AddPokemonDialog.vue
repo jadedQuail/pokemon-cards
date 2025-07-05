@@ -200,7 +200,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
+import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
 
 import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
 import { getTypeOptions } from "@/services/apiClient/type.js";
@@ -211,7 +211,7 @@ import { useCategoryStore } from "~/stores/categoryStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
 import { useToastNotifications } from "@/composables/useToastNotification";
-import { SeverityLevels } from "~/static/constants.js";
+import { SeverityLevel } from "~/static/constants";
 
 const dialogTools = useDialogTools();
 
@@ -296,7 +296,7 @@ const submitPokemonHandler = async () => {
             await addPokemon(apiUrl, fields.value);
 
             showToast(
-                SeverityLevels.Info,
+                SeverityLevel.Info,
                 "Card Created",
                 `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
             );
@@ -304,7 +304,7 @@ const submitPokemonHandler = async () => {
             await editPokemon(apiUrl, fields.value, fields.value.id.content);
 
             showToast(
-                SeverityLevels.Info,
+                SeverityLevel.Info,
                 "Card Edit",
                 `Edited card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
             );

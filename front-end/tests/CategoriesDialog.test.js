@@ -4,7 +4,7 @@ import { screen, fireEvent, render } from "@testing-library/vue";
 import { ref } from "vue";
 import "@testing-library/jest-dom";
 
-import { CategoriesFormMode } from "~/static/constants.js";
+import { CategoriesFormMode } from "~/static/constants";
 
 let CategoriesDialog;
 
