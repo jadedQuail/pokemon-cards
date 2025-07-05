@@ -63,7 +63,7 @@ import "primeicons/primeicons.css";
 import { PokemonFormMode } from "~/static/constants.js";
 
 import { useConfirmDialog } from "@/composables/useConfirmDialog";
-const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
+const { openConfirmDialog } = useConfirmDialog();
 
 const authStore = useAuthStore();
 const pokemonStore = usePokemonStore();
