@@ -23,28 +23,28 @@
                 <!-- Name -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
-                        :for="AddPokemonFieldIds.Name"
+                        :for="AddPokemonFieldId.Name"
                         class="font-semibold w-24"
                         >Name</label
                     >
                     <div class="flex flex-col flex-auto">
                         <InputText
                             data-testid="pokemon-name"
-                            v-model="fields[AddPokemonFieldIds.Name].content"
-                            :id="AddPokemonFieldIds.Name"
+                            v-model="fields[AddPokemonFieldId.Name].content"
+                            :id="AddPokemonFieldId.Name"
                             class="w-full"
                             autocomplete="off"
-                            :invalid="!fields[AddPokemonFieldIds.Name].valid"
+                            :invalid="!fields[AddPokemonFieldId.Name].valid"
                             @update:model-value="
                                 (value) =>
                                     setValidityFlagForField(
                                         value,
-                                        fields[AddPokemonFieldIds.Name]
+                                        fields[AddPokemonFieldId.Name]
                                     )
                             "
                         />
                         <small
-                            v-if="!fields[AddPokemonFieldIds.Name].valid"
+                            v-if="!fields[AddPokemonFieldId.Name].valid"
                             class="text-red-500"
                         >
                             You must provide a name for this Pokemon card.
@@ -54,28 +54,28 @@
                 <!-- HP -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
-                        :for="AddPokemonFieldIds.HP"
+                        :for="AddPokemonFieldId.HP"
                         class="font-semibold w-24"
                         >HP</label
                     >
                     <div class="flex flex-col flex-auto">
                         <InputText
                             data-testid="pokemon-hp"
-                            v-model="fields[AddPokemonFieldIds.HP].content"
-                            :id="AddPokemonFieldIds.HP"
+                            v-model="fields[AddPokemonFieldId.HP].content"
+                            :id="AddPokemonFieldId.HP"
                             class="w-full"
                             autocomplete="off"
-                            :invalid="!fields[AddPokemonFieldIds.HP].valid"
+                            :invalid="!fields[AddPokemonFieldId.HP].valid"
                             @update:model-value="
                                 (value) =>
                                     setValidityFlagForField(
                                         value,
-                                        fields[AddPokemonFieldIds.HP]
+                                        fields[AddPokemonFieldId.HP]
                                     )
                             "
                         />
                         <small
-                            v-if="!fields[AddPokemonFieldIds.HP].valid"
+                            v-if="!fields[AddPokemonFieldId.HP].valid"
                             class="text-red-500"
                         >
                             You must provide a <em>valid</em> HP value for this
@@ -86,28 +86,28 @@
                 <!-- Type -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
-                        :for="AddPokemonFieldIds.Type"
+                        :for="AddPokemonFieldId.Type"
                         class="font-semibold w-24"
                         >Type</label
                     >
                     <div class="flex flex-col flex-auto">
                         <Select
                             data-testid="pokemon-type"
-                            v-model="fields[AddPokemonFieldIds.Type].content"
+                            v-model="fields[AddPokemonFieldId.Type].content"
                             :options="categoryStore.types"
                             placeholder=""
                             class="flex-auto"
-                            :invalid="!fields[AddPokemonFieldIds.Type].valid"
+                            :invalid="!fields[AddPokemonFieldId.Type].valid"
                             @update:model-value="
                                 (value) =>
                                     setValidityFlagForField(
                                         value,
-                                        fields[AddPokemonFieldIds.Type]
+                                        fields[AddPokemonFieldId.Type]
                                     )
                             "
                         />
                         <small
-                            v-if="!fields[AddPokemonFieldIds.Type].valid"
+                            v-if="!fields[AddPokemonFieldId.Type].valid"
                             id="type-error"
                             class="text-red-500"
                         >
@@ -118,28 +118,28 @@
                 <!-- Set -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
-                        :for="AddPokemonFieldIds.Set"
+                        :for="AddPokemonFieldId.Set"
                         class="font-semibold w-24"
                         >Set</label
                     >
                     <div class="flex flex-col flex-auto">
                         <Select
                             data-testid="pokemon-set"
-                            v-model="fields[AddPokemonFieldIds.Set].content"
+                            v-model="fields[AddPokemonFieldId.Set].content"
                             :options="categoryStore.sets"
                             placeholder=""
                             class="flex-auto"
-                            :invalid="!fields[AddPokemonFieldIds.Set].valid"
+                            :invalid="!fields[AddPokemonFieldId.Set].valid"
                             @update:model-value="
                                 (value) =>
                                     setValidityFlagForField(
                                         value,
-                                        fields[AddPokemonFieldIds.Set]
+                                        fields[AddPokemonFieldId.Set]
                                     )
                             "
                         />
                         <small
-                            v-if="!fields[AddPokemonFieldIds.Set].valid"
+                            v-if="!fields[AddPokemonFieldId.Set].valid"
                             class="text-red-500"
                         >
                             You must select a valid set for this Pokemon card.
@@ -149,7 +149,7 @@
                 <!-- Flavor Text -->
                 <div class="flex items-start gap-4 mb-4 mt-1">
                     <label
-                        :for="AddPokemonFieldIds.FlavorText"
+                        :for="AddPokemonFieldId.FlavorText"
                         class="font-semibold w-24"
                         >Flavor Text</label
                     >
@@ -157,24 +157,24 @@
                         <Textarea
                             data-testid="pokemon-flavortext"
                             v-model="
-                                fields[AddPokemonFieldIds.FlavorText].content
+                                fields[AddPokemonFieldId.FlavorText].content
                             "
                             rows="5"
                             cols="5"
                             class="flex-auto resize-none leading-snug"
                             :invalid="
-                                !fields[AddPokemonFieldIds.FlavorText].valid
+                                !fields[AddPokemonFieldId.FlavorText].valid
                             "
                             @update:model-value="
                                 (value) =>
                                     setValidityFlagForField(
                                         value,
-                                        fields[AddPokemonFieldIds.FlavorText]
+                                        fields[AddPokemonFieldId.FlavorText]
                                     )
                             "
                         />
                         <small
-                            v-if="!fields[AddPokemonFieldIds.FlavorText].valid"
+                            v-if="!fields[AddPokemonFieldId.FlavorText].valid"
                             class="text-red-500"
                         >
                             You must enter valid flavor text for this Pokemon
@@ -200,11 +200,9 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
+import { AddPokemonFieldId, PokemonFormMode } from "~/static/constants";
 
 import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
-import { getTypeOptions } from "@/services/apiClient/type.js";
-import { getSetOptions } from "@/services/apiClient/set.js";
 
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
@@ -257,13 +255,13 @@ const resetFieldContent = () => {
 };
 
 const setValidityFlagForField = (value, field) => {
-    if (field.name === AddPokemonFieldIds.HP) {
+    if (field.name === AddPokemonFieldId.HP) {
         if (value.length < 1 || !canBeConvertedToPositiveInt(value)) {
             field.valid = false;
         } else {
             field.valid = true;
         }
-    } else if (field.name === AddPokemonFieldIds.ID) {
+    } else if (field.name === AddPokemonFieldId.ID) {
         field.value = true;
     } else {
         if (value.length < 1) {

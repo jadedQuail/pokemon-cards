@@ -4,7 +4,7 @@ import { within } from "@testing-library/vue";
 import { screen, fireEvent, waitFor } from "@testing-library/vue";
 import "@testing-library/jest-dom";
 
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
+import { AddPokemonFieldId, PokemonFormMode } from "~/static/constants";
 import { SeverityLevel } from "~/static/constants";
 
 let AddPokemonDialog;
@@ -28,30 +28,30 @@ beforeEach(async () => {
     sets = ["Jungle", "Base", "Fossil"];
 
     addPokemonFieldsMock = {
-        [AddPokemonFieldIds.Name]: {
+        [AddPokemonFieldId.Name]: {
             content: "Charmander",
             valid: true,
-            name: AddPokemonFieldIds.Name,
+            name: AddPokemonFieldId.Name,
         },
-        [AddPokemonFieldIds.HP]: {
+        [AddPokemonFieldId.HP]: {
             content: "50",
             valid: true,
-            name: AddPokemonFieldIds.HP,
+            name: AddPokemonFieldId.HP,
         },
-        [AddPokemonFieldIds.Type]: {
+        [AddPokemonFieldId.Type]: {
             content: "Fire",
             valid: true,
-            name: AddPokemonFieldIds.Type,
+            name: AddPokemonFieldId.Type,
         },
-        [AddPokemonFieldIds.Set]: {
+        [AddPokemonFieldId.Set]: {
             content: "Jungle",
             valid: true,
-            name: AddPokemonFieldIds.Set,
+            name: AddPokemonFieldId.Set,
         },
-        [AddPokemonFieldIds.FlavorText]: {
+        [AddPokemonFieldId.FlavorText]: {
             content: "Obviously prefers hot places.",
             valid: true,
-            name: AddPokemonFieldIds.FlavorText,
+            name: AddPokemonFieldId.FlavorText,
         },
     };
 
@@ -97,7 +97,7 @@ test("hides the add pokemon dialog when the Cancel button is clicked", async () 
 });
 
 test("form does not submit when a required field is blank", async () => {
-    addPokemonFieldsMock[AddPokemonFieldIds.Name].content = "";
+    addPokemonFieldsMock[AddPokemonFieldId.Name].content = "";
 
     await renderSuspended(AddPokemonDialog);
 
@@ -116,31 +116,31 @@ test("pre-fills form fields when the dialog is opened in Edit mode", async () =>
 
     const pokemonNameInput = screen.getByTestId("pokemon-name");
     expect(pokemonNameInput).toHaveValue(
-        addPokemonFieldsMock[AddPokemonFieldIds.Name].content
+        addPokemonFieldsMock[AddPokemonFieldId.Name].content
     );
 
     const pokemonHpInput = screen.getByTestId("pokemon-hp");
     expect(pokemonHpInput).toHaveValue(
-        addPokemonFieldsMock[AddPokemonFieldIds.HP].content
+        addPokemonFieldsMock[AddPokemonFieldId.HP].content
     );
 
     const pokemonTypeWrapper = screen.getByTestId("pokemon-type");
     expect(
         within(pokemonTypeWrapper).getByText(
-            addPokemonFieldsMock[AddPokemonFieldIds.Type].content
+            addPokemonFieldsMock[AddPokemonFieldId.Type].content
         )
     ).toBeInTheDocument();
 
     const pokemonSetWrapper = screen.getByTestId("pokemon-set");
     expect(
         within(pokemonSetWrapper).getByText(
-            addPokemonFieldsMock[AddPokemonFieldIds.Set].content
+            addPokemonFieldsMock[AddPokemonFieldId.Set].content
         )
     ).toBeInTheDocument();
 
     const pokemonFlavorTextArea = screen.getByTestId("pokemon-flavortext");
     expect(pokemonFlavorTextArea).toHaveValue(
-        addPokemonFieldsMock[AddPokemonFieldIds.FlavorText].content
+        addPokemonFieldsMock[AddPokemonFieldId.FlavorText].content
     );
 });
 
@@ -156,7 +156,7 @@ test("submits the form and calls the API client function when all fields are val
             SeverityLevel.Info,
             "Card Created",
             expect.stringContaining(
-                addPokemonFieldsMock[AddPokemonFieldIds.Name].content
+                addPokemonFieldsMock[AddPokemonFieldId.Name].content
             )
         );
         expect(hideAddPokemonDialogMock).toHaveBeenCalledTimes(1);

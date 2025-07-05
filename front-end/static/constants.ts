@@ -1,13 +1,11 @@
-// TODO: replace all of these with enums
-
-export const AddPokemonFieldIds = Object.freeze({
-    ID: "id",
-    Name: "name",
-    HP: "hp",
-    Type: "type",
-    Set: "set",
-    FlavorText: "flavorText",
-});
+export enum AddPokemonFieldId {
+    ID = "id",
+    Name = "name",
+    HP = "hp",
+    Type = "type",
+    Set = "set",
+    FlavorText = "flavorText",
+}
 
 export enum LoginFieldId {
     Username = "username",

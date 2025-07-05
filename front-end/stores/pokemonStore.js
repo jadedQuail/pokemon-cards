@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { fetchPokemonData } from "@/services/apiClient/pokemon.js";
-import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants";
+import { AddPokemonFieldId, PokemonFormMode } from "~/static/constants";
 
 export const usePokemonStore = defineStore("pokemon", {
     state: () => ({
@@ -10,33 +10,33 @@ export const usePokemonStore = defineStore("pokemon", {
         addPokemonDialogVisible: false,
         pokemonFormMode: PokemonFormMode.None,
         addPokemonFields: {
-            [AddPokemonFieldIds.ID]: {
-                name: AddPokemonFieldIds.ID,
+            [AddPokemonFieldId.ID]: {
+                name: AddPokemonFieldId.ID,
                 content: "",
                 valid: true,
             },
-            [AddPokemonFieldIds.Name]: {
-                name: AddPokemonFieldIds.Name,
+            [AddPokemonFieldId.Name]: {
+                name: AddPokemonFieldId.Name,
                 content: "",
                 valid: true,
             },
-            [AddPokemonFieldIds.HP]: {
-                name: AddPokemonFieldIds.HP,
+            [AddPokemonFieldId.HP]: {
+                name: AddPokemonFieldId.HP,
                 content: "",
                 valid: true,
             },
-            [AddPokemonFieldIds.Type]: {
-                name: AddPokemonFieldIds.Type,
+            [AddPokemonFieldId.Type]: {
+                name: AddPokemonFieldId.Type,
                 content: "",
                 valid: true,
             },
-            [AddPokemonFieldIds.Set]: {
-                name: AddPokemonFieldIds.Set,
+            [AddPokemonFieldId.Set]: {
+                name: AddPokemonFieldId.Set,
                 content: "",
                 valid: true,
             },
-            [AddPokemonFieldIds.FlavorText]: {
-                name: AddPokemonFieldIds.FlavorText,
+            [AddPokemonFieldId.FlavorText]: {
+                name: AddPokemonFieldId.FlavorText,
                 content: "",
                 valid: true,
             },
@@ -63,17 +63,17 @@ export const usePokemonStore = defineStore("pokemon", {
             this.addPokemonDialogVisible = false;
         },
         setFieldContentForEditDialog(pokemon) {
-            this.addPokemonFields[AddPokemonFieldIds.ID].content =
+            this.addPokemonFields[AddPokemonFieldId.ID].content =
                 pokemon.id || "";
-            this.addPokemonFields[AddPokemonFieldIds.Name].content =
+            this.addPokemonFields[AddPokemonFieldId.Name].content =
                 pokemon.name || "";
-            this.addPokemonFields[AddPokemonFieldIds.HP].content =
+            this.addPokemonFields[AddPokemonFieldId.HP].content =
                 pokemon.hp || "";
-            this.addPokemonFields[AddPokemonFieldIds.Type].content =
+            this.addPokemonFields[AddPokemonFieldId.Type].content =
                 pokemon.type || "";
-            this.addPokemonFields[AddPokemonFieldIds.Set].content =
+            this.addPokemonFields[AddPokemonFieldId.Set].content =
                 pokemon.set || "";
-            this.addPokemonFields[AddPokemonFieldIds.FlavorText].content =
+            this.addPokemonFields[AddPokemonFieldId.FlavorText].content =
                 pokemon.flavorText || "";
         },
     },
