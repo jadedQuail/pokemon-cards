@@ -116,6 +116,7 @@
                     :registrationErrorCode="registrationErrorCode"
                 />
                 <NuxtTurnstile
+                    class="mt-2"
                     v-model="turnstileToken"
                     v-if="enableTurnstile"
                     :options="{ theme: 'light' }"
