@@ -112,9 +112,6 @@
 </template>
 
 <script setup>
-// TODO: Make this a TypeScript project
-
-import { onMounted } from "vue";
 import { useAuthStore } from "~/stores/authStore.js";
 import { LoginFieldIds } from "~/static/constants.js";
 import { logUserIn } from "@/services/apiClient/auth.js";
