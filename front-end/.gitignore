@@ -91,3 +91,7 @@ sw.*
 
 # Ignore macOS Desktop Services Store
 .DS_Store
+
+# Playwright outputs
+/test-results/
+/playwright-report/
