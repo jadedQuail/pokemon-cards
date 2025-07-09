@@ -29,7 +29,7 @@ From there, you should be able to access the front-end page - the default URL wi
 
 You will need to have a MySQL database to connect to in order for this web application to work. You can create a fresh database in MySQL somewhere (whether that be your local machine or in some cloud space), and then you can use the table definitions and test values in the file `DDL.sql` to get your database up and running such that it is compatible with this application.
 
-## Run Tests
+## Run Unit Tests
 
 There are unit tests on the back-end and unit/component tests on the front-end of this application.
 
@@ -42,6 +42,20 @@ To run the front-end tests:
 
 1. Navigate to the `front-end` folder in a terminal.
 2. Run the following command: `npm test`
+
+## Run Playwright Tests
+
+After installing all the packages on the front-end (of which Playwright is one), you can install the browsers necessary for Playwright testing by running the command:
+
+```
+npx playwright install
+```
+
+You can also view which browsers are installed on your device by running:
+
+```
+npx playwright install --list
+```
 
 ## Front-End `.env` File Template
 
