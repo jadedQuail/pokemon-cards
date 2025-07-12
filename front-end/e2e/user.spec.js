@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import { logUserIn } from "./utils/login.js";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -22,14 +24,9 @@ test.describe("user lifecycle suite", () => {
     });
 
     test("able to login", async ({ page }) => {
-        await page.goto("http://localhost:3000");
+        await logUserIn(page, ADMIN_USERNAME, ADMIN_PASSWORD);
 
-        await page.getByTestId("login-logout-button").click();
-
-        await page.getByTestId("login-dialog-username").fill(ADMIN_USERNAME);
-        await page
-            .getByTestId("login-dialog-password-parent")
-            .locator("input")
-            .fill(ADMIN_PASSWORD);
+        const addPokemonButton = page.getByTestId("add-pokemon-button");
+        await expect(addPokemonButton).toBeVisible();
     });
 });
