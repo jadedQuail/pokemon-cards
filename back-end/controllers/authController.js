@@ -7,6 +7,28 @@ import {
     validatePasswordChoice,
 } from "../utils/credentialValidator.js";
 
+export const deleteUser = async (req, res) => {
+    const userId = req.params.id;
+
+    if (!userId) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const query = `DELETE FROM Users WHERE user_id = ?`;
+        const [result] = await db.pool.query(query, [userId]);
+
+        if (result.affectedRows === 0) {
+            return res.sendStatus(404);
+        }
+
+        return res.sendStatus(204);
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        return res.sendStatus(500);
+    }
+};
+
 export const createUser = async (req, res) => {
     const { username, password, confirmPassword } = req.body;
 

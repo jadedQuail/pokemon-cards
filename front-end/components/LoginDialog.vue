@@ -20,6 +20,7 @@
                     <label class="font-semibold w-24">Username</label>
                     <div class="flex flex-col flex-auto">
                         <InputText
+                            data-testid="login-dialog-username"
                             v-model="fields[LoginFieldIds.Username].content"
                             :id="LoginFieldIds.Username"
                             class="w-full"
@@ -49,6 +50,7 @@
                     <label class="font-semibold w-24">Password</label>
                     <div class="flex flex-col flex-auto">
                         <Password
+                            data-testid="login-dialog-password-parent"
                             v-model="fields[LoginFieldIds.Password].content"
                             :id="LoginFieldIds.Password"
                             :feedback="false"

@@ -11,7 +11,7 @@ vi.mock("../database/db-connector.js", () => ({
     },
 }));
 
-vi.mock("../middleware/requireAdmin.js", () => ({
+vi.mock("../middleware/requireAdminOrApiKey.js", () => ({
     default: (_req, _res, next) => next(),
 }));
 

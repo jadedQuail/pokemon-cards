@@ -2,12 +2,12 @@ import express from "express";
 const router = express.Router();
 
 import * as controller from "../controllers/pokemonController.js";
-import requireAdmin from "../middleware/requireAdmin.js";
+import requireAdminOrApiKey from "../middleware/requireAdminOrApiKey.js";
 
 router.get("/", controller.getPokemon);
 
-router.post("/edit/:id", requireAdmin, controller.editPokemon);
-router.post("/add", requireAdmin, controller.addPokemon);
-router.delete("/:id", requireAdmin, controller.deletePokemon);
+router.post("/edit/:id", requireAdminOrApiKey, controller.editPokemon);
+router.post("/add", requireAdminOrApiKey, controller.addPokemon);
+router.delete("/:id", requireAdminOrApiKey, controller.deletePokemon);
 
 export default router;

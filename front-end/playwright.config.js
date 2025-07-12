@@ -8,10 +8,10 @@ export default defineConfig({
     fullyParallel: true,
 
     // Opt out of parallel tests on CI.
-    workers: 2,
+    workers: 1,
 
     // Reporter to use
-    reporter: "html",
+    reporter: "list",
 
     use: {
         // Base URL to use in actions like `await page.goto('/')`.
@@ -19,6 +19,10 @@ export default defineConfig({
 
         // Collect trace when retrying the failed test.
         trace: "on-first-retry",
+
+        launchOptions: {
+            slowMo: 1000,
+        },
     },
     // Configure projects for major browsers.
     projects: [

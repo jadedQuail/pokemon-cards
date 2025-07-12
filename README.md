@@ -60,8 +60,9 @@ npx playwright install --list
 ## Front-End `.env` File Template
 
 ```
-# API Link
+# API
 API_URL=http://localhost:1111
+ADMIN_API_KEY=<your-secret-key>
 
 # Characters to be printed when debugging the DOM in testing suite
 DEBUG_PRINT_LIMIT=100000

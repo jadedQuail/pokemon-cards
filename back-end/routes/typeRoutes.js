@@ -1,12 +1,12 @@
 import express from "express";
 import * as controller from "../controllers/typeController.js";
-import requireAdmin from "../middleware/requireAdmin.js";
+import requireAdminOrApiKey from "../middleware/requireAdminOrApiKey.js";
 
 const router = express.Router();
 
 router.get("/", controller.getTypes);
 
-router.post("/", requireAdmin, controller.addType);
-router.delete("/:type", requireAdmin, controller.deleteType);
+router.post("/", requireAdminOrApiKey, controller.addType);
+router.delete("/:type", requireAdminOrApiKey, controller.deleteType);
 
 export default router;

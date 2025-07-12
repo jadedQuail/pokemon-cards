@@ -1,6 +1,11 @@
 import jwt from "jsonwebtoken";
 
-export default function isAdmin(req, res, next) {
+export default function requireAdminOrApiKey(req, res, next) {
+    const apiKey = req.headers["x-api-key"];
+    if (apiKey && apiKey === process.env.ADMIN_API_KEY) {
+        return next();
+    }
+
     const authHeader = req.headers["authorization"];
     const token = authHeader?.split(" ")[1];
 
