@@ -39,6 +39,7 @@
                     />
                     <Button
                         type="submit"
+                        data-testid="add-category-button"
                         :label="'Add ' + dialogHeaderSingular"
                     ></Button>
                     <Button
