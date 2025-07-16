@@ -191,7 +191,11 @@
                         severity="secondary"
                         @click="closeDialog"
                     ></Button>
-                    <Button type="submit" label="Save"></Button>
+                    <Button
+                        data-testid="submit-add-pokemon-button"
+                        type="submit"
+                        label="Save"
+                    ></Button>
                 </div>
             </form>
         </Dialog>

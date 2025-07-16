@@ -61,7 +61,10 @@
             <!-- Right Content -->
             <div class="flex items-center">
                 <div class="pb-1 hidden custom-800px:block">
-                    <h1 class="text-white text-xl font-sans text-right">
+                    <h1
+                        data-testid="greeting-header"
+                        class="text-white text-xl font-sans text-right"
+                    >
                         {{ getGreetingText() }}
                     </h1>
                 </div>
