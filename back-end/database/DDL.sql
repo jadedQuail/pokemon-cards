@@ -1,9 +1,7 @@
 CREATE DATABASE IF NOT EXISTS pokemoncards;
 USE pokemoncards;
 
---------------------------------------
--- TABLE DEFINITIONS                --
---------------------------------------
+-- TABLE DEFINITIONS
 
 -- Drop Tables
 DROP TABLE IF EXISTS Pokemon;
@@ -51,11 +49,7 @@ CREATE TABLE Users (
     PRIMARY KEY (user_id)
 );
 
----------------------------------------------------------------------------------------------
-
---------------------------------------
--- TEST VALUES                      --
---------------------------------------
+-- TEST VALUES
 
 -- Types Table
 INSERT INTO Types (type_name)
