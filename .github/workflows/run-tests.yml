@@ -61,7 +61,7 @@ jobs:
             - name: Install & start back-end server
               run: |
                   npm install --prefix back-end
-                  npm run dev --prefix back-end &
+                  npm run start --prefix back-end &
 
             - name: Wait for back-end to be ready
               run: |
