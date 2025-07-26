@@ -14,7 +14,7 @@ jobs:
             DB_HOST: 127.0.0.1
             DB_USER: root
             DB_PASSWORD: root
-            DATABASE: testdb
+            DATABASE: pokemoncards
             API_URL: http://localhost:1111
             TEST_ADMIN_USERNAME: AfGk3LmN75
             TEST_ADMIN_PASSWORD: Welcome2025!
@@ -26,7 +26,7 @@ jobs:
                     - 3306:3306
                 env:
                     MYSQL_ROOT_PASSWORD: root
-                    MYSQL_DATABASE: testdb
+                    MYSQL_DATABASE: pokemoncards
                 options: >-
                     --health-cmd="mysqladmin ping --silent"
                     --health-interval=10s
@@ -61,7 +61,8 @@ jobs:
 
             - name: Set up database schema
               run: |
-                  mysql -h 127.0.0.1 -u root -proot testdb < back-end/database/DDL.sql
+                  mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DATABASE" \
+                    < back-end/database/DDL.sql
 
             - name: Seed test admin user
               working-directory: back-end
