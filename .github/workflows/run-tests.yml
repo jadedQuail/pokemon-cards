@@ -1,7 +1,5 @@
 name: Run tests
 
-# TODO: Instead of using prefixes for working directories, use the working-directory tag.
-
 on:
     push: {}
     pull_request: {}
@@ -47,14 +45,16 @@ jobs:
                   node-version: "22"
 
             - name: Install & run frontend tests
+              working-directory: front-end
               run: |
-                  npm install --prefix front-end
-                  npm test --prefix front-end
+                  npm install
+                  npm test
 
             - name: Install & run backend tests
+              working-directory: back-end
               run: |
-                  npm install --prefix back-end
-                  npm test --prefix back-end
+                  npm install
+                  npm test
 
             - name: Wait for MySQL to be ready
               run: |
@@ -100,11 +100,12 @@ jobs:
                   echo "Seed step completed"
 
             - name: Install & start back-end server
+              working-directory: back-end
               env:
                   PORT: 1111
               run: |
-                  npm install --prefix back-end
-                  npm run start --prefix back-end &
+                  npm install
+                  npm run start &
 
             - name: Wait for back-end to be ready
               run: |
@@ -114,9 +115,10 @@ jobs:
                   done
 
             - name: Install & start front-end server
+              working-directory: front-end
               run: |
-                  npm install --prefix front-end
-                  npm run dev --prefix front-end &
+                  npm install
+                  npm run dev &
 
             - name: Wait for front-end to be ready
               run: |
@@ -126,8 +128,9 @@ jobs:
                   done
 
             - name: Install Playwright and browsers
+              working-directory: front-end
               run: |
-                  npm install --prefix front-end @playwright/test
+                  npm install @playwright/test
                   npx playwright install chromium
 
             - name: Run Playwright tests

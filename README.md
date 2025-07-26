@@ -89,7 +89,7 @@ DB_PASSWORD=password
 DATABASE=database_name
 
 # CORS Settings - for development testing purposes ONLY
-ALLOW_ALL_ORIGINS=true
+ALLOW_ALL_ORIGINS=false
 
 # JSON Web Token
 JWT_SECRET=<your_secret_key>

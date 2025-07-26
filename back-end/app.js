@@ -15,8 +15,8 @@ const ALLOW_LIST = [process.env.FRONTEND];
 // TODO: Create journey tests for this app (do this last)
 
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (ALLOW_ALL_ORIGINS || ALLOW_LIST.includes(origin)) {
+    origin: (origin, callback) => {
+        if (!origin || ALLOW_ALL_ORIGINS || ALLOW_LIST.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
