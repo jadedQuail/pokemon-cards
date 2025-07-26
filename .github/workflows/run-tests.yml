@@ -8,6 +8,12 @@ jobs:
     test:
         runs-on: ubuntu-latest
 
+        env:
+            DB_HOST: 127.0.0.1
+            DB_USER: root
+            DB_PASSWORD: root
+            DATABASE: testdb
+
         services:
             mysql:
                 image: mysql:8.0
@@ -51,3 +57,15 @@ jobs:
             - name: Set up database schema
               run: |
                   mysql -h 127.0.0.1 -u root -proot testdb < back-end/database/DDL.sql
+
+            - name: Install & start back-end server
+              run: |
+                  npm install --prefix back-end
+                  npm run start --prefix back-end &
+
+            - name: Wait for back-end to be ready
+              run: |
+                  until curl --silent http://127.0.0.1:3001/health; do
+                    echo "Waiting for back-end…"
+                    sleep 2
+                  done
