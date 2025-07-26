@@ -63,6 +63,36 @@ jobs:
               run: |
                   mysql -h 127.0.0.1 -u root -proot testdb < back-end/database/DDL.sql
 
+            - name: Seed test admin user
+              working-directory: back-end
+              run: |
+                  node -e "
+                    import bcrypt from 'bcrypt';
+                    import mysql from 'mysql2/promise';
+                    (async () => {
+                      const pool = mysql.createPool({
+                        host:     process.env.DB_HOST,
+                        user:     process.env.DB_USER,
+                        password: process.env.DB_PASSWORD,
+                        database: process.env.DATABASE,
+                      });
+                      
+                      const hash = await bcrypt.hash(process.env.TEST_ADMIN_PASSWORD, 10);
+                      
+                      await pool.query(
+                        \`INSERT INTO Users (username, password_hash, is_admin)
+                          VALUES (?, ?, 1)
+                          ON DUPLICATE KEY UPDATE
+                            password_hash = VALUES(password_hash),
+                            is_admin      = VALUES(is_admin)\`,
+                        [process.env.TEST_ADMIN_USERNAME, hash]
+                      );
+                      
+                      await pool.end();
+                      process.exit(0);
+                    })();
+                  "
+
             - name: Install & start back-end server
               env:
                   PORT: 1111
