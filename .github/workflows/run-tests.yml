@@ -65,7 +65,7 @@ jobs:
 
             - name: Wait for back-end to be ready
               run: |
-                  until curl --silent http://127.0.0.1:3001/health; do
+                  until curl --silent http://127.0.0.1:3000/health; do
                     echo "Waiting for back-end…"
                     sleep 2
                   done
