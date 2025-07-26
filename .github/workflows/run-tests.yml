@@ -18,7 +18,7 @@ jobs:
             API_URL: http://localhost:1111
             TEST_ADMIN_USERNAME: AfGk3LmN75
             TEST_ADMIN_PASSWORD: Welcome2025!
-            ALLOW_ALL_ORIGINS: true
+            ALLOW_ALL_ORIGINS: false
             JWT_SECRET: testsecret
             JWT_EXPIRES_IN: 1d
 
