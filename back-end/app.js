@@ -12,8 +12,6 @@ const app = express();
 const ALLOW_ALL_ORIGINS = process.env.ALLOW_ALL_ORIGINS === "true";
 const ALLOW_LIST = [process.env.FRONTEND];
 
-// TODO: Create journey tests for this app (do this last)
-
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || ALLOW_ALL_ORIGINS || ALLOW_LIST.includes(origin)) {
