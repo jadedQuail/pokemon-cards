@@ -95,6 +95,11 @@ jobs:
                   "
                   echo "Seed step completed"
 
+            - name: Dump Users table
+              run: |
+                  echo "Current Users table:"
+                  mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DATABASE" -e "SELECT * FROM Users\G"
+
             - name: Install & start back-end server
               env:
                   PORT: 1111
