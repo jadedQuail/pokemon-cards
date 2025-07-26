@@ -18,6 +18,9 @@ jobs:
             API_URL: http://localhost:1111
             TEST_ADMIN_USERNAME: AfGk3LmN75
             TEST_ADMIN_PASSWORD: Welcome2025!
+            ALLOW_ALL_ORIGINS: true
+            JWT_SECRET: da30ccfd4b5f8884f5b2af150f09ceac73fef1860358c65623cbc79ec3e20225839313f38223eacd7c521222f398bbd1d1110facdcf986501ecbddb80d4c5824eb14bb421b15af8b52271b5db161848ca093b8683f90ce8c0d104ba580d382dafaa06063506862cfcd6a8771bea688d61454dadb8d43ede38867950b7747df67
+            JWT_EXPIRES_IN: 1d
 
         services:
             mysql:
