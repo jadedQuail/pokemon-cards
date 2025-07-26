@@ -75,6 +75,9 @@ jobs:
                   done
 
             - name: Install & start front-end server
+              env:
+                  TEST_ADMIN_USERNAME: AfGk3LmN75
+                  TEST_ADMIN_PASSWORD: Welcome2025!
               run: |
                   npm install --prefix front-end
                   npm run dev --prefix front-end &
