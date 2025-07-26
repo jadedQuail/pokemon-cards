@@ -61,11 +61,23 @@ jobs:
             - name: Install & start back-end server
               run: |
                   npm install --prefix back-end
-                  npm run start --prefix back-end &
+                  npm run dev --prefix back-end &
 
             - name: Wait for back-end to be ready
               run: |
                   until curl --silent http://127.0.0.1:3000/health; do
                     echo "Waiting for back-end…"
+                    sleep 2
+                  done
+
+            - name: Install & start front-end server
+              run: |
+                  npm install --prefix front-end
+                  npm run dev --prefix front-end &
+
+            - name: Wait for front-end to be ready
+              run: |
+                  until curl --silent --fail http://127.0.0.1:3000/ >/dev/null; do
+                    echo "Waiting for front-end…"
                     sleep 2
                   done
