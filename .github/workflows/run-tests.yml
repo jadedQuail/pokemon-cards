@@ -93,6 +93,7 @@ jobs:
                       process.exit(0);
                     })();
                   "
+                  echo "Seed step completed"
 
             - name: Install & start back-end server
               env:
