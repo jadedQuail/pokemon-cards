@@ -94,7 +94,4 @@ ALLOW_ALL_ORIGINS=false
 # JSON Web Token
 JWT_SECRET=<your_secret_key>
 JWT_EXPIRES_IN=1d
-
-# API
-ADMIN_API_KEY=<your_secret_key>
 ```
