@@ -95,3 +95,6 @@ sw.*
 # Playwright outputs
 /test-results/
 /playwright-report/
+
+# Production build output
+.output
