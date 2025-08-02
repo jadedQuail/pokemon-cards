@@ -115,21 +115,8 @@ jobs:
 
             - name: Wait for app to be ready
               run: |
-                  until curl --silent http://127.0.0.1:3000/health; do
-                    echo "Waiting for back-end…"
-                    sleep 2
-                  done
-
-            - name: Install & start front-end server
-              working-directory: front-end
-              run: |
-                  npm install
-                  npm run dev &
-
-            - name: Wait for front-end to be ready
-              run: |
-                  until curl --silent --fail http://localhost:3000/ >/dev/null; do
-                    echo "Waiting for front-end…"
+                  until curl --silent http://localhost:3000/health; do
+                    echo "Waiting for backend..."
                     sleep 2
                   done
 
