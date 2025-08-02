@@ -100,7 +100,12 @@ jobs:
                   "
                   echo "Seed step completed"
 
-            - name: Install & start back-end server
+            - name: Build static frontend
+              working-directory: front-end
+              run: |
+                  npm run generate
+
+            - name: Install & start back-end (serving static frontend)
               working-directory: back-end
               env:
                   PORT: 3000
@@ -108,7 +113,7 @@ jobs:
                   npm install
                   npm run start &
 
-            - name: Wait for back-end to be ready
+            - name: Wait for app to be ready
               run: |
                   until curl --silent http://127.0.0.1:3000/health; do
                     echo "Waiting for back-end…"
@@ -121,12 +126,17 @@ jobs:
                   npm install
                   npm run dev &
 
-            # - name: Wait for front-end to be ready
-            #   run: |
-            #       until curl --silent --fail http://localhost:3000/ >/dev/null; do
-            #         echo "Waiting for front-end…"
-            #         sleep 2
-            #       done
+            - name: Wait for front-end to be ready
+              run: |
+                  until curl --silent --fail http://localhost:3000/ >/dev/null; do
+                    echo "Waiting for front-end…"
+                    sleep 2
+                  done
+
+                  until curl --silent --fail http://localhost:3000/ >/dev/null; do
+                    echo "Waiting for static frontend..."
+                    sleep 2
+                  done
 
             - name: Install Playwright and browsers
               working-directory: front-end
