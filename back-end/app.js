@@ -1,6 +1,10 @@
 import "dotenv/config";
 import express from "express";
-import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import pokemonRoutes from "./routes/pokemonRoutes.js";
 import typeRoutes from "./routes/typeRoutes.js";
@@ -9,20 +13,6 @@ import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
-const ALLOW_ALL_ORIGINS = process.env.ALLOW_ALL_ORIGINS === "true";
-const ALLOW_LIST = [process.env.FRONTEND];
-
-const corsOptions = {
-    origin: (origin, callback) => {
-        if (!origin || ALLOW_ALL_ORIGINS || ALLOW_LIST.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-};
-
-app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
@@ -33,5 +23,12 @@ app.use("/pokemon", pokemonRoutes);
 app.use("/types", typeRoutes);
 app.use("/sets", setRoutes);
 app.use("/auth", authRoutes);
+
+const nuxtStaticPath = path.join(__dirname, "../front-end/.output/public");
+app.use(express.static(nuxtStaticPath));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(nuxtStaticPath, "index.html"));
+});
 
 export default app;
