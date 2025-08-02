@@ -3,13 +3,14 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
+        "build": "npm install --prefix back-end && npm install --prefix front-end && npm run build --prefix front-end",
         "start": "concurrently \"npm --prefix back-end start\" \"npm run --prefix front-end start:prod\"",
         "dev": "concurrently \"npm run --prefix back-end dev\" \"npm run --prefix front-end dev\""
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "devDependencies": {
+    "dependencies": {
         "concurrently": "^9.2.0"
     }
 }
