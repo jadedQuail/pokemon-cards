@@ -21,6 +21,7 @@
         "jsonwebtoken": "^9.0.2",
         "nuxt": "^3.12.4",
         "pinia": "^2.2.2",
+        "pokemon-cards": "file:..",
         "primeicons": "^7.0.0",
         "primevue": "^4.0.3",
         "tailwindcss-primeui": "^0.3.4",

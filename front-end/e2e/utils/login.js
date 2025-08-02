@@ -1,5 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+const API_URL = process.env.API_URL;
+
 export async function logUserIn(page, username, password) {
-    await page.goto("http://localhost:3000");
+    await page.goto(API_URL);
     await page.getByTestId("login-logout-button").click();
     await page.getByTestId("login-dialog-username").fill(username);
     await page
