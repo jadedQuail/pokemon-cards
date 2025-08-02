@@ -19,7 +19,6 @@ jobs:
             ALLOW_ALL_ORIGINS: false
             JWT_SECRET: testsecret
             JWT_EXPIRES_IN: 1d
-            FRONTEND: http://localhost:3000
 
         services:
             mysql:
