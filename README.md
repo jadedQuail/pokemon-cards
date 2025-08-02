@@ -8,10 +8,9 @@ I am using [Express](https://expressjs.com/) as the backend. I am currently usin
 1. Clone this repository.
 2. Create a `.env` file in both the **back-end** and **front-end** folders.
     - Use the `.env.example` files as templates. You need to fill in the proper information for each of those variables.
-3. From the root of the repo, run `npm install`
-4. After that finishes, run `npm run build`
+3. From the root of the repo, run `npm run build`
     - This will install packages on the back-end and front-end as well as create a static build of the front-end
-5. After that finishes, run `npm start`
+4. After that finishes, run `npm start`
     - This will start up the back-end server, which will serve the static Nuxt front-end.
 
 From there, you should be able to access the front-end page - the default URL will be `https:\\localhost:3000`
