@@ -9,6 +9,9 @@ const pool = mysql
         password: process.env.DB_PASSWORD,
         database: process.env.DATABASE,
         multipleStatements: false,
+        ssl: {
+            rejectUnauthorized: false,
+        },
     })
     .promise();
 
