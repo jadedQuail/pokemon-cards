@@ -3,27 +3,16 @@
 This is a simple project that I created with the intention of learning more about Vue as a front-end framework, and for practicing full-stack development in general. In addition to using [Vue.js](https://vuejs.org/) as the front-end (with [Nuxt](https://nuxt.com/)),
 I am using [Express](https://expressjs.com/) as the backend. I am currently using [MySQL](https://www.mysql.com/) as my database management system (running a server locally on my machine), but I plan to host a database somewhere, eventually.
 
-## Set Up
+## Setup and Run
 
 1. Clone this repository.
 2. Create a `.env` file in both the **back-end** and **front-end** folders.
     - Use the `.env.example` files as templates. You need to fill in the proper information for each of those variables.
-3. In a terminal, navigate into the back-end folder: `cd back-end`
-4. Then run the following command to install all dependencies: `npm install`
-5. Go back up a directory (`cd ..`) and then cd into the front-end folder: `cd front-end`
-6. Likewise, install all dependencies with the same command: `npm install`
-
-## Run Servers
-
-To run the back-end:
-
-1. Navigate to the `back-end` folder in a terminal.
-2. Run the following command: `npm run dev`
-
-To run the front-end:
-
-1. Navigate to the `front-end` folder in a terminal.
-2. Run the following command: `npm run dev`
+3. From the root of the repo, run `npm install`
+4. After that finishes, run `npm run build`
+    - This will install packages on the back-end and front-end as well as create a static build of the front-end
+5. After that finishes, run `npm start`
+    - This will start up the back-end server, which will serve the static Nuxt front-end.
 
 From there, you should be able to access the front-end page - the default URL will be `https:\\localhost:3000`
 
@@ -61,7 +50,7 @@ npx playwright install --list
 
 ```
 # API
-API_URL=http://localhost:1111
+API_URL=http://localhost:3000
 
 # Test Admin User
 TEST_ADMIN_USERNAME=<your-desired-test-username>
@@ -79,17 +68,13 @@ NUXT_TURNSTILE_SECRET_KEY=<your-secret-key>
 
 ```
 # Back-end
-PORT=1111
-FRONTEND=http://localhost:3000
+PORT=3000
 
 # Database
 DB_HOST=127.0.0.1
 DB_USER=username
 DB_PASSWORD=password
 DATABASE=database_name
-
-# CORS Settings - for development testing purposes ONLY
-ALLOW_ALL_ORIGINS=false
 
 # JSON Web Token
 JWT_SECRET=<your_secret_key>
