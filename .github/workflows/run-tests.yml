@@ -1,5 +1,7 @@
 name: Run tests
 
+# TODO - Change this pipeline so it's create the front-end as an npm run generate'd thing, instead of a server
+
 on:
     push: {}
     pull_request: {}
@@ -13,7 +15,7 @@ jobs:
             DB_USER: root
             DB_PASSWORD: root
             DATABASE: pokemoncards
-            API_URL: http://localhost:1111
+            API_URL: http://localhost:3000
             TEST_ADMIN_USERNAME: AfGk3LmN75
             TEST_ADMIN_PASSWORD: Welcome2025!
             ALLOW_ALL_ORIGINS: false
@@ -101,14 +103,14 @@ jobs:
             - name: Install & start back-end server
               working-directory: back-end
               env:
-                  PORT: 1111
+                  PORT: 3000
               run: |
                   npm install
                   npm run start &
 
             - name: Wait for back-end to be ready
               run: |
-                  until curl --silent http://127.0.0.1:1111/health; do
+                  until curl --silent http://127.0.0.1:3000/health; do
                     echo "Waiting for back-end…"
                     sleep 2
                   done
