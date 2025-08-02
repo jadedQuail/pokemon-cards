@@ -121,12 +121,12 @@ jobs:
                   npm install
                   npm run dev &
 
-            - name: Wait for front-end to be ready
-              run: |
-                  until curl --silent --fail http://localhost:3000/ >/dev/null; do
-                    echo "Waiting for front-end…"
-                    sleep 2
-                  done
+            # - name: Wait for front-end to be ready
+            #   run: |
+            #       until curl --silent --fail http://localhost:3000/ >/dev/null; do
+            #         echo "Waiting for front-end…"
+            #         sleep 2
+            #       done
 
             - name: Install Playwright and browsers
               working-directory: front-end
