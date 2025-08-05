@@ -68,8 +68,6 @@ const { openConfirmDialog, currentPokemonData } = useConfirmDialog();
 const authStore = useAuthStore();
 const pokemonStore = usePokemonStore();
 
-const config = useRuntimeConfig();
-
 const props = defineProps({
     filters: {
         type: Object,

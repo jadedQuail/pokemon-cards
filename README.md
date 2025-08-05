@@ -50,8 +50,8 @@ npx playwright install --list
 ## Front-End `.env` File Template
 
 ```
-# API
-API_URL=http://localhost:3000
+# This site
+BASE_URL=http://localhost:3000
 
 # Test Admin User
 TEST_ADMIN_USERNAME=<your-desired-test-username>

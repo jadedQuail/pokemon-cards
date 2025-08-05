@@ -222,8 +222,6 @@ const categoryStore = useCategoryStore();
 
 const { showToast } = useToastNotifications();
 
-const config = useRuntimeConfig();
-
 const handleSubmit = async () => {
     setValidityFlagsForAllFields();
 

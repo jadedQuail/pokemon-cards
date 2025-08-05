@@ -119,8 +119,6 @@ import { LoginFieldIds } from "~/static/constants.js";
 import { logUserIn } from "@/services/apiClient/auth.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
-const config = useRuntimeConfig();
-
 const authStore = useAuthStore();
 const dialogTools = useDialogTools();
 

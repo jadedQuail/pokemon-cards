@@ -112,7 +112,6 @@ import { addSet, deleteSet } from "@/services/apiClient/set.js";
 
 const dialogTools = useDialogTools();
 
-const config = useRuntimeConfig();
 const pokemonStore = usePokemonStore();
 const categoryStore = useCategoryStore();
 

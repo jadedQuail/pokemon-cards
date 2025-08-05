@@ -65,8 +65,6 @@ const { isVisible, message, currentPokemonData } = useConfirmDialog();
 
 const pokemonStore = usePokemonStore();
 
-const config = useRuntimeConfig();
-
 const deletePokemonHandler = async () => {
     try {
         const deleteId = currentPokemonData.value.id;

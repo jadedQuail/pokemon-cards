@@ -45,8 +45,6 @@ import { useDialogTools } from "~/composables/useDialogTools.js";
 
 const dialogTools = useDialogTools();
 
-const config = useRuntimeConfig();
-
 const authStore = useAuthStore();
 
 const handleConfirmClick = () => {
