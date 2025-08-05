@@ -2,9 +2,9 @@ import axios from "axios";
 import { getAuthHeaders } from "./utils";
 import { CategoryErrorCodes } from "../../../shared/errorCodes";
 
-export async function getSetOptions(apiUrl) {
+export async function getSetOptions() {
     try {
-        const response = await axios.get(`${apiUrl}/sets`);
+        const response = await axios.get("/sets");
         return response.data;
     } catch (error) {
         console.error("Error fetching set options:", error);
@@ -12,13 +12,9 @@ export async function getSetOptions(apiUrl) {
     }
 }
 
-export async function addSet(apiUrl, setName) {
+export async function addSet(setName) {
     try {
-        await axios.post(
-            `${apiUrl}/sets`,
-            { setName },
-            { headers: getAuthHeaders() }
-        );
+        await axios.post("/sets", { setName }, { headers: getAuthHeaders() });
         return { success: true };
     } catch (error) {
         if (error.response?.status === 409) {
@@ -26,10 +22,14 @@ export async function addSet(apiUrl, setName) {
                 success: false,
                 message: "You can't add a duplicate category!",
             };
-        } else if (error.response?.data?.errorCode === CategoryErrorCodes.INVALID_CHARACTERS) {
+        } else if (
+            error.response?.data?.errorCode ===
+            CategoryErrorCodes.INVALID_CHARACTERS
+        ) {
             return {
                 success: false,
-                message: "Invalid characters detected; you can only use alphanumeric characters, spaces, and dashes."
+                message:
+                    "Invalid characters detected; you can only use alphanumeric characters, spaces, and dashes.",
             };
         }
 
@@ -37,9 +37,9 @@ export async function addSet(apiUrl, setName) {
     }
 }
 
-export async function deleteSet(apiUrl, setName) {
+export async function deleteSet(setName) {
     try {
-        await axios.delete(`${apiUrl}/sets/${setName}`, {
+        await axios.delete(`/sets/${setName}`, {
             headers: getAuthHeaders(),
         });
     } catch (error) {

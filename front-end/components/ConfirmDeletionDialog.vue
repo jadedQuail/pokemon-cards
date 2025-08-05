@@ -69,7 +69,6 @@ const config = useRuntimeConfig();
 
 const deletePokemonHandler = async () => {
     try {
-        const apiUrl = config.public.API_URL;
         const deleteId = currentPokemonData.value.id;
 
         await deletePokemon(deleteId);

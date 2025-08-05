@@ -154,13 +154,12 @@ const addCategoryConfirmation = async (categoryName) => {
 };
 
 const addCategory = async (categoryName) => {
-    const apiUrl = config.public.API_URL;
     let result;
 
     if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
-        result = await addType(apiUrl, categoryName);
+        result = await addType(categoryName);
     } else {
-        result = await addSet(apiUrl, categoryName);
+        result = await addSet(categoryName);
     }
 
     if (!result.success) {
@@ -169,7 +168,7 @@ const addCategory = async (categoryName) => {
     }
 
     await resetDialogInput();
-    await categoryStore.refreshCategories(apiUrl);
+    await categoryStore.refreshCategories();
     await pokemonStore.fetchPokemonData();
 };
 
@@ -183,20 +182,18 @@ const removeCategoryConfirmation = async () => {
 };
 
 const removeCategories = async () => {
-    const apiUrl = config.public.API_URL;
-
     if (categoryStore.categoriesFormMode === CategoriesFormMode.Types) {
         for (const category of selectedCategories.value) {
-            await deleteType(apiUrl, category);
+            await deleteType(category);
         }
     } else {
         for (const category of selectedCategories.value) {
-            await deleteSet(apiUrl, category);
+            await deleteSet(category);
         }
     }
 
     await resetDialogInput();
-    await categoryStore.refreshCategories(apiUrl);
+    await categoryStore.refreshCategories();
     await pokemonStore.fetchPokemonData();
 };
 
@@ -205,7 +202,6 @@ const removeCategoriesDisabled = computed(() => {
 });
 
 onMounted(async () => {
-    const apiUrl = config.public.API_URL;
-    await categoryStore.refreshCategories(apiUrl);
+    await categoryStore.refreshCategories();
 });
 </script>

@@ -202,8 +202,6 @@ const handleSubmit = async () => {
 
 const submitLoginHandler = async () => {
     try {
-        const apiUrl = config.public.API_URL;
-
         const username = fields.value[LoginFieldIds.Username].content;
         const password = fields.value[LoginFieldIds.Password].content;
 

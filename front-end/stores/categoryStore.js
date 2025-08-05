@@ -12,23 +12,23 @@ export const useCategoryStore = defineStore("category", {
     }),
 
     actions: {
-        async loadTypeOptions(apiUrl) {
+        async loadTypeOptions() {
             try {
-                this.types = await getTypeOptions(apiUrl);
+                this.types = await getTypeOptions();
             } catch (error) {
                 console.error("Error fetching type options:", error);
             }
         },
-        async loadSetOptions(apiUrl) {
+        async loadSetOptions() {
             try {
-                this.sets = await getSetOptions(apiUrl);
+                this.sets = await getSetOptions();
             } catch (error) {
                 console.error("Error fetching set options:", error);
             }
         },
-        async refreshCategories(apiUrl) {
-            await this.loadTypeOptions(apiUrl);
-            await this.loadSetOptions(apiUrl);
+        async refreshCategories() {
+            await this.loadTypeOptions();
+            await this.loadSetOptions();
         },
         showCategoriesDialog(formMode) {
             this.categoriesFormMode = formMode;

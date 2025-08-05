@@ -259,8 +259,6 @@ const handleSubmit = async () => {
 };
 
 const logUserInAfterRegistration = async () => {
-    const apiUrl = config.public.API_URL;
-
     const username = fields.value[RegisterFieldIds.Username].content;
     const password = fields.value[RegisterFieldIds.Password].content;
 
@@ -273,8 +271,6 @@ const logUserInAfterRegistration = async () => {
 
 const submitRegistrationHandler = async () => {
     try {
-        const apiUrl = config.public.API_URL;
-
         const username = fields.value[RegisterFieldIds.Username].content;
         const password = fields.value[RegisterFieldIds.Password].content;
         const confirmPassword =

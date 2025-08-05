@@ -207,8 +207,6 @@ import { onMounted } from "vue";
 import { AddPokemonFieldIds, PokemonFormMode } from "~/static/constants.js";
 
 import { addPokemon, editPokemon } from "@/services/apiClient/pokemon.js";
-import { getTypeOptions } from "@/services/apiClient/type.js";
-import { getSetOptions } from "@/services/apiClient/set.js";
 
 import { usePokemonStore } from "~/stores/pokemonStore.js";
 import { useCategoryStore } from "~/stores/categoryStore.js";
@@ -290,8 +288,6 @@ const areAllFieldsValid = () => {
 
 const submitPokemonHandler = async () => {
     try {
-        const apiUrl = config.public.API_URL;
-
         const cardNameForToast = fields.value.name.content;
         const cardHpForToast = fields.value.hp.content;
         const cardTypeForToast = fields.value.type.content;
@@ -348,9 +344,7 @@ const setValidityFlagsForAllFields = () => {
 };
 
 const refreshCategories = async () => {
-    const apiUrl = config.public.API_URL;
-
-    await categoryStore.refreshCategories(apiUrl);
+    await categoryStore.refreshCategories();
 };
 
 onMounted(async () => {
