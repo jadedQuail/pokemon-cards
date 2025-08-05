@@ -2,6 +2,8 @@ import "dotenv/config";
 import fs from "fs";
 import mysql from "mysql2";
 
+// TODO - Implement the certificate
+
 // const pool = mysql
 //     .createPool({
 //         connectionLimit: 10,
