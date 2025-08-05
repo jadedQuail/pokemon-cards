@@ -43,10 +43,10 @@ export const usePokemonStore = defineStore("pokemon", {
         },
     }),
     actions: {
-        async fetchPokemonData(apiUrl) {
+        async fetchPokemonData() {
             try {
                 this.dataLoaded = false;
-                this.pokemonData = await fetchPokemonData(apiUrl);
+                this.pokemonData = await fetchPokemonData();
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {

@@ -297,7 +297,7 @@ const submitPokemonHandler = async () => {
         const cardTypeForToast = fields.value.type.content;
 
         if (pokemonStore.pokemonFormMode === PokemonFormMode.Add) {
-            await addPokemon(apiUrl, fields.value);
+            await addPokemon(fields.value);
 
             showToast(
                 SeverityLevels.Info,
@@ -305,7 +305,7 @@ const submitPokemonHandler = async () => {
                 `Created card: (${cardNameForToast}, ${cardHpForToast}, ${cardTypeForToast})`
             );
         } else if (pokemonStore.pokemonFormMode === PokemonFormMode.Edit) {
-            await editPokemon(apiUrl, fields.value, fields.value.id.content);
+            await editPokemon(fields.value, fields.value.id.content);
 
             showToast(
                 SeverityLevels.Info,
@@ -314,7 +314,7 @@ const submitPokemonHandler = async () => {
             );
         }
 
-        await pokemonStore.fetchPokemonData(apiUrl); // Fetch data after submitting
+        await pokemonStore.fetchPokemonData(); // Fetch data after submitting
     } catch (error) {
         console.error("Error posting data:", error);
     }

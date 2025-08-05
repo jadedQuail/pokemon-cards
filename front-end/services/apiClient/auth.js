@@ -4,10 +4,10 @@ import { useAuthStore } from "~/stores/authStore.js";
 import { LOCAL_STORAGE_TOKEN_KEY } from "~/static/constants.js";
 import { RegistrationErrorCodes } from "../../shared/errorCodes";
 
-export async function createUser(apiUrl, username, password, confirmPassword) {
+export async function createUser(username, password, confirmPassword) {
     try {
         await axios.post(
-            `${apiUrl}/auth/create-user`,
+            "/auth/create-user",
             {
                 username,
                 password,
@@ -29,12 +29,12 @@ export async function createUser(apiUrl, username, password, confirmPassword) {
     }
 }
 
-export async function logUserIn(apiUrl, username, password) {
+export async function logUserIn(username, password) {
     const authStore = useAuthStore();
 
     try {
         const response = await axios.post(
-            `${apiUrl}/auth/login`,
+            "/auth/login",
             {
                 username,
                 password,

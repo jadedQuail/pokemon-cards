@@ -265,7 +265,7 @@ const logUserInAfterRegistration = async () => {
     const password = fields.value[RegisterFieldIds.Password].content;
 
     try {
-        await logUserIn(apiUrl, username, password);
+        await logUserIn(username, password);
     } catch (error) {
         console.error("Error logging user in after registering:", error);
     }
@@ -292,12 +292,7 @@ const submitRegistrationHandler = async () => {
             }
         }
 
-        const result = await createUser(
-            apiUrl,
-            username,
-            password,
-            confirmPassword
-        );
+        const result = await createUser(username, password, confirmPassword);
 
         setRegistrationErrorState(result);
         setRegistrationErrorCode(result.errorCode);

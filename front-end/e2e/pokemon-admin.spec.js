@@ -19,8 +19,8 @@ test.describe("Pokemon Admin Management Suite", () => {
     test("able to login and has admin privileges", async ({ page }) => {
         await logUserIn(page, ADMIN_USERNAME, ADMIN_PASSWORD);
 
-        // const addPokemonButton = page.getByTestId("add-pokemon-button");
-        // await expect(addPokemonButton).toBeVisible();
+        const addPokemonButton = page.getByTestId("add-pokemon-button");
+        await expect(addPokemonButton).toBeVisible();
 
         const greetingHeader = page.getByTestId("greeting-header");
         await expect(greetingHeader).toHaveText(`Hello, ${ADMIN_USERNAME}`);

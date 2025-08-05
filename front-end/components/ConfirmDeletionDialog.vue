@@ -72,8 +72,8 @@ const deletePokemonHandler = async () => {
         const apiUrl = config.public.API_URL;
         const deleteId = currentPokemonData.value.id;
 
-        await deletePokemon(apiUrl, deleteId);
-        await pokemonStore.fetchPokemonData(apiUrl);
+        await deletePokemon(deleteId);
+        await pokemonStore.fetchPokemonData();
         isVisible.value = false;
 
         showToast(

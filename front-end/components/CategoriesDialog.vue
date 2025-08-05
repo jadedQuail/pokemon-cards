@@ -170,7 +170,7 @@ const addCategory = async (categoryName) => {
 
     await resetDialogInput();
     await categoryStore.refreshCategories(apiUrl);
-    await pokemonStore.fetchPokemonData(apiUrl);
+    await pokemonStore.fetchPokemonData();
 };
 
 const removeCategoryConfirmation = async () => {
@@ -197,7 +197,7 @@ const removeCategories = async () => {
 
     await resetDialogInput();
     await categoryStore.refreshCategories(apiUrl);
-    await pokemonStore.fetchPokemonData(apiUrl);
+    await pokemonStore.fetchPokemonData();
 };
 
 const removeCategoriesDisabled = computed(() => {

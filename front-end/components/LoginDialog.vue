@@ -207,7 +207,7 @@ const submitLoginHandler = async () => {
         const username = fields.value[LoginFieldIds.Username].content;
         const password = fields.value[LoginFieldIds.Password].content;
 
-        const result = await logUserIn(apiUrl, username, password);
+        const result = await logUserIn(username, password);
 
         setLoginErrorState(result);
 

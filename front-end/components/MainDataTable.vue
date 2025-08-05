@@ -91,7 +91,7 @@ const updateScrollHeight = () => {
 };
 
 onMounted(async () => {
-    await pokemonStore.fetchPokemonData(config.public.API_URL);
+    await pokemonStore.fetchPokemonData();
     updateScrollHeight();
     window.addEventListener("resize", updateScrollHeight);
 });

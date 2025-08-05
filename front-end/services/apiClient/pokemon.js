@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getAuthHeaders } from "./utils";
 
-export async function fetchPokemonData(apiUrl) {
+export async function fetchPokemonData() {
     try {
-        const response = await axios.get(`${apiUrl}/pokemon`);
+        const response = await axios.get("/pokemon");
         return response.data;
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -11,7 +11,7 @@ export async function fetchPokemonData(apiUrl) {
     }
 }
 
-export async function editPokemon(apiUrl, fields, id) {
+export async function editPokemon(fields, id) {
     try {
         const dataToSend = {
             pokemonName: fields.name.content,
@@ -20,7 +20,7 @@ export async function editPokemon(apiUrl, fields, id) {
             pokemonType: fields.type.content,
             pokemonSet: fields.set.content,
         };
-        await axios.post(`${apiUrl}/pokemon/edit/${id}`, dataToSend, {
+        await axios.post(`/pokemon/edit/${id}`, dataToSend, {
             headers: getAuthHeaders(),
         });
     } catch (error) {
@@ -29,7 +29,7 @@ export async function editPokemon(apiUrl, fields, id) {
     }
 }
 
-export async function addPokemon(apiUrl, fields) {
+export async function addPokemon(fields) {
     try {
         const dataToSend = {
             pokemonName: fields.name.content,
@@ -38,7 +38,7 @@ export async function addPokemon(apiUrl, fields) {
             pokemonType: fields.type.content,
             pokemonSet: fields.set.content,
         };
-        await axios.post(`${apiUrl}/pokemon/add`, dataToSend, {
+        await axios.post("/pokemon/add", dataToSend, {
             headers: getAuthHeaders(),
         });
     } catch (error) {
@@ -47,9 +47,9 @@ export async function addPokemon(apiUrl, fields) {
     }
 }
 
-export async function deletePokemon(apiUrl, pokemonId) {
+export async function deletePokemon(pokemonId) {
     try {
-        await axios.delete(`${apiUrl}/pokemon/${pokemonId}`, {
+        await axios.delete(`/pokemon/${pokemonId}`, {
             headers: getAuthHeaders(),
         });
     } catch (error) {
