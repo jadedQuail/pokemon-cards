@@ -1,7 +1,8 @@
 import "dotenv/config";
 import mysql from "mysql2";
 
-const isLocal = (process.env.ENVIRONMENT || "").toLowerCase() === "local";
+const env = (process.env.ENVIRONMENT || "").toLowerCase();
+const isNotProduction = env !== "production";
 
 const pool = mysql
     .createPool({
@@ -11,7 +12,7 @@ const pool = mysql
         password: process.env.DB_PASSWORD,
         database: process.env.DATABASE,
         multipleStatements: false,
-        ssl: isLocal
+        ssl: isNotProduction
             ? undefined
             : {
                   rejectUnauthorized: true,
