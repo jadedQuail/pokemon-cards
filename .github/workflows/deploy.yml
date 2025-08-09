@@ -1,4 +1,4 @@
-name: Deploy after CI
+name: Deploy after tests pass
 
 on:
     workflow_run:
