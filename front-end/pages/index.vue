@@ -31,14 +31,6 @@ import LoginDialog from "../components/LoginDialog.vue";
 import LogoutDialog from "../components/LogoutDialog.vue";
 import RegisterDialog from "../components/RegisterDialog.vue";
 
-// TODO: Update README to explain option to run front-end and back-end in dev at the same time via concurrently
-// TODO: Add to README instructions on running command to zip up app contents for manual deployment:
-//  zip -r app.zip . \
-//      -x "*.git*" \
-//      -x "node_modules/*" \
-//      -x "front-end/node_modules/*" \
-//      -x "back-end/node_modules/*"
-
 import { useAuthStore } from "~/stores/authStore.js";
 
 const authStore = useAuthStore();
