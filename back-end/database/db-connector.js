@@ -1,7 +1,7 @@
 import "dotenv/config";
 import mysql from "mysql2";
 
-// TODO - Implement the certificate
+const isLocal = (process.env.ENVIRONMENT || "").toLowerCase() === "local";
 
 const pool = mysql
     .createPool({
@@ -11,10 +11,12 @@ const pool = mysql
         password: process.env.DB_PASSWORD,
         database: process.env.DATABASE,
         multipleStatements: false,
-        ssl: {
-            rejectUnauthorized: true,
-            minVersion: "TLSv1.2",
-        },
+        ssl: isLocal
+            ? undefined
+            : {
+                  rejectUnauthorized: true,
+                  minVersion: "TLSv1.2",
+              },
     })
     .promise();
 
