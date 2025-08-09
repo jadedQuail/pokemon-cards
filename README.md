@@ -81,3 +81,21 @@ DATABASE=database_name
 JWT_SECRET=<your_secret_key>
 JWT_EXPIRES_IN=1d
 ```
+
+## Deployment Example - Azure
+
+### Manual Deployment
+
+I was able to deploy manually to Azure by doing the following:
+
+1. Create an [Azure Database for MySQL](https://azure.microsoft.com/en-us/products/mysql) instance, connect to it via an IDE (I used [MySQL Workbench](https://www.mysql.com/products/workbench/)), then run the `DDL.sql` script to initialize the database and tables.
+
+2. Create an [App Service](https://azure.microsoft.com/en-us/products/app-service) instance and fill out the necessary Environment Variables (the same ones you use in your two local `.env` files).
+
+3. In the App Service's Overview, find the Outbound IP addresses and add these to the Azure Database's Firewall rules.
+
+4. Add the [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension to Visual Studio code. After signing in, right-click your App Service and click deploy to Deploy to Web App.
+
+5. After deployment completes, Azure's Oryx system will build the application (i.e. it will run `npm run build`). After this is complete, Azure will start the app by running `npm start`. You can view deployment status via the Deployment Center on your App Service in the Azure Portal.
+
+## CI / CD Deployment
