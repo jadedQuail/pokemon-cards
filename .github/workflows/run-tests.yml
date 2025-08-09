@@ -128,7 +128,7 @@ jobs:
               working-directory: front-end
               run: |
                   npm install @playwright/test
-                  npx playwright install --with-deps chromium
+                  npx playwright install chromium
 
             - name: Run Playwright tests (with tracing + HTML report)
               working-directory: front-end
