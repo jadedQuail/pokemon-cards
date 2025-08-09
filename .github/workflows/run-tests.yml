@@ -19,7 +19,7 @@ jobs:
             ALLOW_ALL_ORIGINS: false
             JWT_SECRET: testsecret
             JWT_EXPIRES_IN: 1d
-            ENVIRONMENT: dev
+            ENVIRONMENT: local
 
         services:
             mysql:
