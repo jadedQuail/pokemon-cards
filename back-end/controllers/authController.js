@@ -25,13 +25,10 @@ export const validateTurnstile = async (req, res) => {
         params.append("response", token);
         if (req.ip) params.append("remoteip", req.ip);
 
-        const resp = await fetch(
-            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            {
-                method: "POST",
-                body: params,
-            }
-        );
+        const resp = await fetch(process.env.TURNSTILE_API_URL, {
+            method: "POST",
+            body: params,
+        });
 
         const data = await resp.json();
 
