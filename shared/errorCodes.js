@@ -5,7 +5,12 @@ export const RegistrationErrorCodes = {
     DUPLICATE_USER: "DUPLICATE_USER",
     USERNAME_INVALID: "USERNAME_INVALID",
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
-    TURNSTILE_VALIDATION_FAILED: "TURNSTILE_VALIDATION_FAILED",
+};
+
+export const TurnstileErrorCodes = {
+    TOKEN_NOT_FOUND: "TOKEN_NOT_FOUND",
+    VALIDATION_FAILED: "VALIDATION_FAILED",
+    MISC_ERROR: "MISC_ERROR",
 };
 
 export const CategoryErrorCodes = {

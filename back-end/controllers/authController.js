@@ -1,11 +1,64 @@
 import db from "../database/db-connector.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { RegistrationErrorCodes } from "../../shared/errorCodes.js";
+import {
+    RegistrationErrorCodes,
+    TurnstileErrorCodes,
+} from "../../shared/errorCodes.js";
 import {
     validateUsernameChoice,
     validatePasswordChoice,
 } from "../utils/credentialValidator.js";
+
+export const validateTurnstile = async (req, res) => {
+    const token = req.body?.token || req.body?.["cf-turnstile-response"];
+
+    if (!token) {
+        return res.status(400).json({
+            errorCode: TurnstileErrorCodes.TOKEN_NOT_FOUND,
+        });
+    }
+
+    try {
+        const params = new URLSearchParams();
+        params.append("secret", process.env.NUXT_TURNSTILE_SECRET_KEY);
+        params.append("response", token);
+        if (req.ip) params.append("remoteip", req.ip);
+
+        const resp = await fetch(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            {
+                method: "POST",
+                body: params,
+            }
+        );
+
+        const data = await resp.json();
+
+        const allowlist = (process.env.ALLOWED_TURNSTILE_HOSTS || "")
+            .split(",")
+            .map((h) => h.trim())
+            .filter(Boolean);
+
+        if (
+            !data.success ||
+            (allowlist.length > 0 &&
+                data.hostname &&
+                !allowlist.includes(data.hostname))
+        ) {
+            return res.status(403).json({
+                errorCode: TurnstileErrorCodes.VALIDATION_FAILED,
+            });
+        }
+
+        return res.sendStatus(204);
+    } catch (err) {
+        console.error("Error validating Turnstile token:", err);
+        return res
+            .status(502)
+            .json({ errorCode: TurnstileErrorCodes.MISC_ERROR });
+    }
+};
 
 export const deleteUser = async (req, res) => {
     const userId = req.params.id;

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { getAuthHeaders } from "./utils";
 
+// TODO - Consolidate my .env's into one .env for both
+
 export async function fetchPokemonData() {
     try {
         const response = await axios.get("/pokemon");

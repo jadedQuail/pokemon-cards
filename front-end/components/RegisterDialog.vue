@@ -282,11 +282,13 @@ const submitRegistrationHandler = async () => {
             } catch {
                 setRegistrationErrorState({ success: false });
                 setRegistrationErrorCode(
-                    RegistrationErrorCodes.TURNSTILE_VALIDATION_FAILED
+                    RegistrationErrorCodes.TURNSTILE_ERROR
                 );
                 return false;
             }
         }
+
+        // TODO: Update README with new environment variables
 
         const result = await createUser(username, password, confirmPassword);
 
@@ -318,7 +320,9 @@ const closeDialog = () => {
 };
 
 async function validateThroughTurnstile() {
-    const data = await $fetch("/api/validateTurnstile", {
+    const BASE_URL = config.public.BASE_URL;
+
+    await $fetch(`${BASE_URL}/auth/validate-turnstile`, {
         method: "POST",
         body: {
             token: turnstileToken.value,
