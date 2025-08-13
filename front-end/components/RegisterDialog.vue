@@ -288,8 +288,6 @@ const submitRegistrationHandler = async () => {
             }
         }
 
-        // TODO: Update README with new environment variables
-
         const result = await createUser(username, password, confirmPassword);
 
         setRegistrationErrorState(result);
