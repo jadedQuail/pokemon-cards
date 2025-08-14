@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-// TODO: Delete "test-results" folder from Kudu console
-
 const BASE_URL = process.env.BASE_URL;
 
 export async function logUserIn(page, username, password) {
