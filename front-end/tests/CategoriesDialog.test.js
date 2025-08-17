@@ -47,7 +47,6 @@ beforeEach(async () => {
 
 test("adds a new type and updates the store", async () => {
     await renderSuspended(CategoriesDialog);
-    screen.debug(screen.getByTestId("categories-form"));
 
     await fireEvent.update(screen.getByTestId("new-category-input"), "Dragon");
     await fireEvent.submit(screen.getByTestId("categories-form"));

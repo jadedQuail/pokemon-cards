@@ -38,13 +38,13 @@ jobs:
                   npm ci
                   npm run generate
 
-            - name: Package backend for deploy
-              run: |
-                  mkdir -p deploy
-                  rsync -a back-end/ deploy/ --exclude node_modules --exclude tests --exclude .git --exclude .github
-                  rm -rf deploy/public && mkdir -p deploy/public
-                  cp -R front-end/.output/public/* deploy/public/
-                  pushd deploy
-                  npm ci --omit=dev
-                  popd
-                  (cd deploy && zip -r ../app.zip .)
+            # - name: Package backend for deploy
+            #   run: |
+            #       mkdir -p deploy
+            #       rsync -a back-end/ deploy/ --exclude node_modules --exclude tests --exclude .git --exclude .github
+            #       rm -rf deploy/public && mkdir -p deploy/public
+            #       cp -R front-end/.output/public/* deploy/public/
+            #       pushd deploy
+            #       npm ci --omit=dev
+            #       popd
+            #       (cd deploy && zip -r ../app.zip .)
