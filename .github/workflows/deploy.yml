@@ -32,7 +32,7 @@ jobs:
                   ref: ${{ github.event.workflow_run.head_commit.id }}
                   fetch-depth: 0
 
-            - name: Build frontend
+            - name: Build front-end
               working-directory: front-end
               run: |
                   npm ci
