@@ -348,4 +348,8 @@ const refreshCategories = async () => {
 onMounted(async () => {
     await refreshCategories();
 });
+
+// TODO - Put into README an explanation of what to do with settings.json to avoid
+// deploying to Azure from VS Code files that shouldn't be in there (like .env).
+// Also, explain the .deployment file and SCM_DO_BUILD_DURING_DEPLOYMENT=true
 </script>
