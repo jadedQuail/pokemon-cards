@@ -102,7 +102,32 @@ I was able to deploy manually to Azure by doing the following:
 
 3. In the App Service's Overview, find the Outbound IP addresses and add these to the Azure Database's Firewall rules.
 
-4. Add the [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension to Visual Studio code. After signing in, right-click your App Service and click deploy to Deploy to Web App.
+4. Add the [Azure Resources](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups) extension to Visual Studio code. Before deploying your site via this extension, make sure that you add to `.vscode/settings.json` the following list of files that should not be bundled into the deployment:
+
+```
+"appService.zipIgnorePattern": [
+    "**/.env*",
+    "**/.github/**",
+    "**/.vscode/**",
+    "**/tests/**",
+    "**/.DS_Store",
+    "**/app.zip",
+    "**/node_modules.tar.gz",
+    "**/README.md",
+    "**/node_modules/**",
+    "**/test-results/**",
+    "**/playwright-report/**"
+]
+```
+
+Additionally, to ensure that Azure's Oryx build process actually runs the command `npm run build`, create a file called `.deployment` at the root level of the repo that contains the following:
+
+```
+[config]
+SCM_DO_BUILD_DURING_DEPLOYMENT=true
+```
+
+Then, after signing in to Azure, right-click your App Service and click deploy to Deploy to Web App.
 
 5. After deployment completes, Azure's Oryx system will build the application (i.e. it will run `npm run build`). After this is complete, Azure will start the app by running `npm start`. You can view deployment status via the Deployment Center on your App Service in the Azure Portal.
 
