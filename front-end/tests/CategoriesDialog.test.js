@@ -45,6 +45,8 @@ beforeEach(async () => {
     CategoriesDialog = module.default;
 });
 
+// TODO - There are things in your .yml files that should be environment variables / otherwise not part of the public github repo
+
 test("adds a new type and updates the store", async () => {
     await renderSuspended(CategoriesDialog);
 
