@@ -4,7 +4,7 @@ on:
     workflow_run:
         workflows: ["Run tests"]
         types: [completed]
-    workflow_dispatch: {}
+        branches: [main]
 
 permissions:
     contents: read
@@ -29,7 +29,7 @@ jobs:
             - name: Checkout the exact commit that passed CI
               uses: actions/checkout@v4
               with:
-                  ref: ${{ github.event.workflow_run.head_commit.id }}
+                  ref: ${{ github.event.workflow_run.head_sha }}
                   fetch-depth: 0
 
             - name: Azure login (OIDC)
