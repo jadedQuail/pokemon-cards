@@ -66,6 +66,7 @@ jobs:
                     --exclude '.env.*' \
                     --exclude 'app.zip' \
                     --exclude 'node_modules.tar.gz' \
+                    --exclude 'front-end/dist' \
                     --delete-excluded
 
             - name: Deploy to Azure Web App (Oryx build)
