@@ -68,7 +68,7 @@ jobs:
                     --exclude 'node_modules.tar.gz' \
                     --delete-excluded
 
-            - name: Deploy to Azure Web App (Oryx build on server)
+            - name: Deploy to Azure Web App (Oryx build)
               uses: azure/webapps-deploy@v3
               with:
                 app-name: ${{ env.AZURE_WEBAPP_NAME }}
