@@ -8,6 +8,7 @@
         "preview": "nuxt preview",
         "start:prod": "nuxi preview",
         "generate": "nuxt generate",
+        "postgenerate": "rm -rf dist",
         "test": "vitest run",
         "playwright": "npx playwright test"
     },

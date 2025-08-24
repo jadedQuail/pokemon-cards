@@ -50,28 +50,28 @@ jobs:
                         --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true WEBSITE_NODE_DEFAULT_VERSION=~${{ env.NODE_VERSION }} --output none
 
             - name: Stage deploy payload
-              run: | 
-                rm -rf deploy-src && mkdir deploy-src
-                rsync -a . deploy-src \
-                    --exclude '.git/' \
-                    --exclude '.github/' \
-                    --exclude '.vscode/' \
-                    --exclude 'tests/' \
-                    --exclude 'test-results/' \
-                    --exclude 'playwright-report/' \
-                    --exclude '**/.DS_Store' \
-                    --exclude 'node_modules/' \
-                    --exclude '**/node_modules/' \
-                    --exclude '.env' \
-                    --exclude '.env.*' \
-                    --exclude 'app.zip' \
-                    --exclude 'node_modules.tar.gz' \
-                    --exclude 'front-end/dist' \
-                    --delete-excluded
+              run: |
+                  rm -rf deploy-src && mkdir deploy-src
+                  rsync -a . deploy-src \
+                      --exclude '.git/' \
+                      --exclude '.github/' \
+                      --exclude '.vscode/' \
+                      --exclude 'tests/' \
+                      --exclude 'test-results/' \
+                      --exclude 'playwright-report/' \
+                      --exclude '**/.DS_Store' \
+                      --exclude 'node_modules/' \
+                      --exclude '**/node_modules/' \
+                      --exclude '.env' \
+                      --exclude '.env.*' \
+                      --exclude 'app.zip' \
+                      --exclude 'node_modules.tar.gz' \
+                      --exclude 'front-end/dist' \
+                      --delete-excluded
 
             - name: Deploy to Azure Web App (Oryx build)
               uses: azure/webapps-deploy@v3
               with:
-                app-name: ${{ env.AZURE_WEBAPP_NAME }}
-                package: deploy-src
-                clean: true
+                  app-name: ${{ env.AZURE_WEBAPP_NAME }}
+                  package: deploy-src
+                  clean: true
