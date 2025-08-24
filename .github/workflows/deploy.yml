@@ -14,10 +14,6 @@ concurrency:
     group: deploy-prod
     cancel-in-progress: true
 
-env:
-    NODE_VERSION: "22"
-    AZURE_WEBAPP_NAME: joshspokemoncards
-
 jobs:
     deploy:
         if: >
@@ -26,6 +22,11 @@ jobs:
         runs-on: ubuntu-latest
         environment:
             name: production
+        env:
+            NODE_VERSION: ${{ vars.NODE_VERSION }}
+            AZURE_WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+            AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+
         steps:
             - name: Checkout the exact commit that passed CI
               uses: actions/checkout@v4
@@ -45,7 +46,7 @@ jobs:
               with:
                   inlineScript: |
                       az webapp config appsettings set \
-                        --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+                        --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
                         --name ${{ env.AZURE_WEBAPP_NAME }} \
                         --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true WEBSITE_NODE_DEFAULT_VERSION=~${{ env.NODE_VERSION }} --output none
 
