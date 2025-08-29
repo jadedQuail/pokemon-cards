@@ -113,7 +113,7 @@
                 <!-- Error Message -->
                 <RegistrationErrorMessage
                     v-if="registrationError && !userHasTypedAgain"
-                    :registrationErrorCode="registrationErrorCode"
+                    :errorCode="registrationErrorCode"
                 />
                 <NuxtTurnstile
                     class="mt-2"
@@ -145,7 +145,10 @@
 import { useAuthStore } from "~/stores/authStore.js";
 import { useDialogTools } from "~/composables/useDialogTools.js";
 
-import { RegistrationErrorCodes } from "../../shared/errorCodes";
+import {
+    RegistrationErrorCodes,
+    TurnstileErrorCodes,
+} from "../../shared/errorCodes";
 import { RegisterFieldIds, SeverityLevels } from "~/static/constants.js";
 import { useToastNotifications } from "@/composables/useToastNotification";
 import { createUser, logUserIn } from "@/services/apiClient/auth.js";
@@ -279,11 +282,11 @@ const submitRegistrationHandler = async () => {
         if (enableTurnstile.value) {
             try {
                 await validateThroughTurnstile();
-            } catch {
+            } catch (error) {
+                const turnstileError = error?.response?._data?.errorCode;
+
                 setRegistrationErrorState({ success: false });
-                setRegistrationErrorCode(
-                    RegistrationErrorCodes.TURNSTILE_ERROR
-                );
+                setRegistrationErrorCode(turnstileError);
                 return false;
             }
         }

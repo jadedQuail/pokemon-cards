@@ -1,18 +1,11 @@
 <template>
-    <div v-if="registrationErrorCode" class="text-red-500">
-        <template
-            v-if="
-                registrationErrorCode === RegistrationErrorCodes.DUPLICATE_USER
-            "
-        >
+    <div v-if="errorCode" class="text-red-500">
+        <template v-if="errorCode === RegistrationErrorCodes.DUPLICATE_USER">
             That username is already taken. Please pick a different one.
         </template>
 
         <template
-            v-else-if="
-                registrationErrorCode ===
-                RegistrationErrorCodes.USERNAME_INVALID
-            "
+            v-else-if="errorCode === RegistrationErrorCodes.USERNAME_INVALID"
         >
             <p>Your username must meet the following criteria:</p>
             <ul class="list-disc list-inside mt-1">
@@ -25,9 +18,7 @@
         </template>
 
         <template
-            v-else-if="
-                registrationErrorCode === RegistrationErrorCodes.PASSWORD_WEAK
-            "
+            v-else-if="errorCode === RegistrationErrorCodes.PASSWORD_WEAK"
         >
             <p>Your password must meet the following criteria:</p>
             <ul class="list-disc list-inside mt-1">
@@ -39,6 +30,11 @@
             </ul>
         </template>
 
+        <template v-else-if="isTurnstileError">
+            We weren't able to verify you this time. Please refresh the page and
+            try again later.
+        </template>
+
         <template v-else>
             There was an error registering your account. Please try again.
         </template>
@@ -46,9 +42,17 @@
 </template>
 
 <script setup>
-import { RegistrationErrorCodes } from "../../shared/errorCodes";
+import { computed } from "vue";
+import {
+    RegistrationErrorCodes,
+    TurnstileErrorCodes,
+} from "../../shared/errorCodes";
 
-defineProps({
-    registrationErrorCode: String,
+const props = defineProps({
+    errorCode: String,
 });
+
+const isTurnstileError = computed(() =>
+    Object.values(TurnstileErrorCodes).includes(props.errorCode)
+);
 </script>
