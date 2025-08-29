@@ -10,9 +10,6 @@ import {
     validatePasswordChoice,
 } from "../utils/credentialValidator.js";
 
-// TODO - Need to implement an error message to the user if Turnstile hangs; right now, this is only a problem on my apartment internet
-// TODO - take care of critical vulnerabilities
-
 export const validateTurnstile = async (req, res) => {
     const token = req.body?.token || req.body?.["cf-turnstile-response"];
 
